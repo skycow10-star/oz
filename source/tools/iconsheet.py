@@ -4,6 +4,7 @@
 # - 흰 배경 기준으로 물건 덩어리를 찾음(격자가 조금 삐뚤어도 됨). 가까운 조각(그림자·반짝이)은 한 덩어리로 묶음
 # - 정사각형 여백을 주고, 바깥 흰 배경은 투명하게 (앱에서는 it_/end_ 그림의 배경 지우기를 건너뜀)
 # - 확인용 미리보기: /home/claude/out/<접두어>_sheet.png
+import os as _os; OZH = _os.environ.get('OZ_HOME', '/home/claude')   # 작업 폴더(기본 /home/claude)
 import sys, os
 import numpy as np
 from PIL import Image, ImageDraw
@@ -27,7 +28,7 @@ for c in cen:
     cur.append(c)
 if cur: rows.append(cur)
 order = [c[2] for r in rows for c in sorted(r, key=lambda c: c[1])]
-os.makedirs('/home/claude/imgs/in', exist_ok=True); os.makedirs('/home/claude/out', exist_ok=True)
+os.makedirs(OZH + '/imgs/in', exist_ok=True); os.makedirs(OZH + '/out', exist_ok=True)
 prev = Image.new('RGBA', (len(order) * 140 + 10, 170), (250, 245, 235, 255)); dr = ImageDraw.Draw(prev)
 for i, (k, sl) in enumerate(zip(keys, order)):
     y0, y1, x0, x1 = sl[0].start, sl[0].stop, sl[1].start, sl[1].stop
@@ -39,7 +40,7 @@ for i, (k, sl) in enumerate(zip(keys, order)):
     piece = Image.fromarray(p)
     side = int(max(x1 - x0, y1 - y0) * 1.12)
     sq = Image.new('RGBA', (side, side), (0, 0, 0, 0)); sq.alpha_composite(piece, ((side - (x1 - x0)) // 2, (side - (y1 - y0)) // 2))
-    sq = sq.resize((256, 256), Image.LANCZOS); sq.save(f'/home/claude/imgs/in/{prefix}_{k}.png')
+    sq = sq.resize((256, 256), Image.LANCZOS); sq.save(f'{OZH}/imgs/in/{prefix}_{k}.png')
     prev.alpha_composite(sq.resize((128, 128), Image.LANCZOS), (8 + i * 140, 6)); dr.text((10 + i * 140, 145), k, fill=(80, 60, 40, 255))
-prev.save(f'/home/claude/out/{prefix}_sheet.png')
+prev.save(f'{OZH}/out/{prefix}_sheet.png')
 print(len(order), '개 저장:', ', '.join(f'{prefix}_{k}' for k in keys[:len(order)]))

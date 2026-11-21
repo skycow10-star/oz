@@ -1,3 +1,4 @@
+import os as _os; OZH = _os.environ.get('OZ_HOME', '/home/claude')   # 작업 폴더(기본 /home/claude)
 import sys
 # usage: mkbook.py key title orig tr_file:chnum [tr_file:chnum ...]
 key,title,orig=sys.argv[1:4]
@@ -10,5 +11,5 @@ for spec in sys.argv[4:]:
         assert '`' not in l and '${' not in l
         out.append(f"[`{n}-{i}`, `{l}`],")
 out+=["  ]","};"]
-open(f'/home/claude/build/book_{key}.js','w',encoding='utf-8').write('\n'.join(out)+'\n')
+open(f'{OZH}/build/book_{key}.js','w',encoding='utf-8').write('\n'.join(out)+'\n')
 print(key, sum(1 for x in out if x.startswith('[`')))

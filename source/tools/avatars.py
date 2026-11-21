@@ -2,10 +2,11 @@
 # 사용법: python3 avatars.py                       → 미리보기 /home/claude/out/av_sheet.png
 #         python3 avatars.py "{'toto':(0,0.05,1.2)}"  → 인물별 미세 조정 (dx, dy, 배율; dx·dy는 크기 비율)
 # 어떤 그림에서 자를지는 work.js 의 avatarFrom {하트키: 스프라이트키}
+import os as _os; OZH = _os.environ.get('OZ_HOME', '/home/claude')   # 작업 폴더(기본 /home/claude)
 import sys, os, ast
 from PIL import Image, ImageDraw
 import numpy as np
-sys.path.insert(0, '/home/claude/tools')
+sys.path.insert(0, OZH + '/tools')
 from work import W, REPO
 SRC = W.get('avatarFrom', {})
 ADJ = ast.literal_eval(sys.argv[1]) if len(sys.argv) > 1 else {}
@@ -25,6 +26,6 @@ for i, (k, f) in enumerate(have):
     crop = crop.resize((160, 160), Image.LANCZOS)
     m = Image.new('L', (160, 160), 0); ImageDraw.Draw(m).ellipse((0, 0, 159, 159), fill=255)
     out = Image.new('RGBA', (160, 160), (0, 0, 0, 0)); out.paste(crop, (0, 0), m)
-    out.save(f'/home/claude/imgs/in/av_{k}.png'); sheet.alpha_composite(out, (5 + i * 170, 5)); d.text((10 + i * 170, 175), k, fill=(80, 60, 40, 255))
-os.makedirs('/home/claude/out', exist_ok=True); sheet.save('/home/claude/out/av_sheet.png')
+    out.save(f'{OZH}/imgs/in/av_{k}.png'); sheet.alpha_composite(out, (5 + i * 170, 5)); d.text((10 + i * 170, 175), k, fill=(80, 60, 40, 255))
+os.makedirs(OZH + '/out', exist_ok=True); sheet.save(OZH + '/out/av_sheet.png')
 print('얼굴', len(have), '개 →', ', '.join(k for k, _ in have), '/ 미리보기 /home/claude/out/av_sheet.png')

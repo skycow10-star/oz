@@ -1,6 +1,7 @@
 # 그림을 앱이 쓰는 모양(배경 JPEG/투명 스프라이트)으로 처리한 뒤 WebP 파일로 저장하고, IMAGE_FILES 목록을 넣은 index.html을 만든다.
+import os as _os; OZH = _os.environ.get('OZ_HOME', '/home/claude')   # 작업 폴더(기본 /home/claude)
 import asyncio, glob, json, base64, os, re, sys
-sys.path.insert(0, "/home/claude/tools")
+sys.path.insert(0, OZH + "/tools")
 from work import REPO, HTML
 from playwright.async_api import async_playwright
 OUT=REPO
@@ -15,7 +16,7 @@ def write_index(manifest, total, errs):
   open(OUT+"/index.html","w",encoding="utf-8").write(base)
   print(len(manifest),"images", round(total/1048576,2),"MB; index", round(len(base.encode())/1024),"KB", errs)
 async def main():
-  files=sorted(glob.glob("/home/claude/imgs/in/*"))
+  files=sorted(glob.glob(OZH + "/imgs/in/*"))
   if not files: return write_index({}, 0, [])
   async with async_playwright() as p:
     b=await p.chromium.launch(executable_path="/usr/bin/google-chrome", args=["--allow-file-access-from-files"])

@@ -1,6 +1,7 @@
 # 작품 설정(build/work.js)을 파이썬 도구에서 읽기 위한 도우미. node 로 WORK 객체를 JSON 으로 꺼낸다.
+import os as _os; OZH = _os.environ.get('OZ_HOME', '/home/claude')   # 작업 폴더(기본 /home/claude)
 import json, subprocess
-HOME = '/home/claude'
+HOME = OZH + ''
 def load():
     js = "const fs=require('fs');eval(fs.readFileSync('%s/build/work.js','utf8')+';globalThis.W=WORK');console.log(JSON.stringify(W))" % HOME
     return json.loads(subprocess.check_output(['node', '-e', js]))
