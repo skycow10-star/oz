@@ -24,7 +24,8 @@ const GLOSS = Object.assign({}, WORK.gloss || {});
 const HERO = WORK.hero;
 const GLOSS_RE = !Object.keys(GLOSS).length ? /(?!)/g : new RegExp(Object.keys(GLOSS).sort((a,b) => b.length - a.length).map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
 const KIND = {act:`🚶 행동하기`, predict:`🔮 예측하기 · 원작의 ${WORK.heroTopic}?`, talk:`💬 말 걸기`, name:`✍️ 이름 짓기`, feel:`💗 마음 읽기`};
-const EASY_IC = {canon:`📖`, imag:`✨`, bal:`⚖️`};
+const BAL = Object.assign({ic:`⚖️`, name:`균형`, badge:{e:`⚖️ 지혜로운 균형을 찾았어요!`, l:`⚖️ 지혜로운 균형을 찾았습니다`}}, WORK.bal || {});
+const EASY_IC = {canon:`📖`, imag:`✨`, bal:BAL.ic};
 const WHO = Object.assign({}, WORK.who || {});
 const CHARS = Object.assign({}, WORK.chars || {});
 const DEFAULT_NAMES = Object.assign({}, WORK.names || {});
@@ -32,9 +33,9 @@ CHAPTERS.forEach(c => { if(c.items) Object.assign(ITEMS, c.items); if(c.album) A
 const BADGE = {
   canon:{e:`📖 원작과 같은 길!`, l:`📖 원작의 길을 걸었습니다`},
   imag:{e:`✨ 상상의 날개를 펼쳤어요!`, l:`✨ 상상의 날개를 펼쳤습니다`},
-  bal:{e:`⚖️ 지혜로운 균형을 찾았어요!`, l:`⚖️ 지혜로운 균형을 찾았습니다`}
+  bal:BAL.badge
 };
-const LABEL = {canon:`원작`, imag:`상상`, bal:`균형`, name:`나만의 이름`, free:`나의 생각`};
+const LABEL = {canon:`원작`, imag:`상상`, bal:BAL.name, name:`나만의 이름`, free:`나의 생각`};
 if(CHAPTERS[0] && !CHAPTERS[0].bgKeys) CHAPTERS[0].bgKeys = [`ch1`];
 let CH, NODES, IDX, CHOICE_IDS, ALBUM;
 function setChapter(ci){
@@ -682,7 +683,7 @@ function renderCover(){
 function renderReport(){
   const total = S.canon + S.imag, c = Math.round(S.canon / total * 100), i = 100 - c;
   const lit = level === "lit", E = S.ending ? CH.endings[S.ending] : null;
-  const emoji = {canon:"📖", imag:"✨", bal:"⚖️"}[S.ending] || "🎬";
+  const emoji = {canon:"📖", imag:"✨", bal:BAL.ic}[S.ending] || "🎬";
   const desc = S.ending && WORK.endingDesc[S.ending] ? (lit ? WORK.endingDesc[S.ending].l : WORK.endingDesc[S.ending].e) : "";
   const snap = S.snap || {}, sh = snap.hearts || {}, sitems = snap.items || [];
   const same = (n, p) => p.type === "canon" || (p.type === "feel" && n.opts[p.oi] && n.opts[p.oi].ok) || (n.t === "name" && !n.free && p.type === "canon");
@@ -692,7 +693,7 @@ function renderReport(){
     if(n.t === "name" && n.free){ mine = `💌 "${esc(p.val)}"`; orig = ""; }
     else if(n.t === "name"){ mine = `✍️ '${esc(p.val)}'`; orig = `'${esc(n.canon)}'`; }
     else if(p.type === "feel"){ const m = n.opts[p.oi], ok = n.opts.find(o => o.ok) || m; mine = `${m.ic} ${esc(T(m))}`; orig = `${ok.ic} ${esc(T(ok))}`; }
-    else { const m = n.opts[p.oi], o = n.opts.find(x => x.type === "canon") || m; mine = `${({canon:"📖", imag:"✨", bal:"⚖️"})[p.type] || ""} ${esc(T(m.s || m))}`; orig = esc(T(o.s || o)); }
+    else { const m = n.opts[p.oi], o = n.opts.find(x => x.type === "canon") || m; mine = `${({canon:"📖", imag:"✨", bal:BAL.ic})[p.type] || ""} ${esc(T(m.s || m))}`; orig = esc(T(o.s || o)); }
     const ok = same(n, p);
     return `<div class="crow ${ok ? "same" : ""}"><div class="cl">${esc(n.label)}</div>${n.t === "name" && n.free
       ? `<div class="cm">${mine} <span class="cnote">나만의 생각</span></div>`
@@ -714,7 +715,7 @@ function renderReport(){
       <p style="font-size:.82rem;color:#8a7461;margin-top:4px">${CH.orig} 「${CH.origTitle}」</p></div>
     ${E ? `<div class="rp-end ${S.ending}"><div class="rp-end-ic">${emoji}</div><span class="tag ${S.ending}">${E.label}</span>
       <h3>${esc(E.title)}</h3><p>${desc}</p>
-      <div class="rp-tally"><span class="t canon">📖 원작 ${S.tally.canon}</span><span class="t imag">✨ 상상 ${S.tally.imag}</span>${S.tally.bal || !EASY_MODE ? `<span class="t bal">⚖️ 균형 ${S.tally.bal}</span>` : ""}</div></div>` : ""}
+      <div class="rp-tally"><span class="t canon">📖 원작 ${S.tally.canon}</span><span class="t imag">✨ 상상 ${S.tally.imag}</span>${S.tally.bal || !EASY_MODE ? `<span class="t bal">${BAL.ic} ${BAL.name} ${S.tally.bal}</span>` : ""}</div></div>` : ""}
     ${gotAny ? `<div class="card"><h4>🎁 이번 장에서 얻은 것</h4><div class="gains">${heartGain}${newItems}</div></div>` : ""}
     <div class="card"><h4>🧭 내 선택과 원작</h4><div class="crows">${rows}</div></div>
     <div class="card"><h4>💬 생각 나누기</h4><ol class="talk-q" style="padding-left:20px">${(lit ? CH.talk.l : CH.talk.e).map(q => `<li>${q}</li>`).join("")}</ol></div>
@@ -772,7 +773,7 @@ function renderMidReport(){
     <div class="type-card"><div class="type-emoji">${type.emoji}</div><div style="flex:1">
       <h3>나의 독서 유형: ${type.name}</h3><p>${lit ? type.l : type.e}</p>
       <div class="rp-gauge"><span style="width:${pct("canon")}%;background:linear-gradient(90deg,#c9504a,#ec8d84)"></span><span style="width:${pct("bal")}%;background:linear-gradient(90deg,#9cc49a,#5b8a5e)"></span><span style="width:${pct("imag")}%;background:linear-gradient(90deg,#8cbbe6,#3f78b0)"></span></div>
-      <div class="rp-legend"><span style="color:#b9473f">📖 원작 ${sum.canon}번</span><span style="color:#5b8a5e">⚖️ 균형 ${sum.bal}번</span><span style="color:#3d73a8">✨ 상상 ${sum.imag}번</span></div>
+      <div class="rp-legend"><span style="color:#b9473f">📖 원작 ${sum.canon}번</span><span style="color:#5b8a5e">${BAL.ic} ${BAL.name} ${sum.bal}번</span><span style="color:#3d73a8">✨ 상상 ${sum.imag}번</span></div>
       <p style="font-size:.8rem;color:#8a7461;margin-top:6px">게이지 누적: 원작 ${gc}% · 상상 ${100 - gc}%</p>
     </div></div>
     <div class="card"><h4>🗺️ 장별 여정</h4><div class="timeline">${timeline}</div></div>
