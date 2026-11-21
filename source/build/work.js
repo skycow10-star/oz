@@ -58,6 +58,10 @@ const WORK = {
     winkie: `윙키`,
     monkeyking: `날개 원숭이 우두머리`,
     oz_man: `작은 노인 오즈`,
+    milkmaid: `젖 짜는 아가씨`,
+    chinaprincess: `도자기 공주`,
+    joker: `어릿광대 익살 씨`,
+    tiger: `호랑이`,
     /*+who*/
   },
   tagColors: {
@@ -69,6 +73,7 @@ const WORK = {
     farmer: `#6a8a5a`, farmwife: `#7a9a6a`, guardian: `#2f8a5a`, soldier: `#3a7a4a`, greengirl: `#3fa07a`, oz: `#1f6a4a`,
     witch: `#4a3a5a`, winkie: `#c9a82a`, monkeyking: `#7a5a3a`,
     oz_man: `#4a7a5a`,
+    milkmaid: `#c9a0b0`, chinaprincess: `#a07ac0`, joker: `#c05a5a`, tiger: `#c08a3a`,
     /*+tag*/
   },
 
@@ -103,6 +108,7 @@ const WORK = {
     `guardian`, `soldier`, `greengirl`, `oz_head`, `oz_lady`, `oz_beast`, `oz_fire`,
     `witch`, `winkie`, `monkeyking`,
     `oz_man`,
+    `milkmaid`, `chinaprincess`, `joker`, `tiger`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -147,6 +153,10 @@ const WORK = {
     ch8_throne: `둥근 알현실, 구석에 쓰러진 칸막이(인물 없이)`,
     ch8_back: `알현실 뒤 작은 방(종이 큰 머리 가면, 줄, 소품 상자)`,
     ch8_room: `밤의 초록 침실(창밖 에메랄드 시 불빛)`,
+    ch9: `궁전 앞 광장, 모닥불 위로 부푼 초록 비단 열기구와 모인 사람들`,
+    ch9_trees: `가지가 사람을 붙잡는 숲 가장자리의 맨 앞줄 나무들`,
+    ch9_china: `접시처럼 매끄러운 하얀 바닥, 알록달록한 작은 도자기 집과 동물들`,
+    ch9_forest: `아주 크고 오래된 나무와 이끼가 가득한 숲속 빈터`,
     /*+bghelp*/
   },
 
@@ -193,6 +203,10 @@ const WORK = {
     ch8_throne: {sky: [`#0f3a2a`, `#1f5a40`, `#2f7a56`], dark: true, sun: [800, 140, `#e8fff0`], far: `#1a5a3c`, near: `#1f6a48`},
     ch8_back:   {sky: [`#2a2a22`, `#3a3a2e`, `#4a4a3a`], dark: true, far: `#3a4a3a`, near: `#3a3a2a`, sun: [400, 600, `#ffd890`]},
     ch8_room:   {sky: [`#0f2a22`, `#1a3a2e`, `#2a5a44`], dark: true, far: `#1f5a40`, near: `#2a6a4a`, sun: [1200, 180, `#d8ffe8`]},
+    ch9:        {sky: [`#9fe0c0`, `#c8f0d8`, `#eaf8ee`], far: `#2fa06a`, near: `#3aa874`, sun: [800, 220, `#d8ffe8`], flowers: [`#7fe0a8`, `#ffffff`]},
+    ch9_trees:  {sky: [`#6f8a6a`, `#8fa888`, `#b8c8a8`], far: `#3a5a3a`, near: `#3a4a2a`, trees: 14, tree: `#2a4a2c`},
+    ch9_china:  {sky: [`#cfe4f6`, `#e6f0fa`, `#f6f8fc`], far: `#e8eef4`, near: `#f4f6f8`, house: `blue`, flowers: [`#e86a9a`, `#7aa7e0`, `#f2c94c`]},
+    ch9_forest: {sky: [`#3a5a3a`, `#4a6a44`, `#6a8a5a`], far: `#2f4f30`, near: `#4a5a2a`, trees: 12, tree: `#2a4a2a`},
     /*+svg*/
   },
 
@@ -238,6 +252,10 @@ const WORK = {
     ch8_throne: {light: `night`, glints: {n: 40, band: [0, 1]}},
     ch8_back:   {light: `lamp`, motes: {n: 16}},
     ch8_room:   {light: `night`, stars: {n: 24, band: [0, .4]}, glints: {n: 12, band: [.3, .8]}},
+    ch9:        {light: `road`, glints: {n: 30, band: [.1, .9]}},
+    ch9_trees:  {light: `dim`, petals: {n: 10, col: [`#4f8a4a`, `#6aa25a`], size: [3, 6], vy: [10, 18], wind: -6}},
+    ch9_china:  {light: `road`, glints: {n: 40, band: [.6, 1]}},
+    ch9_forest: {light: `dim`, motes: {n: 20}},
     /*+fx*/
   },
 
@@ -255,6 +273,7 @@ const WORK = {
     {k: `myWish`, ch: 6, what: `내가 오즈에게 부탁하고 싶은 것`, free: true},
     {k: `reunion`, ch: 7, what: `다시 만난 친구에게 하고 싶은 말`, free: true},
     {k: `toOz`, ch: 8, what: `오즈에게 하고 싶은 말`, free: true},
+    {k: `myHome`, ch: 9, what: `내 마음이 가장 편한 곳`, free: true},
     /*+names*/
   ],
 
@@ -308,6 +327,12 @@ const WORK = {
     "열기구": `뜨거운 공기나 가스를 채운 큰 주머니에 바구니를 달아 하늘에 띄우는 기구예요.`,
     "겨": `곡식을 찧을 때 벗겨져 나오는 껍질 부스러기예요.`,
     "주문": `마법을 일으키려고 외우는 말이에요.`,
+    "도자기": `흙으로 빚어 높은 열에 구운 그릇이나 인형. 매끄럽고 단단하지만 떨어뜨리면 깨져요.`,
+    "어릿광대": `우스운 몸짓과 말로 사람들을 웃기는 사람이에요.`,
+    "벽난로 선반": `벽난로 위에 물건을 올려 두는 선반이에요.`,
+    "통치자": `나라나 도시를 다스리는 사람이에요.`,
+    "쿼들링": `오즈 나라 남쪽에 사는 사람들이에요. 빨간색을 좋아해요.`,
+    "늪": `땅이 질척하고 물이 고여 있어 빠지기 쉬운 곳이에요.`,
     /*+gloss*/
   },
 
