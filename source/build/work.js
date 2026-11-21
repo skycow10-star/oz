@@ -44,11 +44,13 @@ const WORK = {
     northwitch: `북쪽 마녀`,
     scarecrow: `허수아비`,
     boq: `보크`,
+    tinman: `양철 나무꾼`,
     /*+who*/
   },
   tagColors: {
     toto: `#5a5560`, em: `#8a7a6a`, henry: `#6f6a5c`, munchkin: `#4a78b8`, northwitch: `#9b86c4`,
     scarecrow: `#c9a23a`, boq: `#3f6fb0`,
+    tinman: `#7d8a96`,
     /*+tag*/
   },
 
@@ -56,11 +58,12 @@ const WORK = {
   chars: {
     toto: {ic: `🐶`, name: `토토`, full: `토토`, start: 2},
     scarecrow: {ic: `🌾`, name: `허수아비`, full: `허수아비`, start: 0},
+    tinman: {ic: `🪓`, name: `나무꾼`, full: `양철 나무꾼`, start: 0},
     /*+chars*/
   },
   startMet: [`toto`],
   /* 얼굴 아이콘(av_하트키)을 자를 인물 그림. tools/avatars.py 가 씀. 새 친구가 생기면 추가 */
-  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, /*+av*/},
+  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, tinman: `tinman`, /*+av*/},
 
   /* 힘 카드 주인과 힘 이름 (하트 키와 같게). 카드는 장 대본의 cards: {키: {who, name, e, l, quote}} */
   powers: {
@@ -75,6 +78,7 @@ const WORK = {
   sprites: [`dorothy_happy`, `dorothy_sad`, `dorothy_surprised`, `dorothy_brave`, `dorothy_dreamy`,
             `toto`, `em`, `henry`, `munchkin`, `northwitch`,
             `scarecrow`, `boq`,
+    `tinman`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -89,6 +93,10 @@ const WORK = {
     ch2_corn: `옥수수밭과 장대(허수아비 없이)`,
     ch2_rough: `험해진 노란 벽돌 길, 쓸쓸한 들판과 시냇가`,
     ch2_forest: `어두운 숲속 길과 통나무 오두막(밤)`,
+    ch3: `아침 숲속의 맑은 샘`,
+    ch3_tin: `햇살이 비치는 숲, 반쯤 베어진 큰 나무(인물 없이)`,
+    ch3_thicket: `가지가 빽빽이 덮어 막힌 노란 벽돌 길`,
+    ch3_deep: `깊은 숲을 지나는 노란 벽돌 길(오후)`,
     /*+bghelp*/
   },
 
@@ -105,6 +113,10 @@ const WORK = {
     ch2_corn:   {sky: [`#9fd0ee`, `#d6ecf4`, `#f4f0d6`], far: `#c9b45a`, near: `#b39a3e`, trees: 2, road: true},
     ch2_rough:  {sky: [`#b9c7cf`, `#d6dcd8`, `#e8e4d2`], far: `#98a882`, near: `#8a9470`, road: true, stream: true},
     ch2_forest: {sky: [`#1e2a26`, `#2c3b33`, `#3a4a3e`], dark: true, far: `#22352a`, near: `#1c2a22`, trees: 10, tree: `#24402c`, road: true},
+    ch3:         {sky: [`#9fc8a8`, `#c8e0c4`, `#e8f0d8`], far: `#5f8f5a`, near: `#4f7f4a`, trees: 9, tree: `#3f7440`, stream: true, sun: [380, 140, `#fff6cc`]},
+    ch3_tin:     {sky: [`#8fb89a`, `#bfd8bc`, `#e4eed6`], far: `#5a8a56`, near: `#4a7a46`, trees: 10, tree: `#3c6e3e`, sun: [900, 120, `#fff3b8`]},
+    ch3_thicket: {sky: [`#5f7f62`, `#7f9f7c`, `#a8c0a0`], far: `#3f6a42`, near: `#355e38`, trees: 14, tree: `#2f5a34`, road: true},
+    ch3_deep:    {sky: [`#6f9a7a`, `#9fc0a0`, `#d0e0c4`], far: `#4a7a4c`, near: `#3e6e40`, trees: 12, tree: `#355f3a`, road: true},
     /*+svg*/
   },
 
@@ -120,6 +132,10 @@ const WORK = {
     ch2_corn:   {light: `road`, motes: {n: 16}},
     ch2_rough:  {light: `dim`, motes: {n: 10}},
     ch2_forest: {light: `night`, motes: {n: 10}, stars: {n: 10, band: [0, .2]}},
+    ch3:         {light: `road`, glints: {n: 18, band: [.74, .86]}, motes: {n: 10}},
+    ch3_tin:     {light: `road`, motes: {n: 22}},
+    ch3_thicket: {light: `dim`, petals: {n: 10, col: [`#6aa25a`, `#4f8a4a`], size: [3, 6], vy: [10, 18], wind: -4}},
+    ch3_deep:    {light: `dim`, motes: {n: 12}},
     /*+fx*/
   },
 
@@ -131,6 +147,7 @@ const WORK = {
   nameLabels: [
     {k: `toEm`, ch: 1, what: `엠 아주머니께 보내는 한마디`, free: true},
     {k: `toScarecrow`, ch: 2, what: `허수아비에게 해 주고 싶은 말`, free: true},
+    {k: `brainOrHeart`, ch: 3, what: `뇌와 심장, 나의 생각`, free: true},
     /*+names*/
   ],
 
@@ -156,6 +173,9 @@ const WORK = {
     "들통": `물을 길어 나르는 손잡이 달린 통이에요.`,
     "장대": `길고 굵은 막대기예요.`,
     "허수아비": `새를 쫓으려고 사람 모양으로 만들어 밭에 세워 두는 인형이에요.`,
+    "양철": `얇은 철판에 주석을 입혀 녹이 잘 슬지 않게 한 금속판이에요.`,
+    "양철공": `양철로 물건을 만들고 고치는 기술자예요.`,
+    "마디": `팔꿈치·무릎처럼 굽혔다 폈다 하는 이음 부분이에요.`,
     /*+gloss*/
   },
 
