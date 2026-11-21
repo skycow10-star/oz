@@ -57,6 +57,7 @@ const WORK = {
     witch: `서쪽의 나쁜 마녀`,
     winkie: `윙키`,
     monkeyking: `날개 원숭이 우두머리`,
+    oz_man: `작은 노인 오즈`,
     /*+who*/
   },
   tagColors: {
@@ -67,6 +68,7 @@ const WORK = {
     stork: `#8aa0b8`, mousequeen: `#a08ab0`,
     farmer: `#6a8a5a`, farmwife: `#7a9a6a`, guardian: `#2f8a5a`, soldier: `#3a7a4a`, greengirl: `#3fa07a`, oz: `#1f6a4a`,
     witch: `#4a3a5a`, winkie: `#c9a82a`, monkeyking: `#7a5a3a`,
+    oz_man: `#4a7a5a`,
     /*+tag*/
   },
 
@@ -100,6 +102,7 @@ const WORK = {
     `stork`, `mousequeen`,
     `guardian`, `soldier`, `greengirl`, `oz_head`, `oz_lady`, `oz_beast`, `oz_fire`,
     `witch`, `winkie`, `monkeyking`,
+    `oz_man`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -139,6 +142,11 @@ const WORK = {
     ch7_kitchen: `마녀 성의 부엌(냄비, 화덕, 물 양동이)`,
     ch7_yard: `쇠 울타리 마당과 짚 잠자리(밤)`,
     ch7_hall: `노란 성의 큰 방(윙키 축제, 노란 깃발)`,
+    ch8: `끝없이 펼쳐진 붉은 꽃 들판(길 없음)`,
+    ch8_sky: `구름 위 하늘, 멀리 반짝이는 에메랄드 시`,
+    ch8_throne: `둥근 알현실, 구석에 쓰러진 칸막이(인물 없이)`,
+    ch8_back: `알현실 뒤 작은 방(종이 큰 머리 가면, 줄, 소품 상자)`,
+    ch8_room: `밤의 초록 침실(창밖 에메랄드 시 불빛)`,
     /*+bghelp*/
   },
 
@@ -180,6 +188,11 @@ const WORK = {
     ch7_kitchen: {sky: [`#3a2a1a`, `#4a3a26`, `#5a4a32`], dark: true, sun: [400, 640, `#ffb060`]},
     ch7_yard:    {sky: [`#141820`, `#1f2430`, `#2a3038`], dark: true, far: `#3a3a30`, near: `#4a4230`},
     ch7_hall:    {sky: [`#e8c040`, `#f2d870`, `#f8eab0`], far: `#c8a030`, near: `#b8902a`, flowers: [`#f2c94c`, `#ffffff`, `#e8a030`]},
+    ch8:        {sky: [`#f2d0a0`, `#f6e2c0`, `#f8f0dc`], far: `#c87a3a`, near: `#b8502e`, flowers: [`#e04a2a`, `#f28a3a`, `#ffffff`]},
+    ch8_sky:    {sky: [`#7fc0ee`, `#b8dcf4`, `#e6f2fa`], far: `#d8ecf6`, near: `#c0e0f0`, sun: [1250, 200, `#fff6d0`], flat: true},
+    ch8_throne: {sky: [`#0f3a2a`, `#1f5a40`, `#2f7a56`], dark: true, sun: [800, 140, `#e8fff0`], far: `#1a5a3c`, near: `#1f6a48`},
+    ch8_back:   {sky: [`#2a2a22`, `#3a3a2e`, `#4a4a3a`], dark: true, far: `#3a4a3a`, near: `#3a3a2a`, sun: [400, 600, `#ffd890`]},
+    ch8_room:   {sky: [`#0f2a22`, `#1a3a2e`, `#2a5a44`], dark: true, far: `#1f5a40`, near: `#2a6a4a`, sun: [1200, 180, `#d8ffe8`]},
     /*+svg*/
   },
 
@@ -220,6 +233,11 @@ const WORK = {
     ch7_kitchen: {light: `lamp`, motes: {n: 14}},
     ch7_yard:    {light: `night`, stars: {n: 30, band: [0, .4]}},
     ch7_hall:    {light: `road`, petals: {n: 24, col: [`#f2c94c`, `#ffffff`, `#e8a030`], size: [3, 6], vy: [8, 16], wind: -4}},
+    ch8:        {light: `sunset`, petals: {n: 16, col: [`#e04a2a`, `#f28a3a`], size: [3, 6], vy: [8, 16], wind: -6}},
+    ch8_sky:    {light: `road`, motes: {n: 20}},
+    ch8_throne: {light: `night`, glints: {n: 40, band: [0, 1]}},
+    ch8_back:   {light: `lamp`, motes: {n: 16}},
+    ch8_room:   {light: `night`, stars: {n: 24, band: [0, .4]}, glints: {n: 12, band: [.3, .8]}},
     /*+fx*/
   },
 
@@ -236,6 +254,7 @@ const WORK = {
     {k: `toQueen`, ch: 5, what: `들쥐 여왕에게 보내는 감사`, free: true},
     {k: `myWish`, ch: 6, what: `내가 오즈에게 부탁하고 싶은 것`, free: true},
     {k: `reunion`, ch: 7, what: `다시 만난 친구에게 하고 싶은 말`, free: true},
+    {k: `toOz`, ch: 8, what: `오즈에게 하고 싶은 말`, free: true},
     /*+names*/
   ],
 
@@ -283,6 +302,12 @@ const WORK = {
     "땜질": `금속의 갈라지거나 뚫린 곳을 녹인 쇠붙이로 붙여 고치는 일이에요.`,
     "금세공인": `금으로 장신구나 물건을 만드는 기술자예요.`,
     "황금 모자": `날개 달린 원숭이들을 세 번 불러낼 수 있는 마법의 모자예요.`,
+    "사기꾼": `남을 속여서 자기를 대단해 보이게 하거나 이익을 얻는 사람이에요.`,
+    "칸막이": `방 한쪽을 가리려고 세워 두는 판이에요.`,
+    "복화술": `입을 거의 움직이지 않고 말해서, 목소리가 다른 곳에서 나는 것처럼 들리게 하는 재주예요.`,
+    "열기구": `뜨거운 공기나 가스를 채운 큰 주머니에 바구니를 달아 하늘에 띄우는 기구예요.`,
+    "겨": `곡식을 찧을 때 벗겨져 나오는 껍질 부스러기예요.`,
+    "주문": `마법을 일으키려고 외우는 말이에요.`,
     /*+gloss*/
   },
 
