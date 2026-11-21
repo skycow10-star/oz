@@ -46,6 +46,8 @@ const WORK = {
     boq: `보크`,
     tinman: `양철 나무꾼`,
     lion: `겁쟁이 사자`,
+    stork: `황새`,
+    mousequeen: `들쥐 여왕`,
     /*+who*/
   },
   tagColors: {
@@ -53,6 +55,7 @@ const WORK = {
     scarecrow: `#c9a23a`, boq: `#3f6fb0`,
     tinman: `#7d8a96`,
     lion: `#c98a2e`,
+    stork: `#8aa0b8`, mousequeen: `#a08ab0`,
     /*+tag*/
   },
 
@@ -83,6 +86,7 @@ const WORK = {
             `scarecrow`, `boq`,
     `tinman`,
     `lion`,
+    `stork`, `mousequeen`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -106,6 +110,11 @@ const WORK = {
     ch4_ditch: `길을 가로지르는 깊은 골짜기(바닥에 뾰족한 바위)`,
     ch4_bridge: `넓은 골짜기 위에 쓰러뜨린 큰 나무 다리`,
     ch4_river: `넓은 강과 건너편의 꽃 핀 초록 들판(오후)`,
+    ch5: `강가의 아침, 통나무 뗏목`,
+    ch5_river: `빠른 강 한가운데(물에 꽂힌 장대 하나)`,
+    ch5_bank: `꽃과 과일나무가 가득한 강둑`,
+    ch5_poppy: `끝없는 진홍빛 양귀비 꽃밭`,
+    ch5_meadow: `양귀비밭 너머 초록 들판과 강가(나무 수레)`,
     /*+bghelp*/
   },
 
@@ -131,6 +140,11 @@ const WORK = {
     ch4_ditch:  {sky: [`#8fb0a0`, `#b8cfc0`, `#dde6d4`], far: `#4f7f52`, near: `#5a4a3a`, trees: 8, tree: `#3f6a42`, funnel: false},
     ch4_bridge: {sky: [`#7f9f8a`, `#a8c2ae`, `#d0dcc8`], far: `#4a7a4c`, near: `#4a3e30`, trees: 9, tree: `#355f3a`},
     ch4_river:  {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 6, flowers: [`#f2c94c`, `#e86a6a`, `#ffffff`]},
+    ch5:        {sky: [`#ffd9a0`, `#ffe9c4`, `#f6f2dc`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 5, sun: [300, 260, `#fff1c0`]},
+    ch5_river:  {sky: [`#9fd0ee`, `#c8e4f2`, `#e6f2f4`], far: `#7fb36a`, near: `#5d9ec8`, stream: true, trees: 3},
+    ch5_bank:   {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 6, flowers: [`#f2c94c`, `#ffffff`, `#7aa7e0`, `#b07ad0`]},
+    ch5_poppy:  {sky: [`#f2c2a0`, `#f6dcc0`, `#f8ecd8`], far: `#9ab870`, near: `#c8302e`, flowers: [`#e02a2a`, `#ff4a3a`, `#c81e1e`, `#ff7a5a`]},
+    ch5_meadow: {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 4, flowers: [`#e02a2a`, `#ffffff`]},
     /*+svg*/
   },
 
@@ -155,6 +169,11 @@ const WORK = {
     ch4_ditch:  {light: `road`, motes: {n: 10}},
     ch4_bridge: {light: `dim`, motes: {n: 12}},
     ch4_river:  {light: `sunset`, glints: {n: 30, band: [.72, .88]}},
+    ch5:        {light: `sunset`, glints: {n: 20, band: [.72, .88]}},
+    ch5_river:  {light: `road`, glints: {n: 40, band: [.55, .95]}},
+    ch5_bank:   {light: `road`, petals: {n: 14, col: [`#f2c94c`, `#ffffff`, `#b07ad0`], size: [3, 6], vy: [8, 16], wind: -6}},
+    ch5_poppy:  {light: `rose`, petals: {n: 30, col: [`#e02a2a`, `#ff5a4a`, `#c81e1e`], size: [4, 8], vy: [6, 14], wind: -4}},
+    ch5_meadow: {light: `road`, motes: {n: 14}},
     /*+fx*/
   },
 
@@ -168,6 +187,7 @@ const WORK = {
     {k: `toScarecrow`, ch: 2, what: `허수아비에게 해 주고 싶은 말`, free: true},
     {k: `brainOrHeart`, ch: 3, what: `뇌와 심장, 나의 생각`, free: true},
     {k: `courageIs`, ch: 4, what: `내가 생각하는 진짜 용기`, free: true},
+    {k: `toQueen`, ch: 5, what: `들쥐 여왕에게 보내는 감사`, free: true},
     /*+names*/
   ],
 
@@ -201,6 +221,10 @@ const WORK = {
     "경첩": `문이나 턱처럼 여닫는 부분을 이어 주는 쇠붙이예요.`,
     "뗏목": `통나무를 나란히 엮어 물에 띄우는 배예요.`,
     "골짜기": `땅이 깊고 길게 파여 들어간 곳이에요.`,
+    "양귀비": `빛깔이 아주 고운 꽃. 이야기 속 양귀비 꽃밭은 향기를 맡으면 잠들어 버리는 무서운 곳이에요.`,
+    "살쾡이": `고양이보다 크고 사나운 들짐승이에요.`,
+    "황새": `다리와 부리가 길고 하얀 큰 새예요.`,
+    "수레": `바퀴를 달아 짐을 싣고 끄는 도구예요.`,
     /*+gloss*/
   },
 
