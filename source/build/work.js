@@ -45,12 +45,14 @@ const WORK = {
     scarecrow: `허수아비`,
     boq: `보크`,
     tinman: `양철 나무꾼`,
+    lion: `겁쟁이 사자`,
     /*+who*/
   },
   tagColors: {
     toto: `#5a5560`, em: `#8a7a6a`, henry: `#6f6a5c`, munchkin: `#4a78b8`, northwitch: `#9b86c4`,
     scarecrow: `#c9a23a`, boq: `#3f6fb0`,
     tinman: `#7d8a96`,
+    lion: `#c98a2e`,
     /*+tag*/
   },
 
@@ -59,11 +61,12 @@ const WORK = {
     toto: {ic: `🐶`, name: `토토`, full: `토토`, start: 2},
     scarecrow: {ic: `🌾`, name: `허수아비`, full: `허수아비`, start: 0},
     tinman: {ic: `🪓`, name: `나무꾼`, full: `양철 나무꾼`, start: 0},
+    lion: {ic: `🦁`, name: `사자`, full: `겁쟁이 사자`, start: 0},
     /*+chars*/
   },
   startMet: [`toto`],
   /* 얼굴 아이콘(av_하트키)을 자를 인물 그림. tools/avatars.py 가 씀. 새 친구가 생기면 추가 */
-  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, tinman: `tinman`, /*+av*/},
+  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, tinman: `tinman`, lion: `lion`, /*+av*/},
 
   /* 힘 카드 주인과 힘 이름 (하트 키와 같게). 카드는 장 대본의 cards: {키: {who, name, e, l, quote}} */
   powers: {
@@ -79,6 +82,7 @@ const WORK = {
             `toto`, `em`, `henry`, `munchkin`, `northwitch`,
             `scarecrow`, `boq`,
     `tinman`,
+    `lion`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -97,6 +101,11 @@ const WORK = {
     ch3_tin: `햇살이 비치는 숲, 반쯤 베어진 큰 나무(인물 없이)`,
     ch3_thicket: `가지가 빽빽이 덮어 막힌 노란 벽돌 길`,
     ch3_deep: `깊은 숲을 지나는 노란 벽돌 길(오후)`,
+    ch4: `낙엽 덮인 어두운 숲속 노란 벽돌 길`,
+    ch4_camp: `밤, 큰 나무 아래 모닥불`,
+    ch4_ditch: `길을 가로지르는 깊은 골짜기(바닥에 뾰족한 바위)`,
+    ch4_bridge: `넓은 골짜기 위에 쓰러뜨린 큰 나무 다리`,
+    ch4_river: `넓은 강과 건너편의 꽃 핀 초록 들판(오후)`,
     /*+bghelp*/
   },
 
@@ -117,6 +126,11 @@ const WORK = {
     ch3_tin:     {sky: [`#8fb89a`, `#bfd8bc`, `#e4eed6`], far: `#5a8a56`, near: `#4a7a46`, trees: 10, tree: `#3c6e3e`, sun: [900, 120, `#fff3b8`]},
     ch3_thicket: {sky: [`#5f7f62`, `#7f9f7c`, `#a8c0a0`], far: `#3f6a42`, near: `#355e38`, trees: 14, tree: `#2f5a34`, road: true},
     ch3_deep:    {sky: [`#6f9a7a`, `#9fc0a0`, `#d0e0c4`], far: `#4a7a4c`, near: `#3e6e40`, trees: 12, tree: `#355f3a`, road: true},
+    ch4:        {sky: [`#4f6a58`, `#6f8a72`, `#9fb092`], far: `#3f5f44`, near: `#5a5032`, trees: 12, tree: `#2f5034`, road: true},
+    ch4_camp:   {sky: [`#141c22`, `#1f2a30`, `#2c3a3a`], dark: true, far: `#1e2c24`, near: `#2a2418`, trees: 8, tree: `#1a3020`, sun: [800, 640, `#ffb060`]},
+    ch4_ditch:  {sky: [`#8fb0a0`, `#b8cfc0`, `#dde6d4`], far: `#4f7f52`, near: `#5a4a3a`, trees: 8, tree: `#3f6a42`, funnel: false},
+    ch4_bridge: {sky: [`#7f9f8a`, `#a8c2ae`, `#d0dcc8`], far: `#4a7a4c`, near: `#4a3e30`, trees: 9, tree: `#355f3a`},
+    ch4_river:  {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 6, flowers: [`#f2c94c`, `#e86a6a`, `#ffffff`]},
     /*+svg*/
   },
 
@@ -136,6 +150,11 @@ const WORK = {
     ch3_tin:     {light: `road`, motes: {n: 22}},
     ch3_thicket: {light: `dim`, petals: {n: 10, col: [`#6aa25a`, `#4f8a4a`], size: [3, 6], vy: [10, 18], wind: -4}},
     ch3_deep:    {light: `dim`, motes: {n: 12}},
+    ch4:        {light: `dim`, petals: {n: 12, col: [`#a8823e`, `#8a6a2e`, `#c9a24a`], size: [3, 6], vy: [10, 18], wind: -6}},
+    ch4_camp:   {light: `lamp`, motes: {n: 16}, stars: {n: 18, band: [0, .3]}},
+    ch4_ditch:  {light: `road`, motes: {n: 10}},
+    ch4_bridge: {light: `dim`, motes: {n: 12}},
+    ch4_river:  {light: `sunset`, glints: {n: 30, band: [.72, .88]}},
     /*+fx*/
   },
 
@@ -148,6 +167,7 @@ const WORK = {
     {k: `toEm`, ch: 1, what: `엠 아주머니께 보내는 한마디`, free: true},
     {k: `toScarecrow`, ch: 2, what: `허수아비에게 해 주고 싶은 말`, free: true},
     {k: `brainOrHeart`, ch: 3, what: `뇌와 심장, 나의 생각`, free: true},
+    {k: `courageIs`, ch: 4, what: `내가 생각하는 진짜 용기`, free: true},
     /*+names*/
   ],
 
@@ -176,6 +196,11 @@ const WORK = {
     "양철": `얇은 철판에 주석을 입혀 녹이 잘 슬지 않게 한 금속판이에요.`,
     "양철공": `양철로 물건을 만들고 고치는 기술자예요.`,
     "마디": `팔꿈치·무릎처럼 굽혔다 폈다 하는 이음 부분이에요.`,
+    "칼리다": `몸은 곰 같고 머리는 호랑이 같은 오즈 나라 숲속의 괴물이에요.`,
+    "갈기": `사자 목둘레에 난 길고 풍성한 털이에요.`,
+    "경첩": `문이나 턱처럼 여닫는 부분을 이어 주는 쇠붙이예요.`,
+    "뗏목": `통나무를 나란히 엮어 물에 띄우는 배예요.`,
+    "골짜기": `땅이 깊고 길게 파여 들어간 곳이에요.`,
     /*+gloss*/
   },
 

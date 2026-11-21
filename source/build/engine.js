@@ -987,6 +987,8 @@ function startChapter(ci, snap){
   setChapter(ci); preloadChapter();
   const base = fresh();
   S = Object.assign(base, snap ? JSON.parse(JSON.stringify(snap)) : {});
+  /* 앞 장 기록 없이 바로 들어온 경우: 이 장에서 이미 함께 다니는 친구(CH.together)를 하트 1개로 채워 둠 */
+  (CH.together || []).forEach(k => { if(!S.met[k]){ S.met[k] = true; if(!S.hearts[k]) S.hearts[k] = 1; } });
   S.ch = ci; S.started = true; S.pos = 0; S.phase = "play"; S.bg = (CH.nodes[0] && CH.nodes[0].bg) || CH.key;
   S.snap = carry();
   P.reached[CH.key] = true; P.snaps[CH.key] = S.snap;

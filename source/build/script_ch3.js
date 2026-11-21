@@ -4,7 +4,7 @@
    힘 카드: tm_path (모두를 위해 길을 냄)
    ========================================================= */
 CHAPTERS.push({
-  key: `ch3`, num: 3, bgm: `bgm_ch3.mp3`, title: `녹슨 나무꾼`, orig: `원작 5장`, origTitle: `양철 나무꾼을 구하다`,
+  key: `ch3`, num: 3, together: [`scarecrow`], bgm: `bgm_ch3.mp3`, title: `녹슨 나무꾼`, orig: `원작 5장`, origTitle: `양철 나무꾼을 구하다`,
   bgKeys: [`ch3`, `ch3_tin`, `ch3_thicket`, `ch3_deep`],
   endings: {
     canon: {title: `거의 빈 바구니`, label: `원작 결말`},
