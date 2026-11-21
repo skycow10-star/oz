@@ -26,7 +26,7 @@ const HERO = WORK.hero;
 const POWERS = WORK.powers || {};
 const CARDS = {};
 const GLOSS_RE = !Object.keys(GLOSS).length ? /(?!)/g : new RegExp(Object.keys(GLOSS).sort((a,b) => b.length - a.length).map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
-const KIND = {act:`🚶 행동하기`, predict:`🔮 예측하기 · 원작의 ${WORK.heroTopic}?`, talk:`💬 말 걸기`, name:`✍️ 이름 짓기`, feel:`💗 마음 읽기`, power:`💡 힘 알아보기`};
+const KIND = {act:`🚶 행동하기`, predict:`🔮 예측하기 · 원작의 ${WORK.heroTopic}?`, talk:`💬 말 걸기`, name:`✍️ 이름 짓기`, feel:`💗 마음 읽기`, power:`💡 힘 알아보기`, recall:`✨ 힘 카드 꺼내기`};
 const BAL = Object.assign({ic:`⚖️`, name:`균형`, badge:{e:`⚖️ 지혜로운 균형을 찾았어요!`, l:`⚖️ 지혜로운 균형을 찾았습니다`}}, WORK.bal || {});
 const EASY_IC = {canon:`📖`, imag:`✨`, bal:BAL.ic};
 const WHO = Object.assign({}, WORK.who || {});
@@ -469,6 +469,24 @@ function setSprite(img, src, dim){
 function avHtml(k, cls){ const src = imgFor(("av_" + k).toLowerCase()); return src ? `<img class="av ${cls || ""}" src="${src}" alt="">` : (CHARS[k] ? CHARS[k].ic : (POWERS[k] ? POWERS[k].ic : "")); }
 function itHtml(k, cls){ const src = imgFor(("it_" + k).toLowerCase()); return src ? `<img class="it ${cls || ""}" src="${src}" alt="">` : (ITEMS[k] ? ITEMS[k].ic : ""); }
 function endHtml(t, emoji){ const src = imgFor("end_" + t); return src ? `<img class="endic" src="${src}" alt="">` : emoji; }
+/* ✨ 힘 카드 꺼내기: 위기 순간에 친구가 예전에 보여 준 힘을 '떠올리게' 함 (카드가 힘을 주는 게 아님) */
+function recallOpts(n){
+  const who = [].concat(n.who || []), have = (S.cards || []).filter(k => CARDS[k] && who.includes(CARDS[k].who));
+  /* 앞 장을 건너뛰어 카드가 없으면, 이 장 이전에 나온 그 친구의 카드를 보기로 줌(고르면 얻음) */
+  const pool = have.length ? have : Object.keys(CARDS).filter(k => who.includes(CARDS[k].who) && CARDS[k].ch < CH.num);
+  if(!pool.length) return [{type:"recall", card:null, cardName:"함께 걸어온 길", ic:"✨", e:"함께 걸어온 길"}];
+  return pool.map(k => ({type:"recall", card:k, cardName:CARDS[k].name, ic:(POWERS[CARDS[k].who] || {}).ic || "✨", e:CARDS[k].name}));
+}
+function playCardFx(k, done){
+  const c = CARDS[k] || {}, pw = POWERS[c.who] || {};
+  if(!fxOn){ toast({t:`${pw.name || ""}: ${c.name || ""}`, ic:avHtml(c.who), emoji:"✨"}); setTimeout(done, 700); return; }
+  const fx = document.createElement("div"); fx.className = "cardfx";
+  fx.innerHTML = `<div class="cf-burst"></div><div class="cf-card"><div class="cf-face">${avHtml(c.who, "lg")}</div><small>${pw.ic || "✨"} ${esc(pw.name || "")}의 ${esc(pw.power || "힘")}</small><b>${esc(c.name || "")}</b>${!EASY_MODE && c.quote ? `<q>${esc(c.quote)}</q>` : ""}</div>`;
+  el.vn.appendChild(fx); sfx("dream"); setTimeout(() => sfx("chime"), 450);
+  let ended = false; const end = () => { if(ended) return; ended = true; fx.classList.add("out"); setTimeout(() => { fx.remove(); done(); }, 350); };
+  fx.addEventListener("click", e => { e.stopPropagation(); end(); });
+  setTimeout(end, EASY_MODE ? 2600 : 2200);
+}
 function cardsHtml(who){
   const ks = (S.cards || []).filter(k => CARDS[k] && (!who || who.includes(CARDS[k].who)));
   const groups = Object.keys(POWERS).filter(w => ks.some(k => CARDS[k].who === w));
@@ -560,6 +578,7 @@ function renderPlay(instant){
 function shuffle(n){ const a = Array.from({length:n}, (_,i) => i); for(let i=n-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
 function renderChoice(){
   const n = curNode();
+  if(n.kind === "recall") n.opts = recallOpts(n);
   if(!Array.isArray(S.order) || S.order.length !== n.opts.length){ S.order = n.kind === "feel" ? n.opts.map((_, i) => i) : shuffle(n.opts.length); save(); }
   clearInterval(typer); typing = false; typerDone = null;
   el.dlgText.hidden = true; el.note.hidden = true; el.choices.hidden = false; el.nameBox.hidden = true; el.choiceList.hidden = false; el.nextHint.classList.remove("on");
@@ -591,6 +610,12 @@ function pick(oi, btn){
   const n = curNode(), o = n.opts[oi];
   el.choiceList.querySelectorAll(".choice").forEach(b => b.disabled = true);
   btn.classList.add("picked");
+  if(o.type === "recall"){
+    S.picks = S.picks.filter(p => p.id !== n.id); S.picks.push({id:n.id, type:"recall", oi, val:o.cardName});
+    S.names.lastCard = o.cardName; if(o.card) applyEff({card:o.card});
+    playCardFx(o.card, () => { picking = false; enter(n.go ? IDX[n.go] : S.pos + 1, n.note); });
+    return;
+  }
   if(o.type === "feel"){
     S.picks = S.picks.filter(p => p.id !== n.id); S.picks.push({id:n.id, type:"feel", oi, ic:o.ic, val:T(o)});
     applyEff(o.eff); if(n.card) applyEff({card:n.card});
@@ -708,11 +733,12 @@ function renderReport(){
   const emoji = {canon:"📖", imag:"✨", bal:BAL.ic}[S.ending] || "🎬";
   const desc = S.ending && WORK.endingDesc[S.ending] ? (lit ? WORK.endingDesc[S.ending].l : WORK.endingDesc[S.ending].e) : "";
   const snap = S.snap || {}, sh = snap.hearts || {}, sitems = snap.items || [];
-  const same = (n, p) => p.type === "canon" || (p.type === "feel" && n.opts[p.oi] && n.opts[p.oi].ok) || (n.t === "name" && !n.free && p.type === "canon");
+  const same = (n, p) => p.type === "canon" || p.type === "recall" || (p.type === "feel" && n.opts[p.oi] && n.opts[p.oi].ok) || (n.t === "name" && !n.free && p.type === "canon");
   const rows = CHOICE_IDS.map(id => {
     const n = NODES[IDX[id]], p = S.picks.find(x => x.id === id); if(!p) return "";
     let mine = "", orig = "";
-    if(n.t === "name" && n.free){ mine = `💌 "${esc(p.val)}"`; orig = ""; }
+    if(p.type === "recall"){ mine = `✨ ${esc(p.val)}`; orig = ""; }
+    else if(n.t === "name" && n.free){ mine = `💌 "${esc(p.val)}"`; orig = ""; }
     else if(n.t === "name"){ mine = `✍️ '${esc(p.val)}'`; orig = `'${esc(n.canon)}'`; }
     else if(p.type === "feel"){ const m = n.opts[p.oi], ok = n.opts.find(o => o.ok) || m; mine = `${m.ic} ${esc(T(m))}`; orig = `${ok.ic} ${esc(T(ok))}`; }
     else { const m = n.opts[p.oi], o = n.opts.find(x => x.type === "canon") || m; mine = `${({canon:"📖", imag:"✨", bal:BAL.ic})[p.type] || ""} ${esc(T(m.s || m))}`; orig = esc(T(o.s || o)); }

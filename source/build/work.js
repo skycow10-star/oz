@@ -54,6 +54,9 @@ const WORK = {
     soldier: `초록 수염 병사`,
     greengirl: `초록 소녀`,
     oz: `위대한 오즈`,
+    witch: `서쪽의 나쁜 마녀`,
+    winkie: `윙키`,
+    monkeyking: `날개 원숭이 우두머리`,
     /*+who*/
   },
   tagColors: {
@@ -63,6 +66,7 @@ const WORK = {
     lion: `#c98a2e`,
     stork: `#8aa0b8`, mousequeen: `#a08ab0`,
     farmer: `#6a8a5a`, farmwife: `#7a9a6a`, guardian: `#2f8a5a`, soldier: `#3a7a4a`, greengirl: `#3fa07a`, oz: `#1f6a4a`,
+    witch: `#4a3a5a`, winkie: `#c9a82a`, monkeyking: `#7a5a3a`,
     /*+tag*/
   },
 
@@ -95,6 +99,7 @@ const WORK = {
     `lion`,
     `stork`, `mousequeen`,
     `guardian`, `soldier`, `greengirl`, `oz_head`, `oz_lady`, `oz_beast`, `oz_fire`,
+    `witch`, `winkie`, `monkeyking`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -129,6 +134,11 @@ const WORK = {
     ch6_city: `에메랄드 시의 초록 거리(초록 대리석 집, 초록 가게)`,
     ch6_room: `궁전의 초록 침실(초록 분수, 초록 책)`,
     ch6_throne: `에메랄드로 덮인 둥근 알현실과 빈 초록 왕좌(오즈 없이)`,
+    ch7: `서쪽으로 가는 거칠고 나무 없는 언덕(뜨거운 해)`,
+    ch7_castle: `서쪽 마녀의 노란 성(먹구름 하늘)`,
+    ch7_kitchen: `마녀 성의 부엌(냄비, 화덕, 물 양동이)`,
+    ch7_yard: `쇠 울타리 마당과 짚 잠자리(밤)`,
+    ch7_hall: `노란 성의 큰 방(윙키 축제, 노란 깃발)`,
     /*+bghelp*/
   },
 
@@ -165,6 +175,11 @@ const WORK = {
     ch6_city:   {sky: [`#8fd8b0`, `#b8ecd0`, `#e0f8ea`], far: `#2f9a64`, near: `#3aa874`, trees: 0, flowers: [`#1fae6a`, `#7fe0a8`, `#ffffff`], sun: [1200, 160, `#d8ffe8`]},
     ch6_room:   {sky: [`#2a6a4a`, `#3a8a5e`, `#5aa87a`], far: `#2a7a50`, near: `#2f8a5a`, flowers: [`#7fe0a8`, `#ffffff`]},
     ch6_throne: {sky: [`#0f3a2a`, `#1f5a40`, `#2f7a56`], dark: true, sun: [800, 140, `#e8fff0`], far: `#1a5a3c`, near: `#1f6a48`},
+    ch7:         {sky: [`#e8c070`, `#f0d698`, `#f6e8c0`], far: `#b8a060`, near: `#a08a50`, sun: [1250, 160, `#fff0a0`], flat: false},
+    ch7_castle:  {sky: [`#3a3040`, `#5a4a58`, `#8a7a70`], far: `#6a5a40`, near: `#5a4a30`, house: `gray`},
+    ch7_kitchen: {sky: [`#3a2a1a`, `#4a3a26`, `#5a4a32`], dark: true, sun: [400, 640, `#ffb060`]},
+    ch7_yard:    {sky: [`#141820`, `#1f2430`, `#2a3038`], dark: true, far: `#3a3a30`, near: `#4a4230`},
+    ch7_hall:    {sky: [`#e8c040`, `#f2d870`, `#f8eab0`], far: `#c8a030`, near: `#b8902a`, flowers: [`#f2c94c`, `#ffffff`, `#e8a030`]},
     /*+svg*/
   },
 
@@ -200,6 +215,11 @@ const WORK = {
     ch6_city:   {light: `road`, glints: {n: 36, band: [.2, .95]}, petals: {n: 8, col: [`#7fe0a8`, `#ffffff`], size: [2, 4], vy: [6, 12], wind: -3}},
     ch6_room:   {light: `lamp`, glints: {n: 16, band: [.3, .8]}},
     ch6_throne: {light: `night`, glints: {n: 50, band: [0, 1]}},
+    ch7:         {light: `sunset`, motes: {n: 18}},
+    ch7_castle:  {light: `dim`, motes: {n: 10}},
+    ch7_kitchen: {light: `lamp`, motes: {n: 14}},
+    ch7_yard:    {light: `night`, stars: {n: 30, band: [0, .4]}},
+    ch7_hall:    {light: `road`, petals: {n: 24, col: [`#f2c94c`, `#ffffff`, `#e8a030`], size: [3, 6], vy: [8, 16], wind: -4}},
     /*+fx*/
   },
 
@@ -215,6 +235,7 @@ const WORK = {
     {k: `courageIs`, ch: 4, what: `내가 생각하는 진짜 용기`, free: true},
     {k: `toQueen`, ch: 5, what: `들쥐 여왕에게 보내는 감사`, free: true},
     {k: `myWish`, ch: 6, what: `내가 오즈에게 부탁하고 싶은 것`, free: true},
+    {k: `reunion`, ch: 7, what: `다시 만난 친구에게 하고 싶은 말`, free: true},
     /*+names*/
   ],
 
@@ -257,6 +278,11 @@ const WORK = {
     "대리석": `무늬가 아름다운 단단한 돌. 건물이나 조각을 만들 때 써요.`,
     "귀리": `곡식의 한 가지. 죽을 쑤거나 말 먹이로 써요.`,
     "숫돌": `칼이나 도끼를 갈아 날카롭게 만드는 돌이에요.`,
+    "망원경": `먼 곳을 크게 당겨 보는 기구예요.`,
+    "마구": `말이 수레를 끌 수 있도록 몸에 채우는 끈과 장치예요.`,
+    "땜질": `금속의 갈라지거나 뚫린 곳을 녹인 쇠붙이로 붙여 고치는 일이에요.`,
+    "금세공인": `금으로 장신구나 물건을 만드는 기술자예요.`,
+    "황금 모자": `날개 달린 원숭이들을 세 번 불러낼 수 있는 마법의 모자예요.`,
     /*+gloss*/
   },
 
