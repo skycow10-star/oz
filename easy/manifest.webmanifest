@@ -1,0 +1,32 @@
+{
+  "name": "쉬운 오즈의 마법사",
+  "short_name": "쉬운 오즈",
+  "description": "쉬운 말로 읽는 선택형 오즈의 마법사",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbf6ec",
+  "theme_color": "#e0a84a",
+  "icons": [
+    {
+      "src": "../icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

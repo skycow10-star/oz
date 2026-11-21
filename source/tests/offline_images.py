@@ -1,0 +1,26 @@
+import asyncio
+from playwright.async_api import async_playwright
+async def main():
+  async with async_playwright() as p:
+    b=await p.chromium.launch(executable_path="/usr/bin/google-chrome")
+    ctx=await b.new_context(service_workers="allow", viewport={"width":390,"height":844}, device_scale_factor=2, is_mobile=True, has_touch=True)
+    pg=await ctx.new_page(); errs=[]; pg.on("pageerror",lambda e: errs.append(str(e)))
+    await pg.goto("http://localhost:8765/"); await pg.wait_for_timeout(1500)
+    await pg.click("#btnStart"); await pg.wait_for_timeout(2500)
+    for i in range(3): await pg.click("#dialog"); await pg.wait_for_timeout(400)
+    await pg.wait_for_timeout(1200)
+    info=await pg.evaluate("[...document.querySelectorAll('#viewer img')].map(i=>[i.src.split('/').pop(), i.naturalWidth])")
+    print("imgs", info)
+    await pg.screenshot(path="/home/claude/test4/f_ch1.png")
+    print("warming…"); await pg.wait_for_timeout(25000)
+    await ctx.set_offline(True)
+    await pg.reload(); await pg.wait_for_timeout(1500)
+    await pg.evaluate("window.__vn.start(3, null)"); await pg.wait_for_timeout(2500)
+    for i in range(6): await pg.click("#dialog"); await pg.wait_for_timeout(400)
+    await pg.wait_for_timeout(1500)
+    info=await pg.evaluate("[...document.querySelectorAll('#viewer img')].map(i=>[i.src.split('/').pop(), i.naturalWidth])")
+    print("offline ch4 imgs", info)
+    await pg.screenshot(path="/home/claude/test4/f_ch4_off.png")
+    print("errors", errs)
+    await b.close()
+asyncio.run(main())
