@@ -12,7 +12,8 @@ const WORK = {
   easyTitle: `쉬운 오즈의 마법사`,
   easyShort: `쉬운 오즈`,
   desc: `원작 소설과 함께 읽는 선택형 문학 비주얼 노벨`,
-  theme: `#4f8a5b`,
+  theme: `#2f7d5b`,
+  palette: {from: [12, 58], to: 152, spread: 0.45, sat: 0.95},   /* 주황·베이지 → 에메랄드 (앤과 구별) */
   file: `oz_visual_novel.html`,
   saveKey: `ozVN_v1`,
   bookCredit: `L. 프랭크 바움 《오즈의 위대한 마법사》(1900) 영어 원작을 이 앱을 위해 새로 우리말로 옮겼어요. 점선 밑줄 낱말을 누르면 뜻풀이가 나와요.`,

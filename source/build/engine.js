@@ -241,6 +241,7 @@ const DEFS = id => `<defs>
   <filter id="paper${id}"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.42  0 0 0 0 0.28  0 0 0 0.10 0"/></filter></defs>`;
 const SVG_OPEN = `<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">`;
 function blossomCloud(rnd, cx, cy, rx, ry, n, cols){ let s = ""; for(let i=0;i<n;i++){ const a = rnd()*Math.PI*2, r = Math.sqrt(rnd()); s += `<circle cx="${(cx+Math.cos(a)*r*rx).toFixed(0)}" cy="${(cy+Math.sin(a)*r*ry).toFixed(0)}" r="${(18+rnd()*28).toFixed(0)}" fill="${cols[i%cols.length]}" opacity="${(.55+rnd()*.4).toFixed(2)}"/>`; } return s; }
+/*@@KEEPCOLOR*/
 /* 작품 설정(WORK.svgScenes)의 색·요소로 그리는 범용 수채화 장면. 그림 파일이 없을 때만 쓰임 */
 function svgScene(key){
   const all = WORK.svgScenes || {};
@@ -273,6 +274,7 @@ function svgScene(key){
   if(sp.dark) g += `<rect width="1600" height="900" fill="#0d0f18" opacity=".25"/>`;
   return SVG_OPEN + DEFS(id) + g + `<rect width="1600" height="900" filter="url(#paper${id})"/></svg>`;
 }
+/*@@/KEEPCOLOR*/
 const svgCache = {};
 
 /* =========================================================
