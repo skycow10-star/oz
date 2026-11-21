@@ -62,6 +62,9 @@ const WORK = {
     chinaprincess: `도자기 공주`,
     joker: `어릿광대 익살 씨`,
     tiger: `호랑이`,
+    hammerhead: `망치머리`,
+    quadgirl: `빨간 제복의 소녀 병사`,
+    glinda: `남쪽의 착한 마녀 글린다`,
     /*+who*/
   },
   tagColors: {
@@ -74,6 +77,7 @@ const WORK = {
     witch: `#4a3a5a`, winkie: `#c9a82a`, monkeyking: `#7a5a3a`,
     oz_man: `#4a7a5a`,
     milkmaid: `#c9a0b0`, chinaprincess: `#a07ac0`, joker: `#c05a5a`, tiger: `#c08a3a`,
+    hammerhead: `#8a7a6a`, quadgirl: `#c0404a`, glinda: `#c84a5a`,
     /*+tag*/
   },
 
@@ -87,7 +91,7 @@ const WORK = {
   },
   startMet: [`toto`],
   /* 얼굴 아이콘(av_하트키)을 자를 인물 그림. tools/avatars.py 가 씀. 새 친구가 생기면 추가 */
-  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, tinman: `tinman`, lion: `lion`, /*+av*/},
+  avatarFrom: {dorothy: `dorothy_happy`, toto: `toto`, scarecrow: `scarecrow`, tinman: `tinman`, lion: `lion`, /*+av*/},
 
   /* 힘 카드 주인과 힘 이름 (하트 키와 같게). 카드는 장 대본의 cards: {키: {who, name, e, l, quote}} */
   powers: {
@@ -109,6 +113,7 @@ const WORK = {
     `witch`, `winkie`, `monkeyking`,
     `oz_man`,
     `milkmaid`, `chinaprincess`, `joker`, `tiger`,
+    `hammerhead`, `quadgirl`, `glinda`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -157,6 +162,10 @@ const WORK = {
     ch9_trees: `가지가 사람을 붙잡는 숲 가장자리의 맨 앞줄 나무들`,
     ch9_china: `접시처럼 매끄러운 하얀 바닥, 알록달록한 작은 도자기 집과 동물들`,
     ch9_forest: `아주 크고 오래된 나무와 이끼가 가득한 숲속 빈터`,
+    ch10: `커다란 바위 덩이로 뒤덮인 가파른 언덕(바위 뒤에 숨은 망치머리들)`,
+    ch10_red: `쿼들링 나라, 익어 가는 밀밭과 빨간 다리·빨간 농가`,
+    ch10_castle: `글린다의 성 큰 방, 루비 왕좌`,
+    ch10_home: `넓은 캔자스 초원과 헨리 아저씨가 새로 지은 농가(맑은 날)`,
     /*+bghelp*/
   },
 
@@ -207,6 +216,10 @@ const WORK = {
     ch9_trees:  {sky: [`#6f8a6a`, `#8fa888`, `#b8c8a8`], far: `#3a5a3a`, near: `#3a4a2a`, trees: 14, tree: `#2a4a2c`},
     ch9_china:  {sky: [`#cfe4f6`, `#e6f0fa`, `#f6f8fc`], far: `#e8eef4`, near: `#f4f6f8`, house: `blue`, flowers: [`#e86a9a`, `#7aa7e0`, `#f2c94c`]},
     ch9_forest: {sky: [`#3a5a3a`, `#4a6a44`, `#6a8a5a`], far: `#2f4f30`, near: `#4a5a2a`, trees: 12, tree: `#2a4a2a`},
+    ch10:        {sky: [`#b8c8d8`, `#d0dce4`, `#e8ecee`], far: `#8a8a80`, near: `#7a7468`, flat: false},
+    ch10_red:    {sky: [`#9fd0ee`, `#cfe8f4`, `#f6f0d8`], far: `#d8b850`, near: `#c8a840`, road: true, house: `red`, trees: 3, flowers: [`#e04a4a`, `#ffffff`]},
+    ch10_castle: {sky: [`#5a1a2a`, `#8a2a3a`, `#b84a5a`], dark: true, sun: [800, 160, `#ffe0e8`], far: `#8a2a3a`, near: `#a03a4a`},
+    ch10_home:   {sky: [`#9fd0ee`, `#cfe4f0`, `#eef0e8`], far: `#b8b890`, near: `#a8a878`, house: `gray`, sun: [1200, 180, `#fff6d0`]},
     /*+svg*/
   },
 
@@ -256,6 +269,10 @@ const WORK = {
     ch9_trees:  {light: `dim`, petals: {n: 10, col: [`#4f8a4a`, `#6aa25a`], size: [3, 6], vy: [10, 18], wind: -6}},
     ch9_china:  {light: `road`, glints: {n: 40, band: [.6, 1]}},
     ch9_forest: {light: `dim`, motes: {n: 20}},
+    ch10:        {light: `dim`, motes: {n: 12}},
+    ch10_red:    {light: `road`, petals: {n: 14, col: [`#e04a4a`, `#f2c94c`], size: [3, 6], vy: [8, 16], wind: -4}},
+    ch10_castle: {light: `rose`, glints: {n: 40, band: [0, 1]}},
+    ch10_home:   {light: `road`, motes: {n: 14}},
     /*+fx*/
   },
 
@@ -274,6 +291,7 @@ const WORK = {
     {k: `reunion`, ch: 7, what: `다시 만난 친구에게 하고 싶은 말`, free: true},
     {k: `toOz`, ch: 8, what: `오즈에게 하고 싶은 말`, free: true},
     {k: `myHome`, ch: 9, what: `내 마음이 가장 편한 곳`, free: true},
+    {k: `farewell`, ch: 10, what: `세 친구에게 하는 마지막 인사`, free: true},
     /*+names*/
   ],
 
@@ -333,6 +351,10 @@ const WORK = {
     "통치자": `나라나 도시를 다스리는 사람이에요.`,
     "쿼들링": `오즈 나라 남쪽에 사는 사람들이에요. 빨간색을 좋아해요.`,
     "늪": `땅이 질척하고 물이 고여 있어 빠지기 쉬운 곳이에요.`,
+    "망치머리": `팔이 없고, 목을 쭉 늘여 납작한 머리로 들이받는 언덕의 사람들이에요.`,
+    "루비": `빨갛게 빛나는 보석이에요.`,
+    "상복": `가족이 세상을 떠났을 때 슬픔을 나타내려고 입는 옷이에요.`,
+    "뒤꿈치": `발이나 신발의 뒤쪽 끝부분이에요.`,
     /*+gloss*/
   },
 
