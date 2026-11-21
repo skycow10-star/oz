@@ -48,6 +48,12 @@ const WORK = {
     lion: `겁쟁이 사자`,
     stork: `황새`,
     mousequeen: `들쥐 여왕`,
+    farmer: `농부 아저씨`,
+    farmwife: `농부 아주머니`,
+    guardian: `성문 문지기`,
+    soldier: `초록 수염 병사`,
+    greengirl: `초록 소녀`,
+    oz: `위대한 오즈`,
     /*+who*/
   },
   tagColors: {
@@ -56,6 +62,7 @@ const WORK = {
     tinman: `#7d8a96`,
     lion: `#c98a2e`,
     stork: `#8aa0b8`, mousequeen: `#a08ab0`,
+    farmer: `#6a8a5a`, farmwife: `#7a9a6a`, guardian: `#2f8a5a`, soldier: `#3a7a4a`, greengirl: `#3fa07a`, oz: `#1f6a4a`,
     /*+tag*/
   },
 
@@ -87,6 +94,7 @@ const WORK = {
     `tinman`,
     `lion`,
     `stork`, `mousequeen`,
+    `guardian`, `soldier`, `greengirl`, `oz_head`, `oz_lady`, `oz_beast`, `oz_fire`,
     /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
@@ -115,6 +123,12 @@ const WORK = {
     ch5_bank: `꽃과 과일나무가 가득한 강둑`,
     ch5_poppy: `끝없는 진홍빛 양귀비 꽃밭`,
     ch5_meadow: `양귀비밭 너머 초록 들판과 강가(나무 수레)`,
+    ch6: `초록 울타리와 초록 농가가 있는 노란 벽돌 길`,
+    ch6_farm: `초록 농가 안, 저녁 식탁`,
+    ch6_gate: `에메랄드가 박힌 커다란 성문과 초록 성벽`,
+    ch6_city: `에메랄드 시의 초록 거리(초록 대리석 집, 초록 가게)`,
+    ch6_room: `궁전의 초록 침실(초록 분수, 초록 책)`,
+    ch6_throne: `에메랄드로 덮인 둥근 알현실과 빈 초록 왕좌(오즈 없이)`,
     /*+bghelp*/
   },
 
@@ -145,6 +159,12 @@ const WORK = {
     ch5_bank:   {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 6, flowers: [`#f2c94c`, `#ffffff`, `#7aa7e0`, `#b07ad0`]},
     ch5_poppy:  {sky: [`#f2c2a0`, `#f6dcc0`, `#f8ecd8`], far: `#9ab870`, near: `#c8302e`, flowers: [`#e02a2a`, `#ff4a3a`, `#c81e1e`, `#ff7a5a`]},
     ch5_meadow: {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, stream: true, trees: 4, flowers: [`#e02a2a`, `#ffffff`]},
+    ch6:        {sky: [`#a8d8c0`, `#cfeadc`, `#eef6e6`], far: `#5fae6a`, near: `#4f9a5a`, road: true, house: `gray`, trees: 4, tree: `#3f8a4a`},
+    ch6_farm:   {sky: [`#2a3a2e`, `#3a4a3a`, `#4a5a44`], dark: true, far: `#4a6a4a`, near: `#3a5a3a`, sun: [800, 600, `#ffd890`]},
+    ch6_gate:   {sky: [`#9fe0c0`, `#c8f0d8`, `#eaf8ee`], far: `#2fa06a`, near: `#3aa070`, road: true, sun: [800, 200, `#d8ffe8`]},
+    ch6_city:   {sky: [`#8fd8b0`, `#b8ecd0`, `#e0f8ea`], far: `#2f9a64`, near: `#3aa874`, trees: 0, flowers: [`#1fae6a`, `#7fe0a8`, `#ffffff`], sun: [1200, 160, `#d8ffe8`]},
+    ch6_room:   {sky: [`#2a6a4a`, `#3a8a5e`, `#5aa87a`], far: `#2a7a50`, near: `#2f8a5a`, flowers: [`#7fe0a8`, `#ffffff`]},
+    ch6_throne: {sky: [`#0f3a2a`, `#1f5a40`, `#2f7a56`], dark: true, sun: [800, 140, `#e8fff0`], far: `#1a5a3c`, near: `#1f6a48`},
     /*+svg*/
   },
 
@@ -174,6 +194,12 @@ const WORK = {
     ch5_bank:   {light: `road`, petals: {n: 14, col: [`#f2c94c`, `#ffffff`, `#b07ad0`], size: [3, 6], vy: [8, 16], wind: -6}},
     ch5_poppy:  {light: `rose`, petals: {n: 30, col: [`#e02a2a`, `#ff5a4a`, `#c81e1e`], size: [4, 8], vy: [6, 14], wind: -4}},
     ch5_meadow: {light: `road`, motes: {n: 14}},
+    ch6:        {light: `road`, motes: {n: 14}},
+    ch6_farm:   {light: `lamp`, motes: {n: 12}},
+    ch6_gate:   {light: `road`, glints: {n: 40, band: [.1, .9]}},
+    ch6_city:   {light: `road`, glints: {n: 36, band: [.2, .95]}, petals: {n: 8, col: [`#7fe0a8`, `#ffffff`], size: [2, 4], vy: [6, 12], wind: -3}},
+    ch6_room:   {light: `lamp`, glints: {n: 16, band: [.3, .8]}},
+    ch6_throne: {light: `night`, glints: {n: 50, band: [0, 1]}},
     /*+fx*/
   },
 
@@ -188,6 +214,7 @@ const WORK = {
     {k: `brainOrHeart`, ch: 3, what: `뇌와 심장, 나의 생각`, free: true},
     {k: `courageIs`, ch: 4, what: `내가 생각하는 진짜 용기`, free: true},
     {k: `toQueen`, ch: 5, what: `들쥐 여왕에게 보내는 감사`, free: true},
+    {k: `myWish`, ch: 6, what: `내가 오즈에게 부탁하고 싶은 것`, free: true},
     /*+names*/
   ],
 
@@ -225,6 +252,11 @@ const WORK = {
     "살쾡이": `고양이보다 크고 사나운 들짐승이에요.`,
     "황새": `다리와 부리가 길고 하얀 큰 새예요.`,
     "수레": `바퀴를 달아 짐을 싣고 끄는 도구예요.`,
+    "알현실": `왕이나 높은 사람이 손님을 만나는 방이에요.`,
+    "성문 문지기": `성의 문을 지키며 드나드는 사람을 살피는 사람이에요.`,
+    "대리석": `무늬가 아름다운 단단한 돌. 건물이나 조각을 만들 때 써요.`,
+    "귀리": `곡식의 한 가지. 죽을 쑤거나 말 먹이로 써요.`,
+    "숫돌": `칼이나 도끼를 갈아 날카롭게 만드는 돌이에요.`,
     /*+gloss*/
   },
 
