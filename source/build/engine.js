@@ -22,13 +22,17 @@ const ITEMS = Object.assign({}, WORK.items || {});
 const ALBUMS = {};
 const GLOSS = Object.assign({}, WORK.gloss || {});
 const HERO = WORK.hero;
+/* 힘 카드: 친구가 '없다'고 한 힘을 사실은 보여 준 장면에서 얻음. 장 대본의 cards 로 정의 */
+const POWERS = WORK.powers || {};
+const CARDS = {};
 const GLOSS_RE = !Object.keys(GLOSS).length ? /(?!)/g : new RegExp(Object.keys(GLOSS).sort((a,b) => b.length - a.length).map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
-const KIND = {act:`🚶 행동하기`, predict:`🔮 예측하기 · 원작의 ${WORK.heroTopic}?`, talk:`💬 말 걸기`, name:`✍️ 이름 짓기`, feel:`💗 마음 읽기`};
+const KIND = {act:`🚶 행동하기`, predict:`🔮 예측하기 · 원작의 ${WORK.heroTopic}?`, talk:`💬 말 걸기`, name:`✍️ 이름 짓기`, feel:`💗 마음 읽기`, power:`💡 힘 알아보기`};
 const BAL = Object.assign({ic:`⚖️`, name:`균형`, badge:{e:`⚖️ 지혜로운 균형을 찾았어요!`, l:`⚖️ 지혜로운 균형을 찾았습니다`}}, WORK.bal || {});
 const EASY_IC = {canon:`📖`, imag:`✨`, bal:BAL.ic};
 const WHO = Object.assign({}, WORK.who || {});
 const CHARS = Object.assign({}, WORK.chars || {});
 const DEFAULT_NAMES = Object.assign({}, WORK.names || {});
+CHAPTERS.concat(EASY).forEach(c => { if(c.cards) for(const k in c.cards) CARDS[k] = Object.assign({ch:c.num}, c.cards[k]); });
 CHAPTERS.forEach(c => { if(c.items) Object.assign(ITEMS, c.items); if(c.album) ALBUMS[c.key] = c.album; });
 const BADGE = {
   canon:{e:`📖 원작과 같은 길!`, l:`📖 원작의 길을 걸었습니다`},
@@ -56,7 +60,7 @@ const SPRITE_KEYS = (WORK.sprites || []).slice();
    ========================================================= */
 const SAVE_KEY = EASY_MODE ? WORK.saveKey + "_easy" : WORK.saveKey;
 const fresh = () => ({ch:0, pos:0, phase:"cover", started:false, canon:50, imag:50, hearts:Object.fromEntries((WORK.startMet || []).map(k => [k, (CHARS[k] && CHARS[k].start) || 0])), met:Object.fromEntries((WORK.startMet || []).map(k => [k, true])), items:[], flags:{}, names:{},
-  picks:[], tally:{canon:0, imag:0, bal:0}, ending:null, order:null, note:null, bg:`ch1`, cam:``, hist:{}, snap:null});
+  cards:[], picks:[], tally:{canon:0, imag:0, bal:0}, ending:null, order:null, note:null, bg:`ch1`, cam:``, hist:{}, snap:null});
 const freshP = () => ({album:{}, endings:{}, reached:{}, snaps:{}});
 let S = fresh();
 let P = freshP();
@@ -321,6 +325,7 @@ function applyEff(eff){
   if(eff.heart) for(const k in eff.heart){ const before = S.hearts[k] || 0, d = eff.heart[k]; S.met[k] = true; S.hearts[k] = Math.max(0, Math.min(5, before + d)); setTimeout(() => bumpHud(k), 50);
     if(d && CHARS[k]){ const nm = CHARS[k].full; toast(S.hearts[k] === before ? (d > 0 ? `💗 ${nm}의 마음이 이미 가득해요` : `💔 ${nm}의 마음이 더 내려갈 곳이 없어요`) : d > 0 ? `💗 ${nm}의 마음 +${d}` : `💔 ${nm}의 마음 ${d}`); } }
   if(eff.item && !S.items.includes(eff.item)){ S.items.push(eff.item); const it = ITEMS[eff.item]; setTimeout(() => { sfx("item"); toast({t:`추억 상자에 '${it.name}'${josa(it.name, "을")} 넣었어요`, ic:itHtml(eff.item, "sm"), emoji:"🎁"}); }, 400); }
+  if(eff.card && CARDS[eff.card]){ S.cards = S.cards || []; if(!S.cards.includes(eff.card)){ S.cards.push(eff.card); const c = CARDS[eff.card], pw = POWERS[c.who] || {}; setTimeout(() => { sfx("item"); toast({t:`힘 카드: ${pw.name || ""}의 ${pw.power || "힘"} — ${c.name}`, ic:avHtml(c.who), emoji:"💡"}); }, 500); } }
   if(eff.album && !P.album[eff.album]){ P.album[eff.album] = true; if(!/^e_/.test(eff.album)) setTimeout(() => { sfx("dream"); toast("✨ 숨은 장면을 발견했어요! (" + albumCount() + "/" + ALBUM.length + ")"); }, 300); }
 }
 function albumCount(){ return ALBUM.filter(a => P.album[a.id]).length; }
@@ -461,9 +466,19 @@ function setSprite(img, src, dim){
   else img.classList.remove("on", "dim", "talk");
 }
 /* 이모지 대신 그림 아이콘: av_인물(얼굴), it_물건, end_결말. 그림이 없으면 이모지 */
-function avHtml(k, cls){ const src = imgFor(("av_" + k).toLowerCase()); return src ? `<img class="av ${cls || ""}" src="${src}" alt="">` : (CHARS[k] ? CHARS[k].ic : ""); }
+function avHtml(k, cls){ const src = imgFor(("av_" + k).toLowerCase()); return src ? `<img class="av ${cls || ""}" src="${src}" alt="">` : (CHARS[k] ? CHARS[k].ic : (POWERS[k] ? POWERS[k].ic : "")); }
 function itHtml(k, cls){ const src = imgFor(("it_" + k).toLowerCase()); return src ? `<img class="it ${cls || ""}" src="${src}" alt="">` : (ITEMS[k] ? ITEMS[k].ic : ""); }
 function endHtml(t, emoji){ const src = imgFor("end_" + t); return src ? `<img class="endic" src="${src}" alt="">` : emoji; }
+function cardsHtml(who){
+  const ks = (S.cards || []).filter(k => CARDS[k] && (!who || who.includes(CARDS[k].who)));
+  const groups = Object.keys(POWERS).filter(w => ks.some(k => CARDS[k].who === w));
+  if(!groups.length) return `<p style="font-size:.85rem;color:#8a7461">아직 모은 힘 카드가 없어요.</p>`;
+  return groups.map(w => { const pw = POWERS[w];
+    return `<div class="pgroup"><div class="phead">${avHtml(w, "lg")} <b>${pw.name}</b> · ${pw.ic} ${pw.power} <small>(${ks.filter(k => CARDS[k].who === w).length}장)</small></div>` +
+      ks.filter(k => CARDS[k].who === w).map(k => { const c = CARDS[k];
+        return `<div class="pcard"><small>${c.ch}장</small> <b>${esc(c.name)}</b><p>${esc(fill(T(c)))}</p>${!EASY_MODE && c.quote ? `<q>${esc(c.quote)}</q>` : ""}</div>`; }).join("") + `</div>`; }).join("");
+}
+function openCards(who, title){ modal(title || "💡 지금까지 모은 힘 카드", cardsHtml(who), [{label:"닫기", cls:"big alt"}]); }
 function heartStr(k){ const h = Math.max(0, Math.min(5, S.hearts[k] || 0)); return "♥".repeat(h) + "♡".repeat(5 - h); }
 function metList(){ return Object.keys(CHARS).filter(k => S.met[k]); }
 function renderHud(){
@@ -539,8 +554,8 @@ function renderPlay(instant){
   el.nameTag.className = "nametag " + (inner ? "inner" : (n.w !== HERO ? n.w : ""));
   el.progress.textContent = CH.num + "장 · " + CH.title;
   el.miniBook.hidden = false;
-  const text = fill(T(n));
-  if(instant) setTextNow(text, showNote); else typeText(text, showNote);
+  const text = fill(T(n)), after = n.cards ? () => { showNote(); openCards(n.cards, n.cardsTitle); } : showNote;
+  if(instant) setTextNow(text, after); else typeText(text, after);
 }
 function shuffle(n){ const a = Array.from({length:n}, (_,i) => i); for(let i=n-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
 function renderChoice(){
@@ -578,7 +593,9 @@ function pick(oi, btn){
   btn.classList.add("picked");
   if(o.type === "feel"){
     S.picks = S.picks.filter(p => p.id !== n.id); S.picks.push({id:n.id, type:"feel", oi, ic:o.ic, val:T(o)});
-    applyEff(o.eff); showBadge("bal", o.ok ? WORK.feelOk : "💗 그렇게 느낄 수도 있어요");
+    applyEff(o.eff); if(n.card) applyEff({card:n.card});
+    if(n.kind === "power") showBadge("bal", o.ok ? (WORK.powerOk || "💡 친구의 힘을 알아봤어요!") : "💡 원작에서는 어떤 힘이었는지 볼까요?");
+    else showBadge("bal", o.ok ? WORK.feelOk : "💗 그렇게 느낄 수도 있어요");
     setTimeout(() => { picking = false; enter(o.go ? IDX[o.go] : S.pos + 1, n.note); }, 800);
     return;
   }
@@ -709,7 +726,8 @@ function renderReport(){
     .map(k => { const b = sh[k] === undefined ? (CHARS[k].start || 0) : sh[k], d = (S.hearts[k] || 0) - b;
       return `<div class="gain ${d < 0 ? "down" : ""}"><span class="ic">${avHtml(k, "lg")}</span><b>${CHARS[k].name}</b><span class="hearts">${heartStr(k)}</span><small>${d > 0 ? "+" + d : d}</small></div>`; }).join("");
   const newItems = S.items.filter(k => !sitems.includes(k) && ITEMS[k]).map(k => `<div class="gain"><span class="ic">${itHtml(k, "lg")}</span><b>${ITEMS[k].name}</b></div>`).join("");
-  const gotAny = heartGain || newItems;
+  const newCards = (S.cards || []).filter(k => !(snap.cards || []).includes(k) && CARDS[k]).map(k => `<div class="gain"><span class="ic">${avHtml(CARDS[k].who, "lg")}</span><b>💡 ${CARDS[k].name}</b></div>`).join("");
+  const gotAny = heartGain || newItems || newCards;
   const items = S.items.map(k => ITEMS[k] ? `<div class="item"><span class="ic">${itHtml(k, "lg")}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>` : "").join("") || `<p style="font-size:.85rem;color:#8a7461">아직 모은 물건이 없어요.</p>`;
   const album = ALBUM.map(a => P.album[a.id] ? `<div><span class="ic">${a.ic}</span>${a.name}</div>` : `<div class="lock"><span class="ic">❔</span>???</div>`).join("");
   const endN = ["canon","imag","bal"].filter(k => P.endings[CH.key + "_" + k]).length;
@@ -721,7 +739,7 @@ function renderReport(){
     ${E ? `<div class="rp-end ${S.ending}"><div class="rp-end-ic">${endHtml(S.ending, emoji)}</div><span class="tag ${S.ending}">${E.label}</span>
       <h3>${esc(E.title)}</h3><p>${desc}</p>
       <div class="rp-tally"><span class="t canon">📖 원작 ${S.tally.canon}</span><span class="t imag">✨ 상상 ${S.tally.imag}</span>${S.tally.bal || !EASY_MODE ? `<span class="t bal">${BAL.ic} ${BAL.name} ${S.tally.bal}</span>` : ""}</div></div>` : ""}
-    ${gotAny ? `<div class="card"><h4>🎁 이번 장에서 얻은 것</h4><div class="gains">${heartGain}${newItems}</div></div>` : ""}
+    ${gotAny ? `<div class="card"><h4>🎁 이번 장에서 얻은 것</h4><div class="gains">${heartGain}${newItems}${newCards}</div></div>` : ""}
     <div class="card"><h4>🧭 내 선택과 원작</h4><div class="crows">${rows}</div></div>
     <div class="card"><h4>💬 생각 나누기</h4><ol class="talk-q" style="padding-left:20px">${(lit ? CH.talk.l : CH.talk.e).map(q => `<li>${q}</li>`).join("")}</ol></div>
     ${CH.midReport ? (CH.finalReport ? `<div class="mid-banner"><div><b>🏁 1~${CH.num}장 최종 보고서가 열렸어요!</b><br><span>${CH.num}장 동안 함께 걸어온 길을 모두 돌아봐요.</span></div><button type="button" class="big" id="rpMid">🏁 최종 보고서 보기</button></div>` : `<div class="mid-banner"><div><b>📜 1~${CH.num}장 중간 보고서가 열렸어요!</b><br><span>지금까지 걸어온 길, 지어 준 이름, 쌓은 마음을 한눈에 봐요.</span></div><button type="button" class="big" id="rpMid">📜 중간 보고서 보기</button></div>`) : ""}
@@ -788,6 +806,7 @@ function renderMidReport(){
       <div class="card"><h4>🎁 모은 추억 (${S.items.length}개)</h4><p style="font-size:1.5rem;letter-spacing:4px;line-height:1.6">${itemIcons || "—"}</p>
         <h4 style="margin-top:12px">🎬 만난 결말 ${endCount}/${upto.length * 3}</h4><p style="font-size:.84rem;color:#6e5b4b">다른 선택으로 장을 다시 하면 숨은 결말을 더 만날 수 있어요.</p></div>
     </div>
+    ${(S.cards || []).length ? `<div class="card"><h4>💡 모은 힘 카드 (${S.cards.length}장)</h4>${cardsHtml()}</div>` : ""}
     <div class="card"><h4>📝 돌아보며 쓰기</h4>
       <div class="mid-who">이름: <input id="midName" maxlength="20" placeholder="이름을 써 주세요" value="${esc(MID().name || "")}"><span class="print-name" style="display:none">${esc(MID().name || "")}</span></div>
       ${qs.map((q, i) => `<div class="mid-q"><p><b>${i + 1}.</b> ${q}</p><textarea class="mid-ans" data-i="${i}" rows="3" placeholder="여기에 내 생각을 써 보세요.">${esc(MID().a[i] || "")}</textarea><div class="mid-print" id="midP${i}">${esc(MID().a[i] || "")}</div></div>`).join("")}
@@ -951,7 +970,7 @@ $("peekBack").addEventListener("click", e => { e.stopPropagation(); el.vn.classL
 el.btnBox.addEventListener("click", e => {
   e.stopPropagation();
   const items = S.items.length ? S.items.map(k => `<div class="item"><span class="ic">${itHtml(k, "lg")}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>`).join("") : "<p>아직 모은 물건이 없어요. 이야기를 진행하면 하나씩 생겨요!</p>";
-  modal("🎁 추억 상자", `<div class="items">${items}</div>${heartsHtml()}
+  modal("🎁 추억 상자", `<div class="items">${items}</div>${(S.cards || []).length ? `<h4 style="margin-top:12px">💡 힘 카드 (${S.cards.length}장)</h4>${cardsHtml()}` : ""}${heartsHtml()}
     <p style="margin-top:10px;font-size:.84rem;color:#8a7461">✨ 숨은 장면 ${albumCount()}/${ALBUM.length} · 🎬 결말 ${["canon","imag","bal"].filter(k => P.endings[CH.key + "_" + k]).length}/3</p>`, [{label:"닫기", cls:"big alt"}]);
 });
 el.btnReset.addEventListener("click", e => {
@@ -962,7 +981,7 @@ el.btnReset.addEventListener("click", e => {
     {label:"처음부터 시작", cls:"big", fn:() => startNew()}
   ]);
 });
-const CARRY = ["canon","imag","hearts","met","items","flags","names","hist"];
+const CARRY = ["canon","imag","hearts","met","items","flags","names","hist","cards"];
 function carry(){ const o = {}; CARRY.forEach(k => o[k] = JSON.parse(JSON.stringify(S[k]))); return o; }
 function startChapter(ci, snap){
   setChapter(ci); preloadChapter();

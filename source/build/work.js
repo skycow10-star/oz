@@ -41,23 +41,41 @@ const WORK = {
     em: `엠 아주머니`,
     henry: `헨리 아저씨`,
     munchkin: `먼치킨 사람`,
-    northwitch: `북쪽 마녀`
+    northwitch: `북쪽 마녀`,
+    scarecrow: `허수아비`,
+    boq: `보크`,
+    /*+who*/
   },
   tagColors: {
-    toto: `#5a5560`, em: `#8a7a6a`, henry: `#6f6a5c`, munchkin: `#4a78b8`, northwitch: `#9b86c4`
+    toto: `#5a5560`, em: `#8a7a6a`, henry: `#6f6a5c`, munchkin: `#4a78b8`, northwitch: `#9b86c4`,
+    scarecrow: `#c9a23a`, boq: `#3f6fb0`,
+    /*+tag*/
   },
 
   /* 하트(관계) 대상. start = 처음 하트 수 */
   chars: {
-    toto: {ic: `🐶`, name: `토토`, full: `토토`, start: 2}
+    toto: {ic: `🐶`, name: `토토`, full: `토토`, start: 2},
+    scarecrow: {ic: `🌾`, name: `허수아비`, full: `허수아비`, start: 0},
+    /*+chars*/
   },
   startMet: [`toto`],
   /* 얼굴 아이콘(av_하트키)을 자를 인물 그림. tools/avatars.py 가 씀. 새 친구가 생기면 추가 */
-  avatarFrom: {toto: `toto`},
+  avatarFrom: {toto: `toto`, scarecrow: `scarecrow`, /*+av*/},
+
+  /* 힘 카드 주인과 힘 이름 (하트 키와 같게). 카드는 장 대본의 cards: {키: {who, name, e, l, quote}} */
+  powers: {
+    scarecrow: {name: `허수아비`, ic: `🧠`, power: `생각하는 힘`, wish: `뇌`},
+    tinman: {name: `양철 나무꾼`, ic: `💗`, power: `따뜻한 마음`, wish: `심장`},
+    lion: {name: `사자`, ic: `🦁`, power: `용기`, wish: `용기`},
+    dorothy: {name: `도로시`, ic: `🥈`, power: `집으로 가는 힘`, wish: `집`}
+  },
+  powerOk: `💡 친구의 힘을 알아봤어요!`,
 
   /* 인물 그림 키 (흰 배경 전신 PNG → 자동 투명 처리) */
   sprites: [`dorothy_happy`, `dorothy_sad`, `dorothy_surprised`, `dorothy_brave`, `dorothy_dreamy`,
-            `toto`, `em`, `henry`, `munchkin`, `northwitch`],
+            `toto`, `em`, `henry`, `munchkin`, `northwitch`,
+            `scarecrow`, `boq`,
+    /*+sprites*/],
 
   /* 그림 키 안내 (교사용 도움말에 나옴) */
   bgHelp: {
@@ -65,7 +83,13 @@ const WORK = {
     ch1_storm: `회오리바람이 다가오는 들판`,
     ch1_sky: `회오리 속을 떠가는 집 안(어둠)`,
     ch1_munchkin: `먼치킨 나라(꽃·시냇물·파란 집)`,
-    ch1_road: `노란 벽돌 길이 시작되는 곳`
+    ch1_road: `노란 벽돌 길이 시작되는 곳`,
+    ch2: `먼치킨 마을을 지나는 노란 벽돌 길(파란 울타리·둥근 파란 집)`,
+    ch2_feast: `보크네 집 앞 잔치(저녁, 잔디밭에서 춤추는 먼치킨들)`,
+    ch2_corn: `옥수수밭과 장대(허수아비 없이)`,
+    ch2_rough: `험해진 노란 벽돌 길, 쓸쓸한 들판과 시냇가`,
+    ch2_forest: `어두운 숲속 길과 통나무 오두막(밤)`,
+    /*+bghelp*/
   },
 
   /* 그림이 없을 때 나오는 수채화 대체 그림 설정
@@ -75,7 +99,13 @@ const WORK = {
     ch1_storm:    {sky: [`#3e4148`, `#6a6c70`, `#a19c8e`], far: `#7d7768`, near: `#6d6758`, house: `gray`, flat: true, funnel: true},
     ch1_sky:      {sky: [`#1d1f2a`, `#2d3040`, `#3e4152`], dark: true, swirl: true},
     ch1_munchkin: {sky: [`#8fc6ea`, `#bfe1f2`, `#eef6e6`], far: `#7fb36a`, near: `#5f9a52`, flowers: [`#f2c94c`, `#e86a6a`, `#ffffff`, `#7aa7e0`], house: `blue`, stream: true, trees: 6},
-    ch1_road:     {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, road: true, trees: 8, flowers: [`#f2c94c`, `#ffffff`]}
+    ch1_road:     {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, road: true, trees: 8, flowers: [`#f2c94c`, `#ffffff`]},
+    ch2:        {sky: [`#9fd0ee`, `#cfe8f4`, `#f4f2de`], far: `#86b872`, near: `#6aa25a`, road: true, house: `blue`, trees: 4, flowers: [`#7aa7e0`, `#ffffff`]},
+    ch2_feast:  {sky: [`#e9a86a`, `#f3c98e`, `#f8e6c0`], far: `#7aa35e`, near: `#5f8f4e`, house: `blue`, trees: 4, sun: [1250, 330, `#ffd9a0`], flowers: [`#f2c94c`, `#e86a6a`]},
+    ch2_corn:   {sky: [`#9fd0ee`, `#d6ecf4`, `#f4f0d6`], far: `#c9b45a`, near: `#b39a3e`, trees: 2, road: true},
+    ch2_rough:  {sky: [`#b9c7cf`, `#d6dcd8`, `#e8e4d2`], far: `#98a882`, near: `#8a9470`, road: true, stream: true},
+    ch2_forest: {sky: [`#1e2a26`, `#2c3b33`, `#3a4a3e`], dark: true, far: `#22352a`, near: `#1c2a22`, trees: 10, tree: `#24402c`, road: true},
+    /*+svg*/
   },
 
   /* 장면 효과 (빛·꽃잎·별·물빛) — 앤 엔진과 같은 형식 */
@@ -84,7 +114,13 @@ const WORK = {
     ch1_storm:    {light: `dim`, petals: {n: 26, col: [`#8a8070`, `#a8a090`, `#6d6758`], size: [2, 5], vy: [30, 60], wind: -60}},
     ch1_sky:      {light: `night`, motes: {n: 10}},
     ch1_munchkin: {light: `road`, petals: {n: 16, col: [`#f2c94c`, `#ffffff`, `#e86a6a`, `#7aa7e0`], size: [4, 7], vy: [10, 20], wind: -6}, glints: {n: 12, band: [.72, .86]}},
-    ch1_road:     {light: `sunset`, motes: {n: 14}}
+    ch1_road:     {light: `sunset`, motes: {n: 14}},
+    ch2:        {light: `road`, petals: {n: 10, col: [`#7aa7e0`, `#ffffff`], size: [3, 6], vy: [10, 20], wind: -6}},
+    ch2_feast:  {light: `sunset`, petals: {n: 18, col: [`#f2c94c`, `#e86a6a`, `#7aa7e0`, `#ffffff`], size: [3, 6], vy: [12, 22], wind: -4}},
+    ch2_corn:   {light: `road`, motes: {n: 16}},
+    ch2_rough:  {light: `dim`, motes: {n: 10}},
+    ch2_forest: {light: `night`, motes: {n: 10}, stars: {n: 10, band: [0, .2]}},
+    /*+fx*/
   },
 
   /* 물건(추억 상자) — 장 대본의 items 로도 더할 수 있음 */
@@ -93,7 +129,9 @@ const WORK = {
   /* 이름 짓기 기본값 · 보고서에 나오는 이름 목록 */
   names: {},
   nameLabels: [
-    {k: `toEm`, ch: 1, what: `엠 아주머니께 보내는 한마디`, free: true}
+    {k: `toEm`, ch: 1, what: `엠 아주머니께 보내는 한마디`, free: true},
+    {k: `toScarecrow`, ch: 2, what: `허수아비에게 해 주고 싶은 말`, free: true},
+    /*+names*/
   ],
 
   /* 낱말 풀이 (원문 책장·대본에서 점선 밑줄) */
@@ -113,7 +151,12 @@ const WORK = {
     "윙키": `오즈의 서쪽 나라에 사는 사람들. 서쪽의 나쁜 마녀에게 지배받고 있어요.`,
     "에메랄드 시": `오즈 나라 한가운데 있는 도시. 위대한 마법사 오즈가 다스려요.`,
     "열기구": `뜨거운 공기를 채운 커다란 풍선에 바구니를 매달아 하늘을 나는 기구예요.`,
-    "요람": `아기를 눕혀 살살 흔들어 재우는 작은 침대예요.`
+    "요람": `아기를 눕혀 살살 흔들어 재우는 작은 침대예요.`,
+    "햇빛 가리개 모자": `챙이 넓어 얼굴에 햇빛이 들지 않게 해 주는 천 모자(선보닛)예요.`,
+    "들통": `물을 길어 나르는 손잡이 달린 통이에요.`,
+    "장대": `길고 굵은 막대기예요.`,
+    "허수아비": `새를 쫓으려고 사람 모양으로 만들어 밭에 세워 두는 인형이에요.`,
+    /*+gloss*/
   },
 
   /* 리포트의 독서 유형 */
