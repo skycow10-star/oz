@@ -52,6 +52,8 @@ const WORK = {
     toto: {ic: `🐶`, name: `토토`, full: `토토`, start: 2}
   },
   startMet: [`toto`],
+  /* 얼굴 아이콘(av_하트키)을 자를 인물 그림. tools/avatars.py 가 씀. 새 친구가 생기면 추가 */
+  avatarFrom: {toto: `toto`},
 
   /* 인물 그림 키 (흰 배경 전신 PNG → 자동 투명 처리) */
   sprites: [`dorothy_happy`, `dorothy_sad`, `dorothy_surprised`, `dorothy_brave`, `dorothy_dreamy`,

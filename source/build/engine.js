@@ -213,6 +213,7 @@ async function processImage(src, key){
   if(bg){ ctx.fillStyle = "#fbf6ec"; ctx.fillRect(0, 0, w, h); }
   ctx.drawImage(im, 0, 0, w, h);
   if(bg) return cv.toDataURL("image/jpeg", 0.86);
+  if(/^(av|it|end)_/.test(key)) return cv.toDataURL("image/png");  /* 얼굴·물건·결말 아이콘은 그대로 */
   removeEdgeWhite(ctx, w, h);
   return cv.toDataURL("image/png");
 }
@@ -319,7 +320,7 @@ function applyEff(eff){
   if(eff.name) Object.assign(S.names, eff.name);
   if(eff.heart) for(const k in eff.heart){ const before = S.hearts[k] || 0, d = eff.heart[k]; S.met[k] = true; S.hearts[k] = Math.max(0, Math.min(5, before + d)); setTimeout(() => bumpHud(k), 50);
     if(d && CHARS[k]){ const nm = CHARS[k].full; toast(S.hearts[k] === before ? (d > 0 ? `💗 ${nm}의 마음이 이미 가득해요` : `💔 ${nm}의 마음이 더 내려갈 곳이 없어요`) : d > 0 ? `💗 ${nm}의 마음 +${d}` : `💔 ${nm}의 마음 ${d}`); } }
-  if(eff.item && !S.items.includes(eff.item)){ S.items.push(eff.item); const it = ITEMS[eff.item]; setTimeout(() => { sfx("item"); toast(`🎁 추억 상자에 '${it.name}'${josa(it.name, "을")} 넣었어요`); }, 400); }
+  if(eff.item && !S.items.includes(eff.item)){ S.items.push(eff.item); const it = ITEMS[eff.item]; setTimeout(() => { sfx("item"); toast({t:`추억 상자에 '${it.name}'${josa(it.name, "을")} 넣었어요`, ic:itHtml(eff.item, "sm"), emoji:"🎁"}); }, 400); }
   if(eff.album && !P.album[eff.album]){ P.album[eff.album] = true; if(!/^e_/.test(eff.album)) setTimeout(() => { sfx("dream"); toast("✨ 숨은 장면을 발견했어요! (" + albumCount() + "/" + ALBUM.length + ")"); }, 300); }
 }
 function albumCount(){ return ALBUM.filter(a => P.album[a.id]).length; }
@@ -459,14 +460,18 @@ function setSprite(img, src, dim){
   if(src){ if(img.getAttribute("src") !== src) img.src = src; img.classList.add("on"); img.classList.toggle("dim", !!dim); img.classList.toggle("talk", !dim); }
   else img.classList.remove("on", "dim", "talk");
 }
+/* 이모지 대신 그림 아이콘: av_인물(얼굴), it_물건, end_결말. 그림이 없으면 이모지 */
+function avHtml(k, cls){ const src = imgFor(("av_" + k).toLowerCase()); return src ? `<img class="av ${cls || ""}" src="${src}" alt="">` : (CHARS[k] ? CHARS[k].ic : ""); }
+function itHtml(k, cls){ const src = imgFor(("it_" + k).toLowerCase()); return src ? `<img class="it ${cls || ""}" src="${src}" alt="">` : (ITEMS[k] ? ITEMS[k].ic : ""); }
+function endHtml(t, emoji){ const src = imgFor("end_" + t); return src ? `<img class="endic" src="${src}" alt="">` : emoji; }
 function heartStr(k){ const h = Math.max(0, Math.min(5, S.hearts[k] || 0)); return "♥".repeat(h) + "♡".repeat(5 - h); }
 function metList(){ return Object.keys(CHARS).filter(k => S.met[k]); }
 function renderHud(){
   if(S.phase === "cover"){ el.hud.innerHTML = ""; return; }
-  el.hud.innerHTML = metList().map(k => `<span id="hud_${k}">${CHARS[k].ic} ${CHARS[k].name} <b class="hearts">${heartStr(k)}</b></span>`).join("");
+  el.hud.innerHTML = metList().map(k => `<span id="hud_${k}">${avHtml(k)} ${CHARS[k].name} <b class="hearts">${heartStr(k)}</b></span>`).join("");
 }
 function bumpHud(k){ renderHud(); const s = $("hud_" + k); if(s){ s.classList.remove("bump"); void s.offsetWidth; s.classList.add("bump"); } }
-function heartsHtml(){ return metList().map(k => `<p style="margin-top:8px;font-size:.86rem;font-weight:800">${CHARS[k].ic} ${CHARS[k].full}${josa(CHARS[k].full, "과")}의 마음 <span style="color:#d9645c;letter-spacing:1px">${heartStr(k)}</span></p>`).join(""); }
+function heartsHtml(){ return metList().map(k => `<p style="margin-top:8px;font-size:.86rem;font-weight:800;display:flex;align-items:center;gap:6px">${avHtml(k, "lg")} ${CHARS[k].full}${josa(CHARS[k].full, "과")}의 마음 <span style="color:#d9645c;letter-spacing:1px">${heartStr(k)}</span></p>`).join(""); }
 function updateGauge(delta){
   const total = S.canon + S.imag, c = Math.round(S.canon / total * 100), i = 100 - c;
   el.gFillL.style.width = c + "%"; el.gFillR.style.width = i + "%"; el.gL.textContent = c; el.gR.textContent = i;
@@ -702,10 +707,10 @@ function renderReport(){
   }).join("");
   const heartGain = Object.keys(CHARS).filter(k => S.met[k] && (S.hearts[k] || 0) !== (sh[k] === undefined ? (CHARS[k].start || 0) : sh[k]))
     .map(k => { const b = sh[k] === undefined ? (CHARS[k].start || 0) : sh[k], d = (S.hearts[k] || 0) - b;
-      return `<div class="gain ${d < 0 ? "down" : ""}"><span class="ic">${CHARS[k].ic}</span><b>${CHARS[k].name}</b><span class="hearts">${heartStr(k)}</span><small>${d > 0 ? "+" + d : d}</small></div>`; }).join("");
-  const newItems = S.items.filter(k => !sitems.includes(k) && ITEMS[k]).map(k => `<div class="gain"><span class="ic">${ITEMS[k].ic}</span><b>${ITEMS[k].name}</b></div>`).join("");
+      return `<div class="gain ${d < 0 ? "down" : ""}"><span class="ic">${avHtml(k, "lg")}</span><b>${CHARS[k].name}</b><span class="hearts">${heartStr(k)}</span><small>${d > 0 ? "+" + d : d}</small></div>`; }).join("");
+  const newItems = S.items.filter(k => !sitems.includes(k) && ITEMS[k]).map(k => `<div class="gain"><span class="ic">${itHtml(k, "lg")}</span><b>${ITEMS[k].name}</b></div>`).join("");
   const gotAny = heartGain || newItems;
-  const items = S.items.map(k => ITEMS[k] ? `<div class="item"><span class="ic">${ITEMS[k].ic}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>` : "").join("") || `<p style="font-size:.85rem;color:#8a7461">아직 모은 물건이 없어요.</p>`;
+  const items = S.items.map(k => ITEMS[k] ? `<div class="item"><span class="ic">${itHtml(k, "lg")}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>` : "").join("") || `<p style="font-size:.85rem;color:#8a7461">아직 모은 물건이 없어요.</p>`;
   const album = ALBUM.map(a => P.album[a.id] ? `<div><span class="ic">${a.ic}</span>${a.name}</div>` : `<div class="lock"><span class="ic">❔</span>???</div>`).join("");
   const endN = ["canon","imag","bal"].filter(k => P.endings[CH.key + "_" + k]).length;
   const ends = ["canon","imag","bal"].map(k => P.endings[CH.key + "_" + k] ? `<div><span class="ic">🎬</span>${CH.endings[k].title}<br><small>${CH.endings[k].label}</small></div>` : `<div class="lock"><span class="ic">❔</span>??? 결말</div>`).join("");
@@ -713,7 +718,7 @@ function renderReport(){
   el.report.innerHTML = `<div class="rp-wrap">
     <div class="rp-head"><small>CHAPTER ${CH.num} REPORT</small><h2>${CH.num}장 · ${CH.title}</h2>
       <p style="font-size:.82rem;color:#8a7461;margin-top:4px">${CH.orig} 「${CH.origTitle}」</p></div>
-    ${E ? `<div class="rp-end ${S.ending}"><div class="rp-end-ic">${emoji}</div><span class="tag ${S.ending}">${E.label}</span>
+    ${E ? `<div class="rp-end ${S.ending}"><div class="rp-end-ic">${endHtml(S.ending, emoji)}</div><span class="tag ${S.ending}">${E.label}</span>
       <h3>${esc(E.title)}</h3><p>${desc}</p>
       <div class="rp-tally"><span class="t canon">📖 원작 ${S.tally.canon}</span><span class="t imag">✨ 상상 ${S.tally.imag}</span>${S.tally.bal || !EASY_MODE ? `<span class="t bal">${BAL.ic} ${BAL.name} ${S.tally.bal}</span>` : ""}</div></div>` : ""}
     ${gotAny ? `<div class="card"><h4>🎁 이번 장에서 얻은 것</h4><div class="gains">${heartGain}${newItems}</div></div>` : ""}
@@ -764,7 +769,7 @@ function renderMidReport(){
   const names = NAME_LABELS.filter(x => x.ch <= CH.num).map(x => { const v = S.names[x.k];
     return `<div class="c">${x.ch}장 · ${x.what}</div><div class="mine">${v ? `'${esc(v)}'` : `<span style="color:#a08770">—</span>`}</div><div class="orig">${x.free ? `<span style="color:#a08770">정답 없음</span>` : `'${x.canon}'`}</div>`; }).join("");
   const endCount = upto.reduce((s, c) => s + ["canon","imag","bal"].filter(k => P.endings[c.key + "_" + k]).length, 0);
-  const itemIcons = S.items.map(k => ITEMS[k] ? `<span title="${esc(ITEMS[k].name)}">${ITEMS[k].ic}</span>` : "").join(" ");
+  const itemIcons = S.items.map(k => ITEMS[k] ? `<span title="${esc(ITEMS[k].name)}">${itHtml(k)}</span>` : "").join(" ");
   const fin = !!CH.finalReport, RN = fin ? "최종 보고서" : "중간 보고서";
   const RP = (CH.report) || (fin ? WORK.report.final : WORK.report.mid), qs = (lit ? RP.l : RP.e).map(q => q.replace(/\{n\}/g, CH.num));
   el.report.innerHTML = `<div class="rp-wrap mid">
@@ -945,7 +950,7 @@ $("btnPeek").addEventListener("click", e => { e.stopPropagation(); el.vn.classLi
 $("peekBack").addEventListener("click", e => { e.stopPropagation(); el.vn.classList.remove("peek"); });
 el.btnBox.addEventListener("click", e => {
   e.stopPropagation();
-  const items = S.items.length ? S.items.map(k => `<div class="item"><span class="ic">${ITEMS[k].ic}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>`).join("") : "<p>아직 모은 물건이 없어요. 이야기를 진행하면 하나씩 생겨요!</p>";
+  const items = S.items.length ? S.items.map(k => `<div class="item"><span class="ic">${itHtml(k, "lg")}</span><span><b>${ITEMS[k].name}</b><br>${esc(fill(ITEMS[k].desc))}</span></div>`).join("") : "<p>아직 모은 물건이 없어요. 이야기를 진행하면 하나씩 생겨요!</p>";
   modal("🎁 추억 상자", `<div class="items">${items}</div>${heartsHtml()}
     <p style="margin-top:10px;font-size:.84rem;color:#8a7461">✨ 숨은 장면 ${albumCount()}/${ALBUM.length} · 🎬 결말 ${["canon","imag","bal"].filter(k => P.endings[CH.key + "_" + k]).length}/3</p>`, [{label:"닫기", cls:"big alt"}]);
 });
@@ -1058,7 +1063,8 @@ el.modal.addEventListener("click", e => { if(e.target === el.modal) closeModal()
 let toastT = null;
 const toastQ = [];
 function toast(msg){ toastQ.push(msg); if(toastQ.length === 1) showToast(); }
-function showToast(){ const msg = toastQ[0]; if(msg === undefined) return; el.toast.textContent = msg; el.toast.classList.add("show"); clearTimeout(toastT);
+function showToast(){ const msg = toastQ[0]; if(msg === undefined) return;
+  if(typeof msg === "object") el.toast.innerHTML = (/^<img/.test(msg.ic) ? msg.ic : (msg.emoji || "")) + " " + esc(msg.t); else el.toast.textContent = msg; el.toast.classList.add("show"); clearTimeout(toastT);
   toastT = setTimeout(() => { el.toast.classList.remove("show"); toastQ.shift(); if(toastQ.length) setTimeout(showToast, 250); }, toastQ.length > 1 ? 1500 : 2400); }
 
 /* =========================================================
