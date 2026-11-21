@@ -5,6 +5,7 @@ const PRISTINE_HTML = document.documentElement.outerHTML;
 "use strict";
 /* 쉬운 이야기(특수교육·느린 학습자용): /easy/ 주소이거나 ?easy 로 열면 쉬운 장들로 바꿔 끼웁니다. */
 const EASY_MODE = !!window.EASY_MODE || /[?&]easy\b/.test(location.search);
+const ORIG_CHAPTERS = CHAPTERS.slice();
 if(EASY_MODE && EASY.length){ CHAPTERS.length = 0; EASY.forEach(c => CHAPTERS.push(c)); }
 if(EASY_MODE) document.documentElement.classList.add("easy");
 if(EASY_MODE){ document.title = WORK.easyTitle; const h = document.querySelector(".cover h1"); if(h) h.innerHTML = `${WORK.title} <span style="display:inline-block;font-size:.5em;vertical-align:middle;background:#fde7a8;color:#7a5a1a;border-radius:999px;padding:3px 12px">🌼 쉬운 이야기</span>`; }
@@ -32,7 +33,8 @@ const EASY_IC = {canon:`📖`, imag:`✨`, bal:BAL.ic};
 const WHO = Object.assign({}, WORK.who || {});
 const CHARS = Object.assign({}, WORK.chars || {});
 const DEFAULT_NAMES = Object.assign({}, WORK.names || {});
-CHAPTERS.concat(EASY).forEach(c => { if(c.cards) for(const k in c.cards) CARDS[k] = Object.assign({ch:c.num}, c.cards[k]); });
+/* 힘 카드는 원래 이야기 대본에서 정의(쉬운 이야기는 키만 씀). 쉬운 이야기에만 있는 카드는 보조로 */
+EASY.concat(ORIG_CHAPTERS).forEach(c => { if(c.cards) for(const k in c.cards) CARDS[k] = Object.assign({ch:c.num}, c.cards[k]); });
 CHAPTERS.forEach(c => { if(c.items) Object.assign(ITEMS, c.items); if(c.album) ALBUMS[c.key] = c.album; });
 const BADGE = {
   canon:{e:`📖 원작과 같은 길!`, l:`📖 원작의 길을 걸었습니다`},

@@ -4951,6 +4951,1546 @@ CHAPTERS.push({
   ]
 });
 
+/* =========================================================
+   쉬운 이야기 1장 · 회오리바람 (원작 1~2장)
+   - 한 장면에 1~2문장, 짧고 쉬운 말
+   - 선택지 2개: 📖 원작(canon) / ✨ 상상(imag)
+   - 💗 마음 읽기(kind:`feel`), 보기에서 고르는 말 짓기(pick)
+   ========================================================= */
+EASY.push({
+  key: `ch1`, num: 1, bgm: `bgm_ch1.mp3`, title: `회오리바람`, orig: `원작 1~2장`, origTitle: `회오리바람 · 먼치킨들과의 회의`,
+  bgKeys: [`ch1`, `ch1_storm`, `ch1_sky`, `ch1_munchkin`, `ch1_road`],
+  endings: {
+    canon: {title: `노란 벽돌 길 위로`, label: `원작 결말`},
+    imag:  {title: `은 구두의 첫걸음`, label: `상상 결말`},
+    bal:   {title: `먼치킨들의 배웅`, label: `함께 결말`}
+  },
+  items: {
+    silverShoes: {ic: `🥈`, name: `은 구두`, desc: `동쪽 마녀가 신던 반짝이는 은 구두예요. 어떤 힘이 있는지는 아직 아무도 몰라요.`},
+    kissMark: {ic: `✨`, name: `이마의 반짝이는 자국`, desc: `북쪽 마녀가 입 맞춰 준 자리예요. 이 자국이 있으면 아무도 도로시를 해치지 못해요.`},
+    note: {ic: `💌`, name: `엠 아주머니께 보내는 마음`, desc: `내가 고른 한마디: '{toEm}'`}
+  },
+  album: [
+    {id: `e1_bed`, ic: `🛏️`, name: `침대 위의 토토`},
+    {id: `e1_fly`, ic: `🌪️`, name: `하늘을 나는 집`},
+    {id: `e1_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`캔자스는 온통 회색이었어요. 그래도 도로시는 왜 집에 가고 싶을까요?`,
+        `도로시는 마녀를 해치려고 한 게 아니었어요. 그런데 먼치킨들은 고맙다고 했어요. 도로시의 기분은 어땠을까요?`,
+        `처음 보는 곳에서 길을 떠나야 한다면, 나는 무엇을 챙기고 싶나요?`],
+    l: [`캔자스는 온통 회색이었어요. 그래도 도로시는 왜 집에 가고 싶을까요?`,
+        `도로시는 마녀를 해치려고 한 게 아니었어요. 그런데 먼치킨들은 고맙다고 했어요. 도로시의 기분은 어땠을까요?`,
+        `처음 보는 곳에서 길을 떠나야 한다면, 나는 무엇을 챙기고 싶나요?`]
+  },
+  nodes: [
+  /* ---------- 회색 캔자스 ---------- */
+  {id: `s1`, bg: `ch1`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`, cam: `out`,
+   e: `나는 도로시야.\n캔자스의 넓은 들판에 살아.`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `em`,
+   e: `우리 집은 방 하나뿐인 작은 집이야.\n들판도, 집도, 하늘도 다 회색이야.`},
+  {w: `em`, f: `dorothy_sad`, o: `em`,
+   e: `엠 아주머니는 잘 웃지 않으셔.\n헨리 아저씨도 늘 바쁘셔.`},
+  {w: `toto`, f: `dorothy_happy`, o: `toto`,
+   e: `그래도 토토가 있어.\n까만 털의 작은 강아지, 내 친구야.`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_happy`, o: `toto`,
+   q: {e: `회색 집에서 토토와 노는 도로시.\n도로시의 마음은 어떨까요?`},
+   note: {e: `원작의 도로시는 토토 덕분에 웃어요. 회색 집에서도 토토는 늘 즐거웠거든요.`},
+   opts: [
+    {type: `feel`, ic: `😊`, ok: 1, eff: {album: `e1_feel`, heart: {toto: 1}}, e: `토토가 있어서 즐거워요`},
+    {type: `feel`, ic: `😠`, e: `화가 나요`},
+    {type: `feel`, ic: `😴`, e: `졸려요`}
+   ]},
+  /* ---------- 회오리바람 ---------- */
+  {bg: `ch1_storm`, w: `henry`, f: `dorothy_surprised`, o: `henry`, cam: `shake`,
+   e: `"회오리바람이 온다!"\n헨리 아저씨가 외쳤어.`},
+  {w: `em`, f: `dorothy_surprised`, o: `em`, cam: `shake`,
+   e: `"도로시, 빨리 지하실로!"\n엠 아주머니가 바닥 문을 열었어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `toto`,
+   e: `그런데 토토가 침대 밑으로 숨었어!\n나는 토토를 잡으러 갔어.`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `회오리바람`, f: `dorothy_surprised`, o: `toto`,
+   q: {e: `바람이 집을 흔들어요!\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 토토를 꼭 안아요. 그 순간 집이 붕 떠올라요!`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `토토를 꼭 안아요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e1_bed`}, e: `토토랑 침대 위로 올라가요`}
+   ]},
+  {id: `c1a`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `toto`, cam: `shake`,
+   e: `나는 토토를 꼭 안았어.\n그때 집이 붕 떠올랐어!`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`, cam: `up`,
+   e: `우리는 침대 위로 올라갔어.\n침대가 배처럼 둥실둥실 흔들렸어.`},
+  {id: `m1`, bg: `ch1_sky`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `toto`, cam: `up`, eff: {album: `e1_fly`},
+   e: `집이 하늘로 날아가!\n빙글빙글, 바람 한가운데로.`},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`,
+   e: `처음엔 무서웠어.\n그런데 시간이 지나니 조금 괜찮아졌어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`,
+   e: `나는 토토를 안고 침대에 누웠어.\n그리고 스르르 잠이 들었어.`},
+  /* ---------- 먼치킨 나라 ---------- */
+  {bg: `ch1_munchkin`, w: `dorothy`, in: 1, f: `dorothy_surprised`, cam: `shake`,
+   e: `쿵!\n집이 땅에 내려앉았어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, cam: `out`,
+   e: `문을 열었더니… 와!\n초록 풀, 예쁜 꽃, 반짝이는 시냇물!`},
+  {w: `munchkin`, f: `dorothy_surprised`, o: `munchkin`,
+   e: `파란 옷을 입은 작은 사람들이 왔어.\n먼치킨이래.`},
+  {w: `northwitch`, f: `dorothy_surprised`, o: `northwitch`,
+   e: `하얀 옷을 입은 할머니도 있었어.\n북쪽의 착한 마녀래.`},
+  {w: `northwitch`, f: `dorothy_surprised`, o: `northwitch`,
+   e: `"동쪽의 나쁜 마녀를 없애 줘서 고마워요!\n먼치킨들이 이제 자유로워졌어요."`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `northwitch`, cam: `in`,
+   e: `우리 집 아래에 마녀의 발이 보였어.\n집이 마녀 위에 떨어진 거야!`},
+  {t: `choice`, id: `F2`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_surprised`, o: `northwitch`,
+   q: {e: `일부러 한 게 아닌데 고맙대요.\n도로시의 마음은 어떨까요?`},
+   note: {e: `원작의 도로시는 깜짝 놀라고 당황해요. "저는 아무도 해치지 않았어요!" 하고 말하지요.`},
+   opts: [
+    {type: `feel`, ic: `😳`, ok: 1, e: `깜짝 놀라고 당황스러워요`},
+    {type: `feel`, ic: `😎`, e: `뿌듯하고 자랑스러워요`},
+    {type: `feel`, ic: `😂`, e: `웃겨요`}
+   ]},
+  {w: `northwitch`, f: `dorothy_happy`, o: `northwitch`, eff: {item: `silverShoes`},
+   e: `마녀는 사라지고 은 구두만 남았어.\n"이 구두는 이제 네 거란다."`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `northwitch`,
+   e: `"고맙습니다.\n그런데 저는 캔자스 집에 가고 싶어요."`},
+  {w: `northwitch`, f: `dorothy_sad`, o: `northwitch`,
+   e: `"오즈의 나라는 큰 사막에 둘러싸여 있어.\n건너갈 수가 없단다."`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `toto`,
+   e: `나는 울음이 터졌어.\n엠 아주머니가 걱정하실 텐데….`},
+  {t: `name`, id: `N1`, key: `toEm`, free: true, max: 30, label: `엠 아주머니께 보내는 한마디`, f: `dorothy_sad`, o: `em`,
+   q: {e: `✍️ 엠 아주머니께 마음을 보낸다면,\n어떤 말을 보낼까요?`},
+   pick: [`걱정 마세요, 꼭 갈게요`, `보고 싶어요`, `토토랑 잘 있어요`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 도로시는 엠 아주머니가 걱정하실까 봐 집에 가고 싶어 해요.`}},
+  {w: `dorothy`, in: 1, f: `dorothy_brave`, o: `em`, eff: {item: `note`},
+   e: `'{toEm}'\n나는 마음속으로 말했어.`},
+  /* ---------- 오즈를 찾아서 ---------- */
+  {w: `northwitch`, f: `dorothy_surprised`, o: `northwitch`,
+   e: `"에메랄드 시에 가렴.\n위대한 마법사 오즈가 도와줄지도 몰라."`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `북쪽 마녀에게`, f: `dorothy_sad`, o: `northwitch`,
+   q: {e: `혼자 먼 길을 가야 해요.\n도로시는 마녀에게 뭐라고 할까요?`},
+   note: {e: `원작의 도로시는 "같이 가 주시면 안 돼요?" 하고 물어요. 마녀는 같이 갈 수 없지만, 대신 이마에 입을 맞춰 줘요.`},
+   opts: [
+    {type: `canon`, go: `m4`, e: `"같이 가 주시면 안 돼요?"`},
+    {type: `imag`, go: `m4`, e: `"마녀님 모자 한 번만 써 봐도 돼요?"`}
+   ]},
+  {id: `m4`, w: `northwitch`, f: `dorothy_happy`, o: `northwitch`, eff: {item: `kissMark`}, cam: `in`,
+   e: `마녀가 내 이마에 입을 맞췄어.\n이마에 반짝이는 자국이 생겼어.`},
+  {w: `northwitch`, f: `dorothy_happy`, o: `northwitch`,
+   e: `"이 자국이 있으면 아무도 너를 해치지 못해.\n노란 벽돌 길을 따라가렴."`},
+  {t: `choice`, id: `C2`, kind: `predict`, label: `떠날 준비`, f: `dorothy_brave`, o: `toto`,
+   q: {e: `먼 길을 떠나요.\n원작의 도로시는 무엇을 했을까요?`},
+   note: {e: `원작의 도로시는 깨끗한 원피스로 갈아입고, 빵을 바구니에 담고, 은 구두를 신어요.`},
+   opts: [
+    {type: `canon`, go: `c2a`, e: `빵을 챙기고 은 구두를 신어요`},
+    {type: `imag`, go: `c2b`, e: `토토에게 지도를 그려 달래요`}
+   ]},
+  {id: `c2a`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`,
+   e: `나는 빵을 바구니에 담았어.\n그리고 은 구두를 신었어. 딱 맞았어!`},
+  {t: `goto`, to: `m2`},
+  {id: `c2b`, w: `toto`, f: `dorothy_dreamy`, o: `toto`, fx: `dream`,
+   e: `토토가 발로 땅에 쓱쓱 그림을 그렸어.\n꼬불꼬불, 노란 길 그림이야!`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`,
+   e: `나는 웃으며 빵을 챙기고,\n은 구두를 신었어.`},
+  {id: `m2`, bg: `ch1_road`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `toto`, cam: `out`,
+   e: `노란 벽돌 길이 저 멀리까지 이어져 있어.\n"가자, 토토!"`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `첫걸음`, f: `dorothy_brave`, o: `munchkin`,
+   q: {e: `먼치킨들이 손을 흔들어요.\n도로시는 어떻게 출발할까요?`},
+   note: {e: `원작의 도로시는 씩씩하게 걸어가요. 은 구두가 노란 벽돌 길 위에서 짤깍짤깍 소리를 내요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `씩씩하게 걸어가요`},
+    {type: `imag`, go: `E_pre`, e: `은 구두로 깡충 뛰어 봐요`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch1_road`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `toto`,
+   e: `짤깍, 짤깍.\n은 구두 소리를 들으며 나는 노란 길을 걸었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch1_road`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`, cam: `up`,
+   e: `깡충! 은 구두가 반짝 빛났어.\n구두에 정말 무슨 힘이 있는 걸까?`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch1_munchkin`, w: `munchkin`, f: `dorothy_happy`, o: `munchkin`,
+   e: `"잘 가요, 도로시!"\n먼치킨들이 웃으며 배웅해 주었어.`},
+  {id: `E_last`, bg: `ch1_road`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`, cam: `out`,
+   e: `에메랄드 시는 어디쯤 있을까?\n길에서 누구를 만나게 될까?`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 2장 · 옥수수밭의 허수아비 (원작 3~4장)
+   힘 카드: sc_road(알아보기)
+   ========================================================= */
+EASY.push({
+  key: `ch2`, num: 2, bgm: `bgm_ch2.mp3`, title: `옥수수밭의 허수아비`, orig: `원작 3~4장`, origTitle: `도로시, 허수아비를 구하다 · 숲으로 가는 길`,
+  bgKeys: [`ch2`, `ch2_feast`, `ch2_corn`, `ch2_rough`, `ch2_forest`],
+  endings: {
+    canon: {title: `어둠 속의 길잡이`, label: `원작 결말`},
+    imag:  {title: `별자리를 짓는 허수아비`, label: `상상 결말`},
+    bal:   {title: `둘이 드는 바구니`, label: `함께 결말`}
+  },
+  items: {
+    breadBasket: {ic: `🧺`, name: `빵 바구니`, desc: `여행길에 먹을 빵이 든 바구니예요.`},
+    strawTuft: {ic: `🌾`, name: `허수아비의 지푸라기 한 줌`, desc: `허수아비의 몸에서 빠진 지푸라기. 다시 넣어 주었어요.`}
+  },
+  album: [
+    {id: `e2_dance`, ic: `💃`, name: `먼치킨 잔치의 춤`},
+    {id: `e2_crow`, ic: `🐦`, name: `까마귀에게 한 인사`},
+    {id: `e2_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`허수아비는 "뇌가 없다"고 했어요. 그런데 길에서 어떤 생각을 해냈나요?`,
+        `도로시는 왜 허수아비를 장대에서 내려 주었을까요?`,
+        `친구가 넘어졌을 때 나는 어떻게 도와줄 수 있을까요?`],
+    l: [`허수아비는 "뇌가 없다"고 했어요. 그런데 길에서 어떤 생각을 해냈나요?`,
+        `도로시는 왜 허수아비를 장대에서 내려 주었을까요?`,
+        `친구가 넘어졌을 때 나는 어떻게 도와줄 수 있을까요?`]
+  },
+  nodes: [
+  /* ---------- 먼치킨 마을 ---------- */
+  {id: `s1`, bg: `ch2`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`, cam: `out`, eff: {item: `breadBasket`},
+   e: `나는 빵 바구니를 들고 노란 벽돌 길을 걸었어.\n토토가 앞에서 깡충깡충 뛰었어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`,
+   e: `길가에 파란 울타리, 파란 집이 있었어.\n먼치킨들은 파란색을 좋아한대.`},
+  {bg: `ch2_feast`, w: `boq`, f: `dorothy_happy`, o: `boq`,
+   e: `저녁에 부자 먼치킨 보크 아저씨 집에서 잔치가 열렸어.\n"마녀를 없앤 분이 오셨다!"`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `먼치킨 잔치`, f: `dorothy_happy`, o: `boq`,
+   q: {e: `잔치에 초대받았어요.\n도로시는 무엇을 할까요?`},
+   note: {e: `원작의 도로시는 맛있게 저녁을 먹고, 먼치킨들이 춤추는 걸 구경해요.`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `맛있게 먹고 춤을 구경해요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e2_dance`}, e: `먼치킨들과 같이 춤춰요`}
+   ]},
+  {id: `c1a`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `boq`,
+   e: `나는 맛있는 저녁을 먹었어.\n먼치킨들이 빙글빙글 춤을 추었어.`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `munchkin`, fx: `dream`,
+   e: `나도 먼치킨들 손을 잡고 빙글빙글!\n은 구두가 반짝반짝 빛났어.`},
+  {id: `m1`, w: `boq`, f: `dorothy_surprised`, o: `boq`,
+   e: `"파란색과 흰색 옷에, 은 구두라니.\n당신은 착한 마녀가 틀림없어요!"`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `boq`,
+   e: `"아니에요, 저는 그냥 평범한 아이예요."\n나는 웃으며 말했어.`},
+  /* ---------- 허수아비 ---------- */
+  {bg: `ch2_corn`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`, cam: `out`,
+   e: `다음 날, 옥수수밭 옆에서 잠깐 쉬었어.\n장대 위에 허수아비가 있었어.`},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `in`,
+   e: `그런데 허수아비가 나에게 윙크를 했어!\n"안녕하세요!"`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `scarecrow`,
+   e: `"말을 할 줄 알아요?"\n"그럼요. 기분이 어떠세요?"`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `scarecrow`,
+   e: `"나는 별로예요.\n밤낮으로 여기 매달려서 까마귀만 쫓거든요."`},
+  {t: `choice`, id: `C2`, kind: `act`, label: `장대 위의 허수아비`, f: `dorothy_sad`, o: `scarecrow`,
+   q: {e: `허수아비가 장대에서 내려가고 싶대요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 두 팔을 뻗어 허수아비를 장대에서 내려 줘요. 짚으로 만들어서 아주 가벼웠어요.`},
+   opts: [
+    {type: `canon`, go: `c2a`, eff: {heart: {scarecrow: 1}}, e: `두 팔로 장대에서 내려 줘요`},
+    {type: `imag`, go: `c2b`, e: `토토에게 장대를 흔들어 보래요`}
+   ]},
+  {id: `c2a`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `scarecrow`,
+   e: `나는 두 팔을 뻗어 허수아비를 내려 주었어.\n짚이라서 아주 가벼웠어.`},
+  {t: `goto`, to: `m2`},
+  {id: `c2b`, w: `toto`, f: `dorothy_dreamy`, o: `toto`, fx: `dream`,
+   e: `토토가 장대를 낑낑 밀었어.\n어림도 없어! 결국 내가 내려 주었어.`},
+  {id: `m2`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, cam: `in`,
+   e: `"고마워요! 새사람이 된 것 같아요."\n허수아비가 기지개를 켰어.`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `"어디 가는 길이에요?"\n"에메랄드 시에 오즈를 만나러 가."`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `scarecrow`,
+   e: `"나도 데려가 줄래요?\n내 머리엔 짚만 있어요. 뇌가 없어요."`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `scarecrow`,
+   e: `"오즈가 나에게 뇌를 주면 좋겠어요.\n바보라는 말을 듣고 싶지 않아요."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `허수아비의 마음`, f: `dorothy_sad`, o: `scarecrow`,
+   q: {e: `"나는 바보예요."\n허수아비의 마음은 어떨까요?`},
+   note: {e: `허수아비는 자기가 똑똑하지 않다고 생각해서 속상해요. 사실은 그렇지 않은데 말이에요!`},
+   opts: [
+    {type: `feel`, ic: `😢`, ok: 1, eff: {album: `e2_feel`, heart: {scarecrow: 1}}, e: `속상하고 쓸쓸해요`},
+    {type: `feel`, ic: `😆`, e: `신나요`},
+    {type: `feel`, ic: `😡`, e: `화나요`}
+   ]},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1}},
+   e: `"같이 가자!\n오즈에게 같이 부탁하자."`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `"고마워요! 나는 배도 안 고프고, 피곤하지도 않아요.\n무서운 건 딱 하나, 성냥불뿐이에요."`},
+  {t: `name`, id: `N2`, key: `toScarecrow`, free: true, max: 30, label: `허수아비에게 해 주고 싶은 말`, f: `dorothy_happy`, o: `scarecrow`,
+   q: {e: `✍️ 새 친구 허수아비에게\n어떤 말을 해 줄까요?`},
+   pick: [`넌 바보가 아니야`, `만나서 반가워`, `같이 가서 좋아`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 도로시는 허수아비를 새 친구로 반갑게 맞아요.`}},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `"'{toScarecrow}'…."\n허수아비가 수줍게 웃었어.`},
+  /* ---------- 험한 길 ---------- */
+  {bg: `ch2_rough`, w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`, eff: {item: `strawTuft`},
+   e: `길이 점점 울퉁불퉁해졌어.\n허수아비가 구멍에 발이 걸려 쿵! 넘어졌어.`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `넘어진 허수아비`, f: `dorothy_surprised`, o: `scarecrow`,
+   q: {e: `허수아비가 또 넘어졌어요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 허수아비를 일으켜 세워 줘요. 허수아비는 아프지 않다며 웃어요.`},
+   opts: [
+    {type: `canon`, go: `c3a`, eff: {heart: {scarecrow: 1}}, e: `일으켜 세워 줘요`},
+    {type: `imag`, go: `c3b`, eff: {album: `e2_crow`}, e: `날아가는 까마귀에게 길을 물어요`}
+   ]},
+  {id: `c3a`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`,
+   e: `나는 허수아비를 일으켜 주었어.\n"괜찮아요, 하나도 안 아파요!"`},
+  {t: `goto`, to: `m3`},
+  {id: `c3b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `scarecrow`, fx: `dream`,
+   e: `"까마귀야, 구멍 없는 길 좀 알려 줘!"\n까마귀는 허수아비를 보고 놀라 도망갔어.`},
+  {id: `m3`, w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `허수아비가 옛이야기를 해 주었어.\n늙은 까마귀가 말했대. "뇌만 있으면 너도 멋질 텐데."`},
+  /* ---------- 어두운 숲 ---------- */
+  {bg: `ch2_forest`, w: `dorothy`, in: 1, f: `dorothy_sad`, o: `toto`, cam: `out`,
+   e: `해가 지고 깜깜한 숲이 나왔어.\n앞이 하나도 안 보여.`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `scarecrow`,
+   e: `"이렇게 깜깜한데 숲을 나갈 수 있을까?"\n나는 무서웠어.`},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`,
+   e: `허수아비가 말했어.\n"길이 숲으로 들어왔으면, 나가는 길도 있을 거예요."`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `허수아비의 생각`, card: `sc_road`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `💡 "들어온 길은 나가게 돼 있어요."\n허수아비가 보여 준 건 무엇일까요?`},
+   note: {e: `뇌가 없다던 허수아비가 깜깜한 숲에서 좋은 생각을 해냈어요. 생각하는 힘이에요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🧠`, ok: 1, e: `좋은 생각을 해내는 힘`},
+    {type: `feel`, ic: `🌾`, e: `짚이 많은 것`}
+   ]},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `허수아비는 어둠 속에서도 잘 보인대.\n내 손을 잡고 앞장서 주었어.`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `어두운 숲길`, f: `dorothy_happy`, o: `scarecrow`,
+   q: {e: `허수아비가 앞장서 줘요.\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작의 도로시는 허수아비 팔을 잡고 걸어요. 그리고 쉴 곳을 찾아 달라고 부탁해요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"쉴 곳을 찾으면 알려 줘."`},
+    {type: `imag`, go: `E_pre`, e: `"별을 보면서 이름 붙이자!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch2_forest`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `허수아비가 작은 오두막을 찾았어.\n나는 토토를 안고 마른 잎 위에서 잠들었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch2_forest`, w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`, fx: `dream`, cam: `up`,
+   e: `"저 별 세 개는 '도로시 별'이에요!"\n허수아비가 별마다 이름을 붙였어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch2_forest`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1}},
+   e: `우리는 바구니를 같이 들었어.\n"둘이 드니까 가볍네!"`},
+  {id: `E_last`, bg: `ch2_forest`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, cam: `out`,
+   e: `허수아비는 뇌가 없대.\n그런데 오늘 길을 찾은 건 허수아비야.`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 3장 · 녹슨 나무꾼 (원작 5장)
+   힘 카드: tm_path(알아보기)
+   ========================================================= */
+EASY.push({
+  key: `ch3`, num: 3, together: [`scarecrow`], bgm: `bgm_ch3.mp3`, title: `녹슨 나무꾼`, orig: `원작 5장`, origTitle: `양철 나무꾼을 구하다`,
+  bgKeys: [`ch3`, `ch3_tin`, `ch3_thicket`, `ch3_deep`],
+  endings: {
+    canon: {title: `거의 빈 바구니`, label: `원작 결말`},
+    imag:  {title: `숲속 열매 잔치`, label: `상상 결말`},
+    bal:   {title: `셋이 나눈 걱정`, label: `함께 결말`}
+  },
+  items: {
+    oilCan: {ic: `🛢️`, name: `기름통`, desc: `나무꾼의 오두막에 있던 기름통. 녹슨 마디에 기름을 쳐 주었어요.`}
+  },
+  album: [
+    {id: `e3_song`, ic: `🎶`, name: `양철 북 노래`},
+    {id: `e3_fruit`, ic: `🍎`, name: `숲속 열매 따기`},
+    {id: `e3_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`나무꾼은 "심장이 없다"고 했어요. 그런데 나무꾼이 한 일 중에 따뜻했던 건 무엇인가요?`,
+        `허수아비는 뇌, 나무꾼은 심장을 원해요. 나라면 무엇을 고를까요?`,
+        `꼼짝 못 하는 사람을 보면 나는 어떻게 도울 수 있을까요?`],
+    l: [`나무꾼은 "심장이 없다"고 했어요. 그런데 나무꾼이 한 일 중에 따뜻했던 건 무엇인가요?`,
+        `허수아비는 뇌, 나무꾼은 심장을 원해요. 나라면 무엇을 고를까요?`,
+        `꼼짝 못 하는 사람을 보면 나는 어떻게 도울 수 있을까요?`]
+  },
+  nodes: [
+  /* ---------- 신음 소리 ---------- */
+  {id: `s1`, bg: `ch3`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, cam: `out`,
+   e: `아침에 맑은 샘에서 세수를 했어.\n허수아비는 먹지 않아도 괜찮대.`},
+  {bg: `ch3_tin`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `scarecrow`,
+   e: `그때 숲에서 "끄으응…" 소리가 들렸어.\n누가 아픈가 봐!`},
+  {w: `tinman`, f: `dorothy_surprised`, o: `tinman`, cam: `in`,
+   e: `큰 나무 옆에 양철로 된 사람이 서 있었어.\n도끼를 든 채 꼼짝도 못 하고 있었어.`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `"녹이 슬어서 움직일 수가 없어요.\n오두막에 기름통이 있어요…."`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `녹슨 나무꾼`, f: `dorothy_surprised`, o: `tinman`,
+   q: {e: `나무꾼이 꼼짝 못 해요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 얼른 오두막에 가서 기름통을 가져와요. 그리고 마디마다 기름을 쳐 줘요.`},
+   opts: [
+    {type: `canon`, go: `c1a`, eff: {heart: {tinman: 1}}, e: `기름통을 가져와요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e3_song`}, e: `양철 몸을 북처럼 두드려 노래해요`}
+   ]},
+  {id: `c1a`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `tinman`, eff: {item: `oilCan`},
+   e: `나는 오두막으로 달려가 기름통을 가져왔어.\n"어디부터 칠해 줄까요?"`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `tinman`, fx: `dream`,
+   e: `통통통! 양철 북 소리가 숲에 울렸어.\n나무꾼이 웃고 싶은데 입이 안 움직였어. 얼른 기름통을 가져왔지!`},
+  {id: `m1`, w: `tinman`, f: `dorothy_happy`, o: `tinman`, eff: {item: `oilCan`},
+   e: `목부터, 팔, 다리까지 기름을 쳤어.\n끼익… 나무꾼이 움직였어!`},
+  {w: `tinman`, f: `dorothy_happy`, o: `tinman`, cam: `in`,
+   e: `"고마워요! 일 년 동안 여기 서 있었어요.\n당신들이 없었으면 영영 서 있었을 거예요."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `나무꾼의 마음`, f: `dorothy_happy`, o: `tinman`,
+   q: {e: `일 년 만에 움직이게 된 나무꾼.\n나무꾼의 마음은 어떨까요?`},
+   note: {e: `나무꾼은 정말 고맙고 기뻤어요. 그리고 일 년 동안 혼자라서 많이 외로웠을 거예요.`},
+   opts: [
+    {type: `feel`, ic: `🥹`, ok: 1, eff: {album: `e3_feel`, heart: {tinman: 1}}, e: `고맙고 기뻐요`},
+    {type: `feel`, ic: `😒`, e: `귀찮아요`},
+    {type: `feel`, ic: `😨`, e: `무서워요`}
+   ]},
+  /* ---------- 나무꾼의 이야기 ---------- */
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `"나는 원래 사람이었어요.\n먼치킨 아가씨를 사랑했지요."`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `"그런데 나쁜 마녀가 내 도끼에 마법을 걸었어요.\n다칠 때마다 몸을 양철로 바꿨어요."`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `"마지막엔 몸이 다 양철이 되었어요.\n그런데 심장이 없어졌어요."`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `"심장이 없으니 사랑할 수가 없어요.\n오즈에게 심장을 부탁하고 싶어요."`},
+  {w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `"나는 뇌를 원해요.\n바보는 심장이 있어도 쓸 줄 모르니까요."`},
+  {w: `tinman`, f: `dorothy_dreamy`, o: `tinman`,
+   e: `"나는 심장이 좋아요.\n뇌는 사람을 행복하게 해 주지 않으니까요."`},
+  {t: `name`, id: `N3`, key: `brainOrHeart`, free: true, max: 30, label: `뇌와 심장, 나의 생각`, f: `dorothy_dreamy`, o: `tinman`,
+   q: {e: `✍️ 뇌와 심장 중 하나만 고른다면,\n나는 무엇을 고를까요?`},
+   pick: [`생각하는 뇌`, `따뜻한 심장`, `둘 다 소중해`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 도로시는 어느 쪽이 맞는지 모르겠대요. 둘 다 친구가 원하는 걸 얻으면 좋겠다고 생각해요.`}},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `tinman`,
+   e: `'{brainOrHeart}'.\n나는 둘 다 원하는 걸 얻었으면 좋겠어.`},
+  {t: `choice`, id: `C2`, kind: `talk`, label: `함께 가요`, f: `dorothy_happy`, o: `tinman`,
+   q: {e: `나무꾼도 오즈를 만나고 싶대요.\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작의 도로시와 허수아비는 기쁘게 말해요. "같이 가요!" 나무꾼은 도끼를 메고 기름통을 챙겨요.`},
+   opts: [
+    {type: `canon`, go: `m2`, eff: {heart: {tinman: 1}}, e: `"같이 가요!"`},
+    {type: `imag`, go: `m2`, e: `"기름통은 내가 들어 줄게요!"`}
+   ]},
+  {id: `m2`, w: `tinman`, f: `dorothy_happy`, o: `tinman`,
+   e: `"비 오면 기름을 꼭 쳐 줘요."\n나무꾼이 기름통을 내 바구니에 넣었어.`},
+  /* ---------- 빽빽한 숲 ---------- */
+  {bg: `ch3_thicket`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `그런데 나뭇가지가 빽빽해서\n길이 꽉 막혀 버렸어!`},
+  {w: `tinman`, f: `dorothy_brave`, o: `tinman`, cam: `shake`,
+   e: `나무꾼이 도끼를 들고 앞으로 나갔어.\n쓱싹, 쓱싹! 가지를 잘라 길을 냈어.`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `나무꾼의 도끼`, card: `tm_path`, f: `dorothy_happy`, o: `tinman`,
+   q: {e: `💡 나무꾼이 모두를 위해 길을 냈어요.\n나무꾼이 보여 준 건 무엇일까요?`},
+   note: {e: `자기 혼자가 아니라 친구들 모두가 지나갈 수 있게 길을 냈어요. 친구를 생각하는 따뜻한 마음이에요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `💗`, ok: 1, e: `친구들을 생각하는 마음`},
+    {type: `feel`, ic: `🪓`, e: `도끼가 날카로운 것`}
+   ]},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `허수아비가 구멍에 또 빠졌어.\n우리는 웃으며 일으켜 주었어.`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `숲속 점심`, f: `dorothy_sad`, o: `toto`,
+   q: {e: `빵이 얼마 남지 않았어요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 남은 빵을 아껴 먹어요. 허수아비와 나무꾼은 먹지 않아도 되거든요.`},
+   opts: [
+    {type: `canon`, go: `c3a`, e: `빵을 아껴 먹어요`},
+    {type: `imag`, go: `c3b`, eff: {album: `e3_fruit`}, e: `숲에서 열매를 찾아봐요`}
+   ]},
+  {id: `c3a`, w: `dorothy`, in: 1, f: `dorothy_sad`, o: `toto`,
+   e: `나는 빵을 조금만 먹고 토토에게도 나눠 주었어.\n바구니가 점점 가벼워졌어.`},
+  {t: `goto`, to: `m3`},
+  {id: `c3b`, w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`, fx: `dream`,
+   e: `허수아비가 키 큰 나무에서 빨간 열매를 땄어.\n"나는 먹지 않지만, 따는 건 잘해요!"`},
+  {id: `m3`, bg: `ch3_deep`, w: `tinman`, f: `dorothy_happy`, o: `tinman`, cam: `out`,
+   e: `나무꾼은 개미 한 마리도 밟지 않으려고\n조심조심 걸었어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `tinman`,
+   e: `심장이 없다는데…\n왜 이렇게 다정할까?`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `깊은 숲`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `숲이 점점 깊어져요.\n도로시는 친구들에게 뭐라고 할까요?`},
+   note: {e: `원작에서 일행은 숲속 깊은 곳에서 무서운 소리를 들어요. 하지만 셋이 함께라서 계속 걸어가요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"계속 걸어가자."`},
+    {type: `imag`, go: `E_pre`, e: `"숲 노래를 부르며 가자!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch3_deep`, w: `dorothy`, in: 1, f: `dorothy_sad`, o: `toto`,
+   e: `바구니에는 빵이 거의 없었어.\n그래도 친구가 둘이나 생겼어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch3_deep`, w: `tinman`, f: `dorothy_happy`, o: `tinman`, fx: `dream`,
+   e: `나무꾼이 도끼로 박자를 맞추고,\n허수아비가 춤을 췄어. 숲 노래 잔치야!`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch3_deep`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1, tinman: 1}},
+   e: `"뇌가 없어서 걱정이에요." "심장이 없어서 걱정이에요."\n우리는 서로 걱정을 나누며 걸었어.`},
+  {id: `E_last`, bg: `ch3_deep`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `tinman`, cam: `out`,
+   e: `그때 숲속에서\n크고 무서운 소리가 들려왔어….`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 4장 · 겁쟁이 사자 (원작 6~7장)
+   힘 카드: tm_beetle(알아보기), li_jump(자동), li_face(알아보기), sc_bridge(자동)
+   ========================================================= */
+EASY.push({
+  key: `ch4`, num: 4, together: [`scarecrow`, `tinman`], bgm: `bgm_ch4.mp3`, title: `겁쟁이 사자`, orig: `원작 6~7장`, origTitle: `겁쟁이 사자 · 위대한 오즈를 찾아가는 길`,
+  bgKeys: [`ch4`, `ch4_camp`, `ch4_ditch`, `ch4_bridge`, `ch4_river`],
+  endings: {
+    canon: {title: `에메랄드 시의 꿈`, label: `원작 결말`},
+    imag:  {title: `갈기 위의 별빛 여행`, label: `상상 결말`},
+    bal:   {title: `무서운 것 하나씩`, label: `함께 결말`}
+  },
+  items: {
+    lionMane: {ic: `🦁`, name: `사자 갈기 한 가닥`, desc: `골짜기를 뛰어넘을 때 붙잡았던 사자의 갈기. 부드럽고 따뜻했어요.`}
+  },
+  album: [
+    {id: `e4_hug`, ic: `🤗`, name: `토토와 사자의 화해`},
+    {id: `e4_star`, ic: `🌟`, name: `모닥불 별 이야기`},
+    {id: `e4_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`사자는 "나는 겁쟁이야"라고 했어요. 그런데 골짜기와 칼리다 앞에서 어떻게 했나요?`,
+        `나무꾼은 딱정벌레를 밟고 울었어요. 심장이 없다는 나무꾼이 왜 울었을까요?`,
+        `내가 생각하는 진짜 용기는 무엇인가요?`],
+    l: [`사자는 "나는 겁쟁이야"라고 했어요. 그런데 골짜기와 칼리다 앞에서 어떻게 했나요?`,
+        `나무꾼은 딱정벌레를 밟고 울었어요. 심장이 없다는 나무꾼이 왜 울었을까요?`,
+        `내가 생각하는 진짜 용기는 무엇인가요?`]
+  },
+  nodes: [
+  /* ---------- 사자 ---------- */
+  {id: `s1`, bg: `ch4`, w: `lion`, f: `dorothy_surprised`, o: `lion`, cam: `shake`,
+   e: `"어흐흥!"\n커다란 사자가 길로 뛰어나왔어!`},
+  {w: `lion`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `사자가 앞발로 허수아비를 툭 쳐서 넘어뜨렸어.\n나무꾼도 쿵 넘어졌어.`},
+  {w: `toto`, f: `dorothy_surprised`, o: `toto`, cam: `shake`,
+   e: `토토가 왈왈 짖으며 사자에게 달려갔어.\n사자가 입을 쩍 벌렸어!`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `토토를 지켜라`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `사자가 토토를 물려고 해요!\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 달려가서 사자 코를 찰싹 때려요. "작은 강아지를 괴롭히다니, 부끄러운 줄 알아!"`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `사자 코를 찰싹 때려요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e4_hug`}, e: `토토를 안고 "그만!" 외쳐요`}
+   ]},
+  {id: `c1a`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `lion`, cam: `shake`,
+   e: `나는 사자 코를 찰싹 때렸어.\n"작은 강아지를 괴롭히다니, 부끄러운 줄 알아!"`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `lion`, fx: `dream`,
+   e: `나는 토토를 꼭 안고 외쳤어. "그만!"\n사자가 깜짝 놀라 뒤로 물러섰어.`},
+  {id: `m1`, w: `lion`, f: `dorothy_surprised`, o: `lion`, cam: `in`,
+   e: `사자가 코를 문지르며 울먹였어.\n"안 물었잖아… 아파…."`},
+  {w: `lion`, f: `dorothy_sad`, o: `lion`,
+   e: `"사실 나는 겁쟁이야.\n무서워서 크게 소리 지르는 거야."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `사자의 마음`, f: `dorothy_sad`, o: `lion`,
+   q: {e: `"나는 겁쟁이야."\n사자의 마음은 어떨까요?`},
+   note: {e: `사자는 짐승의 왕인데 겁이 많아서 부끄럽고 슬펐어요. 그래서 일부러 크게 소리를 질렀대요.`},
+   opts: [
+    {type: `feel`, ic: `😢`, ok: 1, eff: {album: `e4_feel`, heart: {lion: 1}}, e: `부끄럽고 슬퍼요`},
+    {type: `feel`, ic: `😁`, e: `재밌어요`},
+    {type: `feel`, ic: `😤`, e: `자랑스러워요`}
+   ]},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `"오즈가 나에게 용기를 줄 수 있을까?"\n"같이 가자!" 우리가 말했어.`},
+  /* ---------- 딱정벌레 ---------- */
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `그런데 걷다가 나무꾼이\n작은 딱정벌레를 밟고 말았어.`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`, cam: `in`,
+   e: `나무꾼이 엉엉 울었어.\n눈물 때문에 턱이 녹슬어 버렸어!`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `나무꾼의 눈물`, card: `tm_beetle`, f: `dorothy_dreamy`, o: `tinman`,
+   q: {e: `💡 심장이 없다는 나무꾼이\n작은 벌레 때문에 울었어요. 왜일까요?`},
+   note: {e: `작은 생명도 소중히 여기는 따뜻한 마음! 심장이 없다는 나무꾼은 사실 누구보다 다정해요. 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `💗`, ok: 1, e: `작은 생명도 아끼는 마음`},
+    {type: `feel`, ic: `🛢️`, e: `기름이 모자라서`}
+   ]},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `tinman`, eff: {heart: {tinman: 1}},
+   e: `나는 기름통으로 턱에 기름을 쳐 주었어.\n"이제 조심해서 걸을게요."`},
+  /* ---------- 밤 ---------- */
+  {bg: `ch4_camp`, w: `lion`, f: `dorothy_happy`, o: `lion`, cam: `out`,
+   e: `밤에는 큰 나무 아래 모닥불을 피웠어.\n사자의 털이 따뜻했어.`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `허수아비는 불이 무서워서\n멀찍이 떨어져 앉았어.`},
+  {t: `name`, id: `N4`, key: `courageIs`, free: true, max: 30, label: `내가 생각하는 진짜 용기`, f: `dorothy_dreamy`, o: `lion`,
+   q: {e: `✍️ 사자는 용기가 없대요.\n내가 생각하는 진짜 용기는 무엇일까요?`},
+   pick: [`무서워도 해 보는 것`, `친구를 지키는 것`, `미안하다고 말하는 것`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 사자는 무서운 일 앞에서 자주 떨지만, 그래도 친구들을 위해 나서요.`}},
+  {w: `lion`, f: `dorothy_dreamy`, o: `lion`,
+   e: `"'{courageIs}'…."\n사자가 내 말을 오래 생각했어.`},
+  /* ---------- 골짜기 ---------- */
+  {bg: `ch4_ditch`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `다음 날, 땅이 쩍 갈라진 깊은 골짜기가 나왔어.\n바닥엔 뾰족한 바위가 가득해!`},
+  {w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `허수아비가 생각했어.\n"사자가 우리를 하나씩 태우고 뛰어넘으면 어때요?"`},
+  {w: `lion`, f: `dorothy_surprised`, o: `lion`,
+   e: `"무섭지만… 해 볼게."\n사자가 몸을 웅크렸어.`},
+  {t: `choice`, id: `C2`, kind: `act`, label: `골짜기 뛰어넘기`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `사자가 뛰어넘을 거래요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작에서는 허수아비가 먼저 타요. 떨어져도 안 다치니까요. 사자는 무서웠지만 모두를 한 명씩 건네줘요.`},
+   opts: [
+    {type: `canon`, go: `c2a`, e: `허수아비가 먼저 타요`},
+    {type: `imag`, go: `c2b`, e: `"하나, 둘, 셋!" 다 같이 응원해요`}
+   ]},
+  {id: `c2a`, w: `lion`, f: `dorothy_brave`, o: `lion`, cam: `up`, eff: {item: `lionMane`, card: `li_jump`},
+   e: `허수아비, 나, 나무꾼 차례로\n사자가 휙! 휙! 휙! 뛰어넘었어.`},
+  {t: `goto`, to: `m2`},
+  {id: `c2b`, w: `lion`, f: `dorothy_happy`, o: `lion`, fx: `dream`, cam: `up`, eff: {item: `lionMane`, card: `li_jump`},
+   e: `"하나, 둘, 셋!" 응원 소리에 맞춰\n사자가 휙! 휙! 휙! 뛰어넘었어.`},
+  {id: `m2`, w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `사자가 헉헉거리며 웃었어.\n"무서웠는데… 해냈어!"`},
+  /* ---------- 칼리다 ---------- */
+  {bg: `ch4_bridge`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `lion`, cam: `shake`,
+   e: `또 골짜기가 나왔어. 이번엔 너무 넓어!\n그때 "크르릉!" 칼리다가 나타났어.`},
+  {w: `lion`, f: `dorothy_surprised`, o: `lion`,
+   e: `곰 몸에 호랑이 머리를 한 괴물이야.\n사자도 덜덜 떨었어.`},
+  {w: `lion`, f: `dorothy_brave`, o: `lion`, cam: `in`,
+   e: `그런데 사자가 돌아서서 말했어.\n"내 뒤에 서! 내가 막을게."`},
+  {t: `choice`, id: `P2`, kind: `power`, label: `사자의 앞발`, card: `li_face`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `💡 무서워서 떨면서도 "내 뒤에 서!"\n사자가 보여 준 건 무엇일까요?`},
+   note: {e: `무서운데도 친구들 앞에 섰어요. 무섭지 않은 게 아니라, 무서워도 하는 것. 그게 용기예요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🦁`, ok: 1, e: `무서워도 친구를 지키는 용기`},
+    {type: `feel`, ic: `💪`, e: `힘이 센 것`}
+   ]},
+  {w: `scarecrow`, f: `dorothy_brave`, o: `scarecrow`, eff: {card: `sc_bridge`},
+   e: `허수아비가 외쳤어. "나무꾼, 큰 나무를 베어 다리를 만들어요!"\n우리는 나무 다리를 건넜어.`},
+  {w: `tinman`, f: `dorothy_surprised`, o: `tinman`, cam: `shake`,
+   e: `칼리다가 따라 건너오자\n나무꾼이 다리를 쿵! 끊었어. 휴, 살았다!`},
+  /* ---------- 강 ---------- */
+  {bg: `ch4_river`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, cam: `out`,
+   e: `숲을 나오니 넓은 강이 있었어.\n강 건너엔 꽃이 가득한 초록 들판!`},
+  {t: `choice`, id: `C3`, kind: `predict`, label: `강을 건너려면`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `강을 어떻게 건널까요?\n원작에서는 어떻게 했을까요?`},
+   note: {e: `원작에서는 허수아비가 뗏목을 만들자고 해요. 나무꾼이 통나무를 잘라 뗏목을 만들어요.`},
+   opts: [
+    {type: `canon`, go: `m3`, e: `뗏목을 만들어요`},
+    {type: `imag`, go: `m3`, e: `커다란 연잎을 타요`}
+   ]},
+  {id: `m3`, w: `tinman`, f: `dorothy_happy`, o: `tinman`,
+   e: `나무꾼이 통나무로 뗏목을 만들기 시작했어.\n하지만 해가 져서 내일 건너기로 했어.`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `강가의 밤`, f: `dorothy_dreamy`, o: `lion`,
+   q: {e: `내일이면 강을 건너요.\n도로시는 친구들에게 뭐라고 할까요?`},
+   note: {e: `원작의 도로시는 에메랄드 시와 오즈를 꿈꾸며 잠들어요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"오즈를 만나는 꿈을 꾸자."`},
+    {type: `imag`, go: `E_pre`, eff: {album: `e4_star`}, e: `"사자 갈기 위에서 별을 보자!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch4_river`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`,
+   e: `나는 반짝이는 초록 도시 꿈을 꾸었어.\n오즈가 나를 집에 보내 주는 꿈.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch4_camp`, w: `lion`, f: `dorothy_dreamy`, o: `lion`, fx: `dream`, cam: `up`,
+   e: `사자 갈기에 누워 별을 보았어.\n갈기가 구름처럼 폭신폭신했어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch4_camp`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {lion: 1, scarecrow: 1, tinman: 1}},
+   e: `"나는 불이 무서워." "나는 녹이 무서워요." "나는 다 무서워."\n우리는 무서운 걸 하나씩 말하고 웃었어.`},
+  {id: `E_last`, bg: `ch4_river`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `lion`, cam: `out`,
+   e: `겁쟁이라는 사자가 오늘 우리를 두 번이나 구했어.\n정말 겁쟁이일까?`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 5장 · 양귀비 꽃밭 (원작 8~9장)
+   힘 카드: li_swim(자동), tm_mouse(알아보기), sc_mice(알아보기)
+   ========================================================= */
+EASY.push({
+  key: `ch5`, num: 5, together: [`scarecrow`, `tinman`, `lion`], bgm: `bgm_ch5.mp3`, title: `양귀비 꽃밭`, orig: `원작 8~9장`, origTitle: `죽음의 양귀비 꽃밭 · 들쥐 여왕`,
+  bgKeys: [`ch5`, `ch5_river`, `ch5_bank`, `ch5_poppy`, `ch5_meadow`],
+  endings: {
+    canon: {title: `사자가 깨어나기를`, label: `원작 결말`},
+    imag:  {title: `들쥐 왕국의 행진`, label: `상상 결말`},
+    bal:   {title: `작은 친구들과의 약속`, label: `함께 결말`}
+  },
+  items: {
+    storkFeather: {ic: `🪶`, name: `황새 깃털`, desc: `강에서 허수아비를 구해 준 황새의 하얀 깃털이에요.`},
+    poppy: {ic: `🌺`, name: `양귀비 꽃 한 송이`, desc: `향기를 맡으면 잠이 드는 진홍빛 꽃이에요. 조심!`}
+  },
+  album: [
+    {id: `e5_wave`, ic: `👋`, name: `장대 위 허수아비에게 손 흔들기`},
+    {id: `e5_parade`, ic: `🐭`, name: `들쥐 수레 행진`},
+    {id: `e5_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`작은 들쥐들이 커다란 사자를 구했어요. 어떻게 할 수 있었을까요?`,
+        `나무꾼은 처음 보는 작은 들쥐를 구해 주었어요. 그게 나중에 어떻게 되었나요?`,
+        `내가 고마운 사람에게 보내고 싶은 말은 무엇인가요?`],
+    l: [`작은 들쥐들이 커다란 사자를 구했어요. 어떻게 할 수 있었을까요?`,
+        `나무꾼은 처음 보는 작은 들쥐를 구해 주었어요. 그게 나중에 어떻게 되었나요?`,
+        `내가 고마운 사람에게 보내고 싶은 말은 무엇인가요?`]
+  },
+  nodes: [
+  /* ---------- 강 ---------- */
+  {id: `s1`, bg: `ch5`, w: `tinman`, f: `dorothy_happy`, o: `tinman`, cam: `out`,
+   e: `아침에 뗏목이 다 만들어졌어.\n우리는 뗏목을 타고 강으로 나갔어.`},
+  {bg: `ch5_river`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `그런데 물살이 너무 빨라!\n뗏목이 자꾸 떠내려갔어.`},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `허수아비가 장대를 강바닥에 꽂고 밀었어.\n그런데 장대가 박혀 빠지지 않았어!`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `scarecrow`,
+   e: `허수아비는 장대에 매달린 채\n강 한가운데 남고 말았어.`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `강 한가운데`, f: `dorothy_sad`, o: `scarecrow`,
+   q: {e: `허수아비가 강 한가운데 남았어요!\n도로시는 어떻게 할까요?`},
+   note: {e: `원작에서는 사자가 강에 뛰어들어요. 나무꾼이 사자 꼬리를 잡고, 사자가 헤엄쳐서 뗏목을 강가로 끌어가요.`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `사자가 헤엄쳐 뗏목을 끌어요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e5_wave`}, e: `"꼭 데리러 갈게!" 손을 흔들어요`}
+   ]},
+  {id: `c1a`, w: `lion`, f: `dorothy_brave`, o: `lion`, cam: `shake`,
+   e: `사자가 풍덩 뛰어들었어.\n"내 꼬리를 꽉 잡아!"`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `scarecrow`, fx: `dream`,
+   e: `"허수아비! 꼭 데리러 갈게!"\n그때 사자가 풍덩 뛰어들었어.`},
+  {id: `m1`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {card: `li_swim`, heart: {lion: 1}},
+   e: `나무꾼이 꼬리를 잡고, 사자가 힘껏 헤엄쳤어.\n뗏목이 강가에 닿았어!`},
+  {bg: `ch5_bank`, w: `stork`, f: `dorothy_sad`, o: `stork`,
+   e: `그런데 허수아비는 아직 강 한가운데야.\n그때 하얀 황새가 날아왔어.`},
+  {w: `stork`, f: `dorothy_happy`, o: `stork`, eff: {item: `storkFeather`},
+   e: `"내가 데려올게요.\n짚이라서 가벼울 거예요."`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, cam: `in`, eff: {heart: {scarecrow: 1}},
+   e: `황새가 허수아비를 발로 잡고 날아왔어!\n허수아비가 기뻐서 춤을 추었어.`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `허수아비의 마음`, f: `dorothy_happy`, o: `scarecrow`,
+   q: {e: `다시 친구들에게 돌아온 허수아비.\n허수아비의 마음은 어떨까요?`},
+   note: {e: `허수아비는 영영 장대에 매달려 있을까 봐 무서웠어요. 다시 친구들을 만나서 정말 기뻤어요.`},
+   opts: [
+    {type: `feel`, ic: `🥳`, ok: 1, eff: {album: `e5_feel`, heart: {scarecrow: 1}}, e: `안심되고 기뻐요`},
+    {type: `feel`, ic: `😑`, e: `심심해요`},
+    {type: `feel`, ic: `😠`, e: `화나요`}
+   ]},
+  /* ---------- 양귀비 꽃밭 ---------- */
+  {bg: `ch5_poppy`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, cam: `out`,
+   e: `빨간 양귀비 꽃이 끝없이 피어 있었어.\n향기가 아주 진했어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`, eff: {item: `poppy`},
+   e: `눈이 점점 감겼어.\n나랑 토토는 꽃밭에 스르르 쓰러져 잠들었어.`},
+  {w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `허수아비가 말했어. "이 꽃 향기를 맡으면 잠이 들어요!\n빨리 데리고 나가야 해요."`},
+  {w: `lion`, f: `dorothy_dreamy`, o: `lion`,
+   e: `"나는 먼저 뛰어갈게!"\n사자가 달려갔어.`},
+  {w: `tinman`, f: `dorothy_dreamy`, o: `tinman`,
+   e: `허수아비와 나무꾼은 꽃 향기에 잠들지 않아.\n둘이 나와 토토를 안고 꽃밭을 나갔어.`},
+  {w: `lion`, f: `dorothy_dreamy`, o: `lion`, cam: `in`,
+   e: `그런데 꽃밭 끝에서\n사자가 잠들어 쓰러져 있었어!`},
+  {w: `tinman`, f: `dorothy_dreamy`, o: `tinman`,
+   e: `사자는 너무 무거워서 들 수가 없었어.\n"미안해, 사자야…."`},
+  /* ---------- 들쥐 여왕 ---------- */
+  {bg: `ch5_meadow`, w: `mousequeen`, f: `dorothy_dreamy`, o: `mousequeen`, cam: `shake`,
+   e: `그때 작은 들쥐가 달려왔어.\n사나운 살쾡이가 쫓아오고 있었어!`},
+  {w: `tinman`, f: `dorothy_dreamy`, o: `tinman`, cam: `shake`,
+   e: `나무꾼은 생각할 틈도 없이 도끼를 휘둘렀어.\n들쥐가 살았어!`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `나무꾼과 들쥐`, card: `tm_mouse`, f: `dorothy_dreamy`, o: `tinman`,
+   q: {e: `💡 나무꾼은 처음 보는 작은 들쥐를 구했어요.\n나무꾼이 보여 준 건 무엇일까요?`},
+   note: {e: `작고 약한 생명을 그냥 두지 못하는 따뜻한 마음이에요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `💗`, ok: 1, e: `작은 생명을 지키는 마음`},
+    {type: `feel`, ic: `🪓`, e: `도끼질을 잘하는 것`}
+   ]},
+  {w: `mousequeen`, f: `dorothy_happy`, o: `mousequeen`,
+   e: `"고마워요! 나는 들쥐 여왕이에요.\n무엇이든 도와줄게요."`},
+  {w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `허수아비가 머리를 톡톡 두드렸어.\n"좋은 생각이 났어요!"`},
+  {t: `choice`, id: `P2`, kind: `power`, label: `허수아비의 작전`, card: `sc_mice`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `💡 "나무 수레에 사자를 태우고,\n들쥐 수천 마리가 끌면 돼요!" 허수아비가 보여 준 건?`},
+   note: {e: `작은 들쥐들이 힘을 모으면 큰 사자도 옮길 수 있다는 걸 생각해 냈어요. 생각하는 힘이에요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🧠`, ok: 1, e: `모두 힘을 모으는 방법을 생각한 힘`},
+    {type: `feel`, ic: `🐭`, e: `들쥐가 힘이 센 것`}
+   ]},
+  {w: `tinman`, f: `dorothy_dreamy`, o: `tinman`,
+   e: `나무꾼이 나무로 수레를 뚝딱 만들었어.\n들쥐 수천 마리가 몰려왔어.`},
+  {t: `choice`, id: `C2`, kind: `predict`, label: `사자 옮기기`, f: `dorothy_dreamy`, o: `mousequeen`,
+   q: {e: `들쥐들이 실로 수레를 끌어요.\n어떻게 될까요?`},
+   note: {e: `원작에서 들쥐들은 영차영차 수레를 끌어서 사자를 꽃밭 밖으로 옮겨요. 허수아비와 나무꾼도 뒤에서 밀어요.`},
+   opts: [
+    {type: `canon`, go: `m2`, e: `영차영차, 사자를 옮겨요`},
+    {type: `imag`, go: `c2b`, eff: {album: `e5_parade`}, e: `들쥐들이 노래하며 행진해요`}
+   ]},
+  {id: `c2b`, w: `mousequeen`, f: `dorothy_dreamy`, o: `mousequeen`, fx: `dream`,
+   e: `"찍찍, 영차! 찍찍, 영차!"\n들쥐들이 노래하며 행진했어.`},
+  {id: `m2`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {lion: 1}},
+   e: `수레가 꽃밭 밖으로 나왔어.\n사자가 살았어!`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `mousequeen`,
+   e: `그때 나도 잠에서 깼어.\n"작은 들쥐들이 사자를 구했다고?"`},
+  {t: `name`, id: `N5`, key: `toQueen`, free: true, max: 30, label: `들쥐 여왕에게 보내는 감사`, f: `dorothy_happy`, o: `mousequeen`,
+   q: {e: `✍️ 들쥐 여왕에게\n어떤 고마운 말을 할까요?`},
+   pick: [`우리 사자를 구해 줘서 고마워요`, `작아도 정말 대단해요`, `꼭 다시 만나요`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 도로시는 들쥐들에게 고맙다고 인사해요. 여왕은 "필요하면 불러요" 하고 말해요.`}},
+  {w: `mousequeen`, f: `dorothy_happy`, o: `mousequeen`,
+   e: `"'{toQueen}'."\n여왕이 수염을 씰룩이며 웃었어. "필요하면 언제든 불러요."`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `사자를 기다리며`, f: `dorothy_happy`, o: `lion`,
+   q: {e: `사자는 아직 자고 있어요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 사자 곁에서 깨어나기를 기다려요. 과일을 따 먹으며 쉬어요.`},
+   opts: [
+    {type: `canon`, go: `C4x`, e: `사자 곁에서 기다려요`},
+    {type: `imag`, go: `C4x`, e: `들쥐들과 꽃 왕관을 만들어요`}
+   ]},
+  {id: `C4x`, t: `choice`, kind: `talk`, label: `깨어난 사자에게`, f: `dorothy_happy`, o: `lion`,
+   q: {e: `사자가 눈을 떠요!\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작의 사자는 깨어나서 깜짝 놀라요. "작은 들쥐들이 나를 구했다고?" 하고요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"들쥐들이 너를 구했어!"`},
+    {type: `imag`, go: `E_pre`, e: `"잘 잤어? 꽃 왕관 써 봐!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch5_meadow`, w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `사자가 눈을 떴어.\n"작은 들쥐들이 나를? 고마워라…."`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch5_meadow`, w: `mousequeen`, f: `dorothy_dreamy`, o: `mousequeen`, fx: `dream`,
+   e: `들쥐들이 꽃 왕관을 사자 머리에 씌웠어.\n사자가 깨어나 "에취!" 재채기를 했어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch5_meadow`, w: `mousequeen`, f: `dorothy_happy`, o: `mousequeen`, eff: {heart: {tinman: 1, lion: 1}},
+   e: `"다음엔 우리가 도와줄게요."\n작은 친구들과 약속했어.`},
+  {id: `E_last`, bg: `ch5_meadow`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `lion`, cam: `out`,
+   e: `다시 넷이 함께 노란 벽돌 길을 찾았어.\n에메랄드 시가 가까워지고 있어!`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 6장 · 에메랄드 시 (원작 10~11장)
+   ========================================================= */
+EASY.push({
+  key: `ch6`, num: 6, together: [`scarecrow`, `tinman`, `lion`], bgm: `bgm_ch6.mp3`, title: `에메랄드 시`, orig: `원작 10~11장`, origTitle: `성문 문지기 · 놀라운 오즈의 에메랄드 시`,
+  bgKeys: [`ch6`, `ch6_farm`, `ch6_gate`, `ch6_city`, `ch6_room`, `ch6_throne`],
+  endings: {
+    canon: {title: `초록 수탉이 울 때`, label: `원작 결말`},
+    imag:  {title: `초록 달걀의 꿈`, label: `상상 결말`},
+    bal:   {title: `넷이 한 약속`, label: `함께 결말`}
+  },
+  items: {
+    greenSpectacles: {ic: `🕶️`, name: `초록 안경`, desc: `성문 문지기가 채워 준 초록 안경. 에메랄드 시에서는 모두 이 안경을 써요.`},
+    emerald: {ic: `💎`, name: `에메랄드 한 알`, desc: `초록 거리 바닥에 박혀 반짝이던 보석이에요.`}
+  },
+  album: [
+    {id: `e6_lemonade`, ic: `🍋`, name: `초록 레모네이드`},
+    {id: `e6_egg`, ic: `🥚`, name: `초록 달걀의 꿈`},
+    {id: `e6_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`네 친구는 오즈를 만날 때 모두 다른 모습을 보았어요. 왜 그랬을까요?`,
+        `오즈는 "서쪽 마녀를 없애야 소원을 들어주겠다"고 했어요. 이 말을 들은 친구들의 기분은 어땠을까요?`,
+        `내가 오즈에게 부탁하고 싶은 것은 무엇인가요?`],
+    l: [`네 친구는 오즈를 만날 때 모두 다른 모습을 보았어요. 왜 그랬을까요?`,
+        `오즈는 "서쪽 마녀를 없애야 소원을 들어주겠다"고 했어요. 이 말을 들은 친구들의 기분은 어땠을까요?`,
+        `내가 오즈에게 부탁하고 싶은 것은 무엇인가요?`]
+  },
+  nodes: [
+  /* ---------- 초록 농가 ---------- */
+  {id: `s1`, bg: `ch6`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `lion`, cam: `out`,
+   e: `길가의 울타리와 집이 초록색으로 바뀌었어.\n에메랄드 시가 가까운가 봐!`},
+  {bg: `ch6_farm`, w: `farmwife`, f: `dorothy_happy`, o: `farmwife`,
+   e: `저녁에 한 농가에서 묵었어.\n아주머니가 맛있는 저녁을 차려 주셨어.`},
+  {w: `farmer`, f: `dorothy_surprised`, o: `farmer`,
+   e: `"오즈를 만나러 간다고?\n오즈는 아무도 만나 주지 않는단다."`},
+  {w: `farmer`, f: `dorothy_surprised`, o: `farmer`,
+   e: `"오즈는 새도 되고, 코끼리도 되고, 고양이도 된대.\n진짜 모습은 아무도 몰라."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_sad`, o: `farmer`,
+   q: {e: `"오즈는 아무도 안 만나 준대."\n도로시의 마음은 어떨까요?`},
+   note: {e: `도로시는 걱정이 되었어요. 하지만 여기까지 왔으니 꼭 만나야 한다고 생각해요.`},
+   opts: [
+    {type: `feel`, ic: `😟`, ok: 1, eff: {album: `e6_feel`}, e: `걱정되지만 꼭 만나고 싶어요`},
+    {type: `feel`, ic: `😆`, e: `너무 웃겨요`},
+    {type: `feel`, ic: `🥱`, e: `상관없어요`}
+   ]},
+  /* ---------- 성문 ---------- */
+  {bg: `ch6_gate`, w: `dorothy`, in: 1, f: `dorothy_surprised`, cam: `out`,
+   e: `다음 날, 커다란 초록 성문이 나왔어.\n에메랄드가 반짝반짝 박혀 있었어!`},
+  {w: `guardian`, f: `dorothy_surprised`, o: `guardian`,
+   e: `초록 옷의 문지기가 말했어.\n"이 도시에 들어오려면 초록 안경을 써야 한다."`},
+  {w: `guardian`, f: `dorothy_surprised`, o: `guardian`, eff: {item: `greenSpectacles`},
+   e: `"안 그러면 눈이 부셔서 안 보이거든."\n문지기가 안경을 채우고 열쇠로 잠갔어.`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `초록 안경`, f: `dorothy_dreamy`, o: `guardian`,
+   q: {e: `초록 안경을 썼어요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 문지기 말대로 안경을 쓰고 들어가요. 토토도 작은 안경을 썼대요!`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `토토도 안경을 쓰고 들어가요`},
+    {type: `imag`, go: `c1b`, e: `안경을 살짝 내려서 몰래 봐요`}
+   ]},
+  {id: `c1a`, w: `toto`, f: `dorothy_happy`, o: `toto`,
+   e: `토토도 작은 초록 안경을 썼어.\n너무 귀여워!`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `guardian`, fx: `dream`,
+   e: `안경을 살짝 내려 봤어.\n어? 그런데 열쇠로 잠겨서 안 내려가!`},
+  /* ---------- 초록 도시 ---------- */
+  {id: `m1`, bg: `ch6_city`, w: `dorothy`, in: 1, f: `dorothy_happy`, cam: `out`, eff: {item: `emerald`},
+   e: `와! 집도, 길도, 하늘도 다 초록색이야.\n바닥엔 에메랄드가 반짝였어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`,
+   e: `초록 옷을 입은 사람들, 초록 사탕, 초록 레모네이드.\n아이들이 사자를 보고 도망갔어.`},
+  {t: `choice`, id: `C2`, kind: `act`, label: `초록 거리`, f: `dorothy_happy`, o: `lion`,
+   q: {e: `신기한 초록 거리예요.\n도로시는 무엇을 할까요?`},
+   note: {e: `원작의 일행은 병사를 따라 곧장 궁전으로 가요. 거리 사람들은 신기한 듯 바라봐요.`},
+   opts: [
+    {type: `canon`, go: `m2`, e: `곧장 궁전으로 가요`},
+    {type: `imag`, go: `c2b`, eff: {album: `e6_lemonade`}, e: `초록 레모네이드를 사 먹어요`}
+   ]},
+  {id: `c2b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`,
+   e: `초록 레모네이드를 한 모금!\n맛은… 그냥 레모네이드 맛이었어.`},
+  {id: `m2`, bg: `ch6_room`, w: `soldier`, f: `dorothy_happy`, o: `soldier`,
+   e: `초록 수염 병사가 궁전으로 데려갔어.\n"오즈님께 여쭤보겠다."`},
+  {w: `greengirl`, f: `dorothy_happy`, o: `greengirl`,
+   e: `초록 소녀가 초록 방으로 안내해 주었어.\n초록 침대, 초록 분수, 초록 책!`},
+  {t: `name`, id: `N6`, key: `myWish`, free: true, max: 30, label: `내가 오즈에게 부탁하고 싶은 것`, f: `dorothy_dreamy`, o: `greengirl`,
+   q: {e: `✍️ 내일 오즈를 만나요.\n내가 오즈에게 부탁한다면 무엇을 부탁할까요?`},
+   pick: [`친구랑 사이좋게 지내게 해 주세요`, `용기를 주세요`, `집에 가고 싶어요`],
+   ph: `직접 써도 돼요`,
+   note: {e: `도로시는 집에 가고 싶다고 부탁할 거예요. 친구들은 뇌, 심장, 용기를 부탁하고요.`}},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`,
+   e: `'{myWish}'.\n나도 마음속으로 소원을 빌었어.`},
+  /* ---------- 오즈 ---------- */
+  {bg: `ch6_throne`, w: `oz_head`, f: `dorothy_surprised`, o: `oz_head`, cam: `in`,
+   e: `다음 날, 나 혼자 알현실에 들어갔어.\n왕좌 위에 커다란 머리가 떠 있었어!`},
+  {w: `oz_head`, f: `dorothy_surprised`, o: `oz_head`,
+   e: `"나는 위대하고 무시무시한 오즈다.\n너는 누구냐?"`},
+  {w: `dorothy`, in: 1, f: `dorothy_brave`, o: `oz_head`,
+   e: `"저는 작고 순한 도로시예요.\n캔자스 집으로 보내 주세요."`},
+  {w: `oz_head`, f: `dorothy_sad`, o: `oz_head`, cam: `shake`,
+   e: `"서쪽의 나쁜 마녀를 없애라.\n그러면 집에 보내 주마."`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `oz_head`,
+   e: `"저는 아무도 해치고 싶지 않아요!"\n나는 울면서 나왔어.`},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `oz_lady`,
+   e: `허수아비가 갔을 땐 아름다운 숙녀가 있었대.\n"마녀를 없애면 뇌를 주마."`},
+  {w: `tinman`, f: `dorothy_surprised`, o: `oz_beast`,
+   e: `나무꾼은 무시무시한 괴물을 봤대.\n"마녀를 없애면 심장을 주마."`},
+  {w: `lion`, f: `dorothy_surprised`, o: `oz_fire`,
+   e: `사자는 활활 타는 불덩이를 봤대.\n"마녀를 없애면 용기를 주마."`},
+  {t: `choice`, id: `C3`, kind: `predict`, label: `오즈의 진짜 모습`, f: `dorothy_dreamy`, o: `oz`,
+   q: {e: `넷이 모두 다른 모습을 봤어요.\n오즈의 진짜 모습은 무엇일까요?`},
+   note: {e: `아직은 아무도 몰라요. 오즈의 진짜 모습은 8장에서 밝혀져요. 기억해 두세요!`},
+   opts: [
+    {type: `canon`, go: `m3`, e: `아직은 모르겠어요`},
+    {type: `imag`, go: `m3`, e: `사실은 작은 생쥐일 거예요!`}
+   ]},
+  {id: `m3`, bg: `ch6_room`, w: `lion`, f: `dorothy_sad`, o: `lion`,
+   e: `"이제 어떻게 하지?"\n우리는 한참 동안 말이 없었어.`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `서쪽으로 갈까`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `서쪽 마녀를 찾아가야 할까요?\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작에서 넷은 함께 서쪽으로 가기로 해요. 마녀를 없앨 수 있을지는 몰라도, 혼자 가게 둘 수는 없으니까요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"무섭지만 같이 가 보자."`},
+    {type: `imag`, go: `E_pre`, e: `"먼저 맛있는 걸 먹고 생각하자!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch6_gate`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `lion`,
+   e: `다음 날 아침, 초록 수탉이 울었어.\n우리는 서쪽으로 길을 떠났어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch6_room`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, fx: `dream`, eff: {album: `e6_egg`},
+   e: `초록 달걀 프라이를 먹는 꿈을 꾸었어.\n꿈에서도 다 초록색이었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch6_room`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `우리 넷은 손을 포갰어.\n"누구도 혼자 두지 않기!"`},
+  {id: `E_last`, bg: `ch6_gate`, w: `dorothy`, in: 1, f: `dorothy_brave`, o: `scarecrow`, cam: `out`,
+   e: `서쪽 마녀는 얼마나 무서울까?\n그래도 우리는 넷이야.`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 7장 · 서쪽 마녀의 성 (원작 12~13장) + 중간 보고서
+   힘 카드: sc_bees(알아보기), li_no(자동) / ✨ 힘 카드 꺼내기 R1(사자)
+   ========================================================= */
+EASY.push({
+  key: `ch7`, num: 7, together: [`scarecrow`, `tinman`, `lion`], midReport: true, bgm: `bgm_ch7.mp3`, title: `서쪽 마녀의 성`, orig: `원작 12~13장`, origTitle: `나쁜 마녀를 찾아서 · 구출`,
+  bgKeys: [`ch7`, `ch7_castle`, `ch7_kitchen`, `ch7_yard`, `ch7_hall`],
+  endings: {
+    canon: {title: `노란 나라의 작별`, label: `원작 결말`},
+    imag:  {title: `윙키 축제의 밤`, label: `상상 결말`},
+    bal:   {title: `다시 넷이 함께`, label: `함께 결말`}
+  },
+  items: {
+    waterBucket: {ic: `🪣`, name: `물 한 동이`, desc: `마녀에게 끼얹은 부엌의 물 양동이. 도로시는 물이 마녀의 약점인 줄 몰랐어요.`},
+    goldenCap: {ic: `👑`, name: `황금 모자`, desc: `마녀의 찬장에 있던 예쁜 모자. 어떤 마법이 있는지는 아직 몰라요.`}
+  },
+  album: [
+    {id: `e7_drum`, ic: `🥁`, name: `냄비 북 노래`},
+    {id: `e7_party`, ic: `🎉`, name: `윙키 축제`},
+    {id: `e7_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`늑대, 까마귀, 벌이 왔을 때 친구들은 각자 어떻게 모두를 지켰나요?`,
+        `도로시는 마녀를 없애려고 물을 끼얹은 게 아니었어요. 이 장면을 어떻게 생각하나요?`,
+        `망가진 친구를 다시 찾아 고쳐 주었을 때, 친구들의 기분은 어땠을까요?`],
+    l: [`늑대, 까마귀, 벌이 왔을 때 친구들은 각자 어떻게 모두를 지켰나요?`,
+        `도로시는 마녀를 없애려고 물을 끼얹은 게 아니었어요. 이 장면을 어떻게 생각하나요?`,
+        `망가진 친구를 다시 찾아 고쳐 주었을 때, 친구들의 기분은 어땠을까요?`]
+  },
+  nodes: [
+  /* ---------- 서쪽으로 ---------- */
+  {id: `s1`, bg: `ch7`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `lion`, cam: `out`,
+   e: `서쪽으로 가는 길엔 나무도, 집도 없었어.\n해가 뜨겁게 내리쬐었어.`},
+  {bg: `ch7_castle`, w: `witch`, f: `dorothy_surprised`, o: `witch`, cam: `in`,
+   e: `서쪽 마녀는 눈이 하나뿐이야.\n그런데 그 눈으로 아주 멀리까지 본대.`},
+  {w: `witch`, f: `dorothy_surprised`, o: `witch`, cam: `shake`,
+   e: `"내 땅에 들어오다니!"\n마녀가 늑대 마흔 마리를 보냈어.`},
+  {t: `choice`, id: `C1`, kind: `predict`, label: `늑대 떼`, f: `dorothy_dreamy`, o: `tinman`,
+   q: {e: `밤에 늑대들이 몰려와요!\n누가 막을까요?`},
+   note: {e: `원작에서는 나무꾼이 나서요. "이건 제 싸움이에요!" 양철 몸엔 늑대 이빨이 안 들어가거든요.`},
+   opts: [
+    {type: `canon`, go: `c1a`, e: `나무꾼이 막아요`},
+    {type: `imag`, go: `c1b`, e: `사자가 잠꼬대로 "어흥!"`}
+   ]},
+  {id: `c1a`, w: `tinman`, f: `dorothy_brave`, o: `tinman`, cam: `shake`,
+   e: `"이건 제 싸움이에요!"\n나무꾼이 도끼로 늑대들을 모두 물리쳤어.`},
+  {t: `goto`, to: `m1`},
+  {id: `c1b`, w: `lion`, f: `dorothy_dreamy`, o: `lion`, fx: `dream`, cam: `shake`,
+   e: `사자가 잠꼬대로 "어흥!"\n늑대들이 멈칫한 사이 나무꾼이 다 물리쳤어.`},
+  {id: `m1`, w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `다음엔 까마귀 떼가 왔어.\n허수아비가 두 팔을 쫙 벌리자 까마귀들이 무서워했어!`},
+  {w: `witch`, f: `dorothy_surprised`, o: `witch`, cam: `shake`,
+   e: `화가 난 마녀가 이번엔\n검은 벌 떼를 보냈어!`},
+  {w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`,
+   e: `허수아비가 말했어.\n"내 짚을 꺼내서 도로시랑 토토랑 사자를 덮어요!"`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `허수아비의 짚`, card: `sc_bees`, f: `dorothy_surprised`, o: `scarecrow`,
+   q: {e: `💡 허수아비가 자기 몸의 짚으로\n친구들을 덮었어요. 허수아비가 보여 준 건?`},
+   note: {e: `벌은 짚도 양철도 못 뚫는다는 걸 생각해 냈어요. 그리고 자기 몸을 비워 친구들을 지켰어요. 생각하는 힘이에요! 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🧠`, ok: 1, e: `친구를 지키는 방법을 생각한 힘`},
+    {type: `feel`, ic: `😴`, e: `그냥 쉬고 싶었던 것`}
+   ]},
+  {w: `tinman`, f: `dorothy_happy`, o: `tinman`,
+   e: `벌들은 나무꾼을 쏘다가 침이 다 부러졌어.\n우리는 허수아비에게 짚을 다시 채워 주었어.`},
+  /* ---------- 날개 원숭이 ---------- */
+  {bg: `ch7_castle`, w: `monkeyking`, f: `dorothy_sad`, o: `monkeyking`, cam: `shake`,
+   e: `마녀가 황금 모자로 날개 원숭이들을 불렀어.\n원숭이들이 하늘에서 내려왔어!`},
+  {w: `monkeyking`, f: `dorothy_sad`, o: `monkeyking`, cam: `shake`,
+   e: `원숭이들이 나무꾼을 바위에 떨어뜨리고,\n허수아비의 짚을 다 빼 버렸어.`},
+  {w: `lion`, f: `dorothy_sad`, o: `lion`, cam: `shake`,
+   e: `사자는 밧줄에 묶여 마녀의 성으로 끌려갔어.\n친구들이… 다 흩어졌어.`},
+  {w: `monkeyking`, f: `dorothy_surprised`, o: `monkeyking`,
+   e: `그런데 원숭이들은 내 이마 자국을 보고 멈췄어.\n"이 아이는 해칠 수 없다."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_sad`, o: `toto`,
+   q: {e: `친구들이 모두 흩어졌어요.\n도로시의 마음은 어떨까요?`},
+   note: {e: `도로시는 너무 슬프고 무서웠어요. 친구들이 어떻게 되었는지 몰랐으니까요.`},
+   opts: [
+    {type: `feel`, ic: `😭`, ok: 1, eff: {album: `e7_feel`}, e: `슬프고 무서워요`},
+    {type: `feel`, ic: `😊`, e: `편안해요`},
+    {type: `feel`, ic: `🤩`, e: `신나요`}
+   ]},
+  /* ---------- 마녀의 성 ---------- */
+  {bg: `ch7_kitchen`, w: `witch`, f: `dorothy_sad`, o: `witch`,
+   e: `마녀는 나에게 부엌일을 시켰어.\n"냄비를 닦고, 불을 피워라!"`},
+  {t: `choice`, id: `C2`, kind: `act`, label: `마녀의 부엌`, f: `dorothy_sad`, o: `witch`,
+   q: {e: `마녀가 일을 시켜요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 얌전히 열심히 일해요. 사실 마녀는 이마 자국 때문에 도로시를 해칠 수 없었는데, 도로시는 그걸 몰랐어요.`},
+   opts: [
+    {type: `canon`, go: `m2`, e: `얌전히 일해요`},
+    {type: `imag`, go: `c2b`, eff: {album: `e7_drum`}, e: `냄비를 북처럼 두드리며 노래해요`}
+   ]},
+  {id: `c2b`, w: `dorothy`, in: 1, f: `dorothy_brave`, fx: `dream`,
+   e: `통통, 냄비 북을 치며 노래했어.\n그러니까 조금 덜 무서웠어.`},
+  {id: `m2`, bg: `ch7_yard`, w: `witch`, f: `dorothy_sad`, o: `lion`,
+   e: `마녀는 사자를 마당에 가두고 밥을 주지 않았어.\n"마구를 차고 내 마차를 끌어라!"`},
+  {w: `lion`, f: `dorothy_sad`, o: `lion`,
+   e: `밤에 몰래 사자에게 갔어.\n사자는 배가 고파서 힘이 없었어.`},
+  {t: `choice`, id: `R1`, kind: `recall`, who: `lion`, label: `사자에게 꺼내 보인 카드`, go: `r1`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `✨ 사자가 포기하려고 해요.\n사자가 예전에 해낸 일을 떠올리게 해 줄 카드는?`},
+   note: {e: `카드가 사자에게 힘을 주는 게 아니에요. 사자가 이미 해낸 일을 기억하게 해 줄 뿐이에요.`}},
+  {id: `r1`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {card: `li_no`, heart: {lion: 1}},
+   e: `"'{lastCard}'… 맞아, 나 그때 해냈지."\n다음 날 사자가 마녀에게 말했어. "절대 안 해!"`},
+  /* ---------- 은 구두와 물 ---------- */
+  {bg: `ch7_kitchen`, w: `witch`, f: `dorothy_surprised`, o: `witch`, cam: `shake`,
+   e: `마녀는 내 은 구두가 갖고 싶었어.\n안 보이는 막대로 나를 넘어뜨리고, 구두 한 짝을 빼앗았어!`},
+  {w: `witch`, f: `dorothy_brave`, o: `witch`,
+   e: `"이제 이 구두는 내 거다! 히히히!"\n마녀가 나를 비웃었어.`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `빼앗긴 구두`, f: `dorothy_brave`, o: `witch`,
+   q: {e: `구두를 빼앗겼어요!\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 화가 나서 옆에 있던 물 양동이를 마녀에게 끼얹어요. 물이 마녀의 약점인 줄은 몰랐어요!`},
+   opts: [
+    {type: `canon`, go: `c3a`, e: `물 양동이를 끼얹어요`},
+    {type: `imag`, go: `c3b`, e: `"왜 이렇게 못되게 굴어요?" 물어요`}
+   ]},
+  {id: `c3a`, w: `dorothy`, f: `dorothy_brave`, o: `witch`, eff: {item: `waterBucket`}, cam: `shake`,
+   e: `나는 물 양동이를 번쩍 들어\n마녀에게 촤악! 끼얹었어.`},
+  {t: `goto`, to: `m3`},
+  {id: `c3b`, w: `witch`, f: `dorothy_brave`, o: `witch`, fx: `dream`, eff: {item: `waterBucket`},
+   e: `"왜 그래요?" 마녀가 화가 나서 펄쩍 뛰다가\n물 양동이를 걷어찼어. 촤악!`},
+  {id: `m3`, w: `witch`, f: `dorothy_surprised`, o: `witch`, cam: `shake`,
+   e: `"으악! 내가 녹는다!"\n마녀가 점점 작아지더니… 사라졌어!`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `toto`,
+   e: `나는 은 구두를 다시 신었어.\n그리고 사자에게 달려갔어. "사자야, 이제 자유야!"`},
+  /* ---------- 친구 구하기 ---------- */
+  {bg: `ch7_hall`, w: `winkie`, f: `dorothy_happy`, o: `winkie`,
+   e: `마녀의 일꾼이던 노란 윙키들도 자유가 되었어.\n윙키들이 만세를 불렀어!`},
+  {w: `tinman`, f: `dorothy_happy`, o: `tinman`, eff: {heart: {tinman: 1}},
+   e: `윙키들과 함께 찌그러진 나무꾼을 찾아\n망치로 똑딱똑딱 고쳤어.`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1}},
+   e: `허수아비의 옷도 찾아서\n새 짚을 가득 채웠어. "다시 태어난 것 같아요!"`},
+  {t: `name`, id: `N7`, key: `reunion`, free: true, max: 30, label: `다시 만난 친구에게 하고 싶은 말`, f: `dorothy_happy`, o: `scarecrow`,
+   q: {e: `✍️ 다시 넷이 모였어요!\n친구들에게 어떤 말을 할까요?`},
+   pick: [`다시는 헤어지지 말자`, `보고 싶었어`, `고쳐 줘서 다행이야`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작에서 넷은 노란 성에서 며칠 동안 행복하게 지내요.`}},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `"'{reunion}'"\n친구들이 모두 고개를 끄덕였어.`},
+  {w: `winkie`, f: `dorothy_happy`, o: `winkie`, eff: {item: `goldenCap`},
+   e: `마녀의 찬장에서 예쁜 황금 모자를 찾았어.\n나는 그냥 예뻐서 썼어.`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `떠나기 전 인사`, f: `dorothy_happy`, o: `winkie`,
+   q: {e: `윙키들과 헤어질 시간이에요.\n도로시는 뭐라고 인사할까요?`},
+   note: {e: `원작에서는 모두 윙키들과 팔이 아플 때까지 악수를 했대요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"고마워요!" 악수해요`},
+    {type: `imag`, go: `E_pre`, eff: {album: `e7_party`}, e: `"우리 축제해요!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch7_hall`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `winkie`,
+   e: `팔이 아플 때까지 악수를 했어.\n윙키들이 만세를 세 번 불러 주었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch7_hall`, w: `winkie`, f: `dorothy_happy`, o: `winkie`, fx: `dream`,
+   e: `노란 깃발이 펄럭이는 윙키 축제!\n사자는 윙키 아이들을 등에 태워 주었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch7_hall`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `"혼자서는 못 했을 거야. 너희가 있어서 버텼어."\n사자가 말했어. 우리 넷은 손을 포갰어.`},
+  {id: `E_last`, bg: `ch7`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, cam: `out`,
+   e: `이제 오즈에게 가서 약속을 지켜 달라고 하자!\n내 머리 위에서 황금 모자가 반짝였어.`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 8장 · 위대한 사기꾼 (원작 14~16장)
+   힘 카드: sc_learn(알아보기), li_afraid(알아보기) / ✨ 힘 카드 꺼내기 R1(세 친구)
+   가짜 선물은 밋밋하게, 진짜 힘은 카드에서
+   ========================================================= */
+EASY.push({
+  key: `ch8`, num: 8, together: [`scarecrow`, `tinman`, `lion`], bgm: `bgm_ch8.mp3`, title: `위대한 사기꾼`, orig: `원작 14~16장`, origTitle: `날개 달린 원숭이 · 오즈의 정체 · 사기꾼의 마법`,
+  bgKeys: [`ch8`, `ch8_sky`, `ch8_throne`, `ch8_back`, `ch8_room`],
+  endings: {
+    canon: {title: `혼자 남은 마법사`, label: `원작 결말`},
+    imag:  {title: `선물 자랑 대회`, label: `상상 결말`},
+    bal:   {title: `선물보다 먼저 있던 것`, label: `함께 결말`}
+  },
+  items: {
+    newBrains: {ic: `📌`, name: `겨로 만든 새 뇌`, desc: `겨에 핀과 바늘을 섞어 만든 허수아비의 '새 뇌'예요.`},
+    silkHeart: {ic: `💚`, name: `비단 심장`, desc: `비단으로 만들고 톱밥을 채운 나무꾼의 '새 심장'이에요.`},
+    courage: {ic: `🍶`, name: `초록 병의 '용기'`, desc: `오즈가 접시에 따라 준 마실 것. "용기가 되는 거란다."`}
+  },
+  album: [
+    {id: `e8_ride`, ic: `🐒`, name: `원숭이 하늘길`},
+    {id: `e8_toto`, ic: `🐶`, name: `칸막이를 넘어뜨린 토토`},
+    {id: `e8_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`오즈는 마법사가 아니었어요. 그런데도 친구들은 선물을 받고 기뻐했어요. 왜 그랬을까요?`,
+        `"진짜 용기는 무서울 때 맞서는 것." 내가 무서웠는데도 해낸 일이 있나요?`,
+        `도로시는 허수아비에게 "지금 그대로의 네가 좋아"라고 했어요. 내가 친구에게 해 주고 싶은 말은?`],
+    l: [`오즈는 마법사가 아니었어요. 그런데도 친구들은 선물을 받고 기뻐했어요. 왜 그랬을까요?`,
+        `"진짜 용기는 무서울 때 맞서는 것." 내가 무서웠는데도 해낸 일이 있나요?`,
+        `도로시는 허수아비에게 "지금 그대로의 네가 좋아"라고 했어요. 내가 친구에게 해 주고 싶은 말은?`]
+  },
+  nodes: [
+  /* ---------- 길을 잃다 ---------- */
+  {id: `s1`, bg: `ch8`, w: `dorothy`, in: 1, f: `dorothy_sad`, o: `toto`, cam: `out`,
+   e: `에메랄드 시로 가는 길이 없었어.\n며칠을 걸어도 빨간 꽃 들판뿐이야.`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `scarecrow`,
+   e: `우리는 길을 잃었어.\n모두 지쳐서 풀밭에 주저앉았어.`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `길 잃은 들판`, f: `dorothy_sad`, o: `toto`,
+   q: {e: `모두 지쳤어요.\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 들쥐 여왕이 준 호루라기를 불어요. 예전에 도와준 친구가 이번엔 도로시를 도와줘요.`},
+   opts: [
+    {type: `canon`, go: `m1`, e: `들쥐 여왕의 호루라기를 불어요`},
+    {type: `imag`, go: `c1b`, e: `사자 등에 올라 멀리 봐요`}
+   ]},
+  {id: `c1b`, w: `lion`, f: `dorothy_dreamy`, o: `lion`, fx: `dream`,
+   e: `사자 등에서 까치발을 들어도 꽃뿐이야.\n사자가 펄쩍 뛰자 호루라기가 삑! 울렸어.`},
+  {id: `m1`, w: `mousequeen`, f: `dorothy_surprised`, o: `mousequeen`,
+   e: `들쥐 여왕이 달려왔어!\n"황금 모자로 날개 원숭이를 불러요. 데려다줄 거예요."`},
+  {w: `dorothy`, in: 1, f: `dorothy_brave`, o: `monkeyking`,
+   e: `모자 안에 주문이 있었어.\n"에페, 페페, 카케! 힐로, 홀로, 헬로! 지지, 주지, 직!"`},
+  {bg: `ch8_sky`, w: `monkeyking`, f: `dorothy_happy`, o: `monkeyking`, cam: `up`, eff: {album: `e8_ride`},
+   e: `원숭이들이 우리를 안고 하늘을 날았어.\n이번엔 아무도 다치지 않았어!`},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `금방 에메랄드 시에 도착했어.\n"정말 멋진 비행이었어!"`},
+  /* ---------- 오즈의 정체 ---------- */
+  {bg: `ch8_throne`, w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `oz`, cam: `in`,
+   e: `알현실에 들어갔는데 아무도 없었어.\n목소리만 들렸어. "나는 위대한 오즈다."`},
+  {w: `tinman`, f: `dorothy_brave`, o: `oz`,
+   e: `"약속을 지켜 주세요!"\n"내일 다시 오너라." 우리는 화가 났어.`},
+  {t: `choice`, id: `C2`, kind: `predict`, label: `목소리의 주인`, f: `dorothy_surprised`, o: `lion`,
+   q: {e: `사자가 "어흥!" 울부짖어요.\n오즈는 진짜 어디 있을까요?`},
+   note: {e: `원작에서 사자 소리에 놀란 토토가 펄쩍 뛰다가 구석의 칸막이를 넘어뜨려요. 그 뒤에 작은 할아버지가 있었어요!`},
+   opts: [
+    {type: `canon`, go: `m2`, eff: {album: `e8_toto`}, e: `구석 칸막이 뒤에 있어요`},
+    {type: `imag`, go: `m2`, e: `천장 위에 거인이 있어요`}
+   ]},
+  {id: `m2`, w: `toto`, f: `dorothy_surprised`, o: `toto`, cam: `shake`,
+   e: `"어흥!" 놀란 토토가 펄쩍 뛰다가\n구석 칸막이를 쿵! 넘어뜨렸어.`},
+  {w: `oz_man`, f: `dorothy_surprised`, o: `oz_man`, cam: `in`,
+   e: `칸막이 뒤에 머리가 벗어진 작은 할아버지가 있었어.\n"나, 나는 오즈다. 때리지 마라!"`},
+  {w: `oz_man`, f: `dorothy_sad`, o: `oz_man`,
+   e: `"나는 마법사가 아니야.\n그냥 평범한 사람이야."`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `scarecrow`,
+   e: `"당신은 사기꾼이에요!"\n허수아비가 슬프게 말했어.`},
+  {w: `oz_man`, f: `dorothy_dreamy`, o: `oz_man`,
+   e: `오즈는 원래 열기구를 타던 서커스 사람이었대.\n바람에 날려 이 나라에 왔대.`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `친구들의 마음`, f: `dorothy_sad`, o: `scarecrow`,
+   q: {e: `오즈가 가짜 마법사래요.\n친구들의 마음은 어떨까요?`},
+   note: {e: `친구들은 실망하고 슬펐어요. 뇌, 심장, 용기를 받으려고 먼 길을 왔으니까요.`},
+   opts: [
+    {type: `feel`, ic: `😞`, ok: 1, eff: {album: `e8_feel`}, e: `실망하고 슬퍼요`},
+    {type: `feel`, ic: `😂`, e: `재밌어요`},
+    {type: `feel`, ic: `😌`, e: `편안해요`}
+   ]},
+  /* ---------- 오즈가 알아본 것 ---------- */
+  {w: `oz_man`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `오즈가 허수아비에게 말했어.\n"너는 뇌가 필요 없어. 날마다 무언가를 배우고 있잖니."`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `날마다 배우는 허수아비`, card: `sc_learn`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `💡 허수아비가 이미 가진 건\n무엇일까요?`},
+   note: {e: `허수아비는 길에서 늘 새로운 걸 배웠어요. 날마다 배우는 것, 그게 생각하는 힘이에요. 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🧠`, ok: 1, e: `날마다 배우는 힘`},
+    {type: `feel`, ic: `📌`, e: `머리에 꽂을 바늘`}
+   ]},
+  {w: `oz_man`, f: `dorothy_dreamy`, o: `lion`,
+   e: `오즈가 사자에게 말했어.\n"진짜 용기는 무서울 때 맞서는 거란다."`},
+  {t: `choice`, id: `P2`, kind: `power`, label: `무서워도 맞서는 사자`, card: `li_afraid`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `💡 사자가 이미 가진 용기는\n어떤 용기일까요?`},
+   note: {e: `무섭지 않은 게 용기가 아니라, 무서운데도 하는 게 용기예요. 사자는 늘 그랬어요. 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🦁`, ok: 1, e: `무서워도 친구 앞에 서는 용기`},
+    {type: `feel`, ic: `🍶`, e: `약을 마셔야 생기는 용기`}
+   ]},
+  {w: `oz_man`, f: `dorothy_sad`, o: `oz_man`,
+   e: `그래도 친구들은 선물을 원했어.\n"좋다. 내일 오너라." 오즈가 말했어.`},
+  /* ---------- 밤 ---------- */
+  {bg: `ch8_room`, w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `그날 밤, 친구들은 걱정했어.\n"가짜 마법사가 주는 선물이 진짜일까요?"`},
+  {t: `choice`, id: `R1`, kind: `recall`, who: [`scarecrow`, `tinman`, `lion`], label: `선물 전날 밤 꺼낸 카드`, go: `r1`, f: `dorothy_brave`, o: `scarecrow`,
+   q: {e: `✨ 친구들이 이미 해낸 일을 보여 주세요!\n어떤 카드를 꺼낼까요?`},
+   note: {e: `이 카드들은 오즈의 선물보다 먼저 있었어요. 친구들은 오즈를 만나기 전에 이미 해냈어요.`}},
+  {id: `r1`, w: `tinman`, f: `dorothy_happy`, o: `tinman`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `"'{lastCard}'…."\n"이건 우리가 오즈를 만나기 전 일이잖아요!"`},
+  /* ---------- 가짜 선물 ---------- */
+  {bg: `ch8_throne`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `다음 날 허수아비가 말했어.\n"뇌를 받으면 나도 다른 사람들처럼 될 거예요."`},
+  {t: `choice`, id: `C3`, kind: `talk`, label: `허수아비에게 한 말`, f: `dorothy_happy`, o: `scarecrow`,
+   q: {e: `도로시는 허수아비에게\n뭐라고 말할까요?`},
+   note: {e: `원작의 도로시는 말해요. "나는 언제나 지금 그대로의 네가 좋았어."`},
+   opts: [
+    {type: `canon`, go: `m3`, eff: {heart: {scarecrow: 1}}, e: `"나는 지금 그대로의 네가 좋아."`},
+    {type: `imag`, go: `m3`, e: `"새 뇌로 처음 무슨 생각 할 거야?"`}
+   ]},
+  {id: `m3`, w: `oz_man`, f: `dorothy_dreamy`, o: `scarecrow`, eff: {item: `newBrains`},
+   e: `오즈는 허수아비 머리에\n겨와 핀과 바늘을 넣어 주었어.`},
+  {w: `oz_man`, f: `dorothy_dreamy`, o: `tinman`, eff: {item: `silkHeart`},
+   e: `나무꾼 가슴엔\n비단으로 만든 심장을 넣어 주었어.`},
+  {w: `oz_man`, f: `dorothy_dreamy`, o: `lion`, eff: {item: `courage`},
+   e: `사자에겐 초록 병에 든 걸 마시게 했어.\n"이게 용기가 될 거란다."`},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `친구들은 모두 기뻐했어.\n"용기로 가득해요!"`},
+  {t: `name`, id: `N8`, key: `toOz`, free: true, max: 30, label: `오즈에게 하고 싶은 말`, f: `dorothy_dreamy`, o: `oz_man`,
+   q: {e: `✍️ 가짜 마법사 오즈에게\n하고 싶은 말이 있나요?`},
+   pick: [`속인 건 잘못이에요`, `친구들 마음은 알아줬네요`, `이제 솔직하게 살아요`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 친구들은 오즈가 가짜인 걸 알면서도 선물에 기뻐해요.`}},
+  {w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `oz_man`,
+   e: `'{toOz}'.\n그런데 정말 선물이 친구들을 바꾼 걸까?`},
+  {t: `choice`, id: `C4`, kind: `act`, label: `혼자 남은 오즈`, f: `dorothy_dreamy`, o: `oz_man`,
+   q: {e: `알현실에 오즈 혼자 남았어요.\n이제 어떻게 될까요?`},
+   note: {e: `원작의 오즈는 혼자 중얼거려요. "셋을 행복하게 하는 건 쉬웠지. 하지만 도로시를 집에 보내는 건…."`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `오즈가 혼자 중얼거려요`},
+    {type: `imag`, go: `E_pre`, e: `친구들이 선물 자랑 대회를 열어요`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch8_throne`, w: `oz_man`, f: `dorothy_dreamy`, o: `oz_man`,
+   e: `"다들 내가 뭐든 할 수 있다고 믿었지.\n하지만 도로시를 캔자스로 보내는 건 어쩌지?"`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch8_room`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, fx: `dream`,
+   e: `허수아비는 수수께끼를 풀고, 나무꾼은 개미 때문에 울고,\n사자는 그림자를 보고도 안 도망갔어. 원래 다 할 수 있던 거잖아!`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch8_room`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `우리는 카드를 바닥에 펼쳤어.\n"선물은 오늘 받았는데, 카드는 그 전부터 있었네!"`},
+  {id: `E_last`, bg: `ch8_room`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `toto`, cam: `out`, cards: [`scarecrow`, `tinman`, `lion`], cardsTitle: `선물보다 먼저 있던 힘`,
+   e: `친구들은 소원을 이루었어.\n이제 남은 건 나 하나. 나는 집에 갈 수 있을까?`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 9장 · 남쪽으로 가는 길 (원작 17~21장)
+   힘 카드: sc_again(알아보기), tm_careful(알아보기), li_spider(자동) / ✨ R1(사자)
+   ========================================================= */
+EASY.push({
+  key: `ch9`, num: 9, together: [`scarecrow`, `tinman`, `lion`], bgm: `bgm_ch9.mp3`, title: `남쪽으로 가는 길`, orig: `원작 17~21장`, origTitle: `열기구 · 남쪽으로 · 싸우는 나무 · 도자기 나라 · 짐승의 왕`,
+  bgKeys: [`ch9`, `ch8_throne`, `ch9_trees`, `ch9_china`, `ch9_forest`],
+  endings: {
+    canon: {title: `숲의 왕의 약속`, label: `원작 결말`},
+    imag:  {title: `짐승들의 대관식`, label: `상상 결말`},
+    bal:   {title: `왕이 되어도 친구`, label: `함께 결말`}
+  },
+  items: {
+    towel: {ic: `🧺`, name: `눈물 닦는 수건`, desc: `우는 나무꾼이 녹슬지 않게 눈물을 닦아 준 수건이에요.`},
+    ladder: {ic: `🪜`, name: `나무꾼의 사다리`, desc: `도자기 벽을 넘을 때 쓴 사다리예요.`}
+  },
+  album: [
+    {id: `e9_toto`, ic: `🐶`, name: `토토 찾기 대작전`},
+    {id: `e9_crown`, ic: `👑`, name: `짐승들의 대관식`},
+    {id: `e9_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`도로시는 약속을 못 지킨 오즈를 용서했어요. 나라면 어떻게 했을까요?`,
+        `도자기 공주는 "우리나라에 있을 때가 제일 즐거워"라고 했어요. 내가 가장 편한 곳은 어디인가요?`,
+        `선물을 받은 뒤에도 친구들은 길에서 계속 힘을 보여 줬어요. 어떤 장면이 기억에 남나요?`],
+    l: [`도로시는 약속을 못 지킨 오즈를 용서했어요. 나라면 어떻게 했을까요?`,
+        `도자기 공주는 "우리나라에 있을 때가 제일 즐거워"라고 했어요. 내가 가장 편한 곳은 어디인가요?`,
+        `선물을 받은 뒤에도 친구들은 길에서 계속 힘을 보여 줬어요. 어떤 장면이 기억에 남나요?`]
+  },
+  nodes: [
+  /* ---------- 열기구 ---------- */
+  {id: `s1`, bg: `ch8_back`, w: `oz_man`, f: `dorothy_happy`, o: `oz_man`,
+   e: `오즈가 말했어. "열기구를 만들어 하늘로 사막을 건너자.\n나도 같이 캔자스에 갈 거야."`},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `oz_man`,
+   e: `나는 초록 비단을 한 폭씩 꿰맸어.\n사흘 만에 커다란 초록 열기구가 완성됐어!`},
+  {bg: `ch9`, w: `oz_man`, f: `dorothy_happy`, o: `oz_man`, cam: `out`,
+   e: `궁전 앞에서 열기구가 부풀어 올랐어.\n"내가 없는 동안 허수아비가 너희를 다스릴 것이다!"`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `toto`,
+   e: `"어서 오너라, 도로시!"\n그런데 토토가 고양이를 쫓아 사라졌어!`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `사라진 토토`, f: `dorothy_surprised`, o: `toto`,
+   q: {e: `열기구가 곧 떠나요!\n도로시는 어떻게 할까요?`},
+   note: {e: `원작의 도로시는 토토를 두고 갈 수 없어서 찾으러 가요. 그런데 돌아오기 직전에 밧줄이 끊어져요!`},
+   opts: [
+    {type: `canon`, go: `m1`, e: `토토를 찾으러 가요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e9_toto`}, e: `친구들에게 같이 찾자고 해요`}
+   ]},
+  {id: `c1b`, w: `lion`, f: `dorothy_brave`, o: `lion`, fx: `dream`,
+   e: `사자가 코를 킁킁, 허수아비는 두리번두리번.\n"저기 있어요!"`},
+  {id: `m1`, w: `oz_man`, f: `dorothy_sad`, o: `oz_man`, cam: `shake`,
+   e: `토토를 안고 달려갔는데… 툭! 밧줄이 끊어졌어.\n열기구가 나를 두고 하늘로 날아갔어.`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `oz_man`, cam: `out`,
+   e: `"돌아와요!" "돌아갈 수가 없구나. 잘 있어라!"\n그게 오즈를 본 마지막이었어.`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_sad`, o: `toto`,
+   q: {e: `집에 갈 기회가 날아가 버렸어요.\n도로시의 마음은 어떨까요?`},
+   note: {e: `도로시는 서럽게 울었어요. 그래도 토토를 두고 가지 않은 건 잘한 일이라고 생각했어요.`},
+   opts: [
+    {type: `feel`, ic: `😢`, ok: 1, eff: {album: `e9_feel`, heart: {toto: 1}}, e: `슬프지만 토토가 있어 다행이에요`},
+    {type: `feel`, ic: `😄`, e: `아무렇지 않아요`},
+    {type: `feel`, ic: `😡`, e: `토토가 미워요`}
+   ]},
+  /* ---------- 다음 길 ---------- */
+  {bg: `ch8_throne`, w: `tinman`, f: `dorothy_sad`, o: `tinman`, eff: {item: `towel`, heart: {tinman: 1}},
+   e: `나무꾼도 울었어. "녹슬지 않게 눈물 좀 닦아 줄래요?"\n나는 수건으로 꼼꼼히 닦아 주었어.`},
+  {w: `scarecrow`, f: `dorothy_sad`, o: `monkeyking`,
+   e: `허수아비가 생각했어. "날개 원숭이를 불러요!"\n그런데 원숭이들은 이 나라를 떠날 수 없대.`},
+  {w: `scarecrow`, f: `dorothy_dreamy`, o: `scarecrow`,
+   e: `허수아비가 머리가 불룩해질 만큼 다시 생각했어.\n"병사에게 물어봅시다!"`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `다시 생각한 허수아비`, card: `sc_again`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `💡 첫 생각이 실패해도 다시 생각했어요.\n허수아비가 보여 준 힘은?`},
+   note: {e: `실패해도 다시 생각하고, 모르면 물어봐요. 그게 생각하는 힘이에요. 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `🧠`, ok: 1, e: `포기하지 않고 다시 생각하는 힘`},
+    {type: `feel`, ic: `👑`, e: `왕이 된 것`}
+   ]},
+  {w: `soldier`, f: `dorothy_happy`, o: `soldier`,
+   e: `"남쪽의 착한 마녀 글린다라면 도와줄지도 몰라요.\n하지만 남쪽 길은 위험하답니다."`},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `"우리도 같이 갈게!"\n왕이 된 허수아비도, 나무꾼도, 사자도 말했어.`},
+  /* ---------- 싸우는 나무 ---------- */
+  {bg: `ch9_trees`, w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, cam: `shake`,
+   e: `숲에 들어가려는데 나뭇가지가 허수아비를 휘감아\n휙! 던져 버렸어.`},
+  {t: `choice`, id: `C2`, kind: `act`, label: `길을 막는 나무`, f: `dorothy_surprised`, o: `tinman`,
+   q: {e: `나무들이 길을 막아요!\n어떻게 지나갈까요?`},
+   note: {e: `원작에서는 나무꾼이 도끼로 가지를 싹둑 잘라요. 그 사이에 모두 지나가요.`},
+   opts: [
+    {type: `canon`, go: `m2`, e: `나무꾼이 도끼로 길을 열어요`},
+    {type: `imag`, go: `c2b`, e: `"나무님, 지나가게 해 주세요!"`}
+   ]},
+  {id: `c2b`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `tinman`, fx: `dream`,
+   e: `나무들은 가지를 더 세게 흔들었어.\n결국 나무꾼이 "죄송해요" 하고 가지를 잘랐어.`},
+  {id: `m2`, w: `tinman`, f: `dorothy_brave`, o: `tinman`, cam: `shake`,
+   e: `싹둑! 나무가 부르르 떠는 사이\n우리는 모두 무사히 지나갔어.`},
+  /* ---------- 도자기 나라 ---------- */
+  {bg: `ch9_china`, w: `scarecrow`, f: `dorothy_surprised`, o: `scarecrow`, eff: {item: `ladder`}, cam: `out`,
+   e: `사다리로 하얀 벽을 넘었더니… 와!\n작은 도자기 집, 도자기 사람들이 있었어.`},
+  {w: `milkmaid`, f: `dorothy_sad`, o: `milkmaid`, cam: `shake`,
+   e: `우리 때문에 놀란 도자기 소가\n와장창 넘어져 다리가 부러졌어. "미안해요!"`},
+  {w: `tinman`, f: `dorothy_sad`, o: `tinman`,
+   e: `나무꾼이 말했어.\n"여기서는 아주 조심해야겠어요. 작은 사람들이 다칠지도 몰라요."`},
+  {t: `choice`, id: `P2`, kind: `power`, label: `조심조심 나무꾼`, card: `tm_careful`, f: `dorothy_dreamy`, o: `tinman`,
+   q: {e: `💡 나무꾼은 깨지기 쉬운 도자기 사람들을 걱정했어요.\n나무꾼이 보여 준 건?`},
+   note: {e: `작고 약한 이웃을 아끼는 마음이에요. 비단 심장을 받기 전부터 나무꾼은 이랬어요. 힘 카드를 얻었어요.`},
+   opts: [
+    {type: `feel`, ic: `💗`, ok: 1, e: `작은 이웃을 아끼는 마음`},
+    {type: `feel`, ic: `🪓`, e: `도끼가 튼튼한 것`}
+   ]},
+  {w: `chinaprincess`, f: `dorothy_dreamy`, o: `chinaprincess`,
+   e: `예쁜 도자기 공주를 만났어.\n"캔자스에 같이 갈래?" "싫어. 여기 우리나라가 제일 좋아."`},
+  {t: `choice`, id: `C3`, kind: `talk`, label: `도자기 공주에게`, f: `dorothy_dreamy`, o: `chinaprincess`,
+   q: {e: `공주는 자기 나라가 제일 좋대요.\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작의 도로시는 "너를 불행하게 하지는 않을게" 하고 작별 인사를 해요. 도로시도 집이 그리우니까 공주 마음을 알았어요.`},
+   opts: [
+    {type: `canon`, go: `m3`, e: `"알겠어. 잘 있어!"`},
+    {type: `imag`, go: `m3`, e: `"그럼 살금살금 놀러 올게!"`}
+   ]},
+  {t: `name`, id: `m3`, key: `myHome`, free: true, max: 30, label: `내 마음이 가장 편한 곳`, f: `dorothy_dreamy`, o: `chinaprincess`,
+   q: {e: `✍️ 공주에게는 자기 나라가 제일 좋대요.\n내 마음이 가장 편한 곳은 어디인가요?`},
+   pick: [`우리 집`, `우리 반 교실`, `할머니 댁`],
+   ph: `직접 써도 돼요`,
+   note: {e: `도로시에게는 캔자스가 그런 곳이에요. 엠 아주머니와 헨리 아저씨가 있으니까요.`}},
+  {w: `dorothy`, in: 1, f: `dorothy_happy`, o: `lion`,
+   e: `'{myHome}'.\n나도 그곳을 떠올리며 조심조심 도자기 나라를 지나갔어.`},
+  /* ---------- 짐승의 왕 ---------- */
+  {bg: `ch9_forest`, w: `tiger`, f: `dorothy_surprised`, o: `tiger`,
+   e: `큰 숲에 짐승들이 모여 있었어.\n"짐승의 왕이시여! 거미 괴물을 물리쳐 주세요!"`},
+  {w: `lion`, f: `dorothy_surprised`, o: `lion`,
+   e: `사자의 갈기가 살짝 떨렸어.\n사자는 지금도 무서운 거야.`},
+  {t: `choice`, id: `R1`, kind: `recall`, who: `lion`, label: `거미 괴물 앞의 사자에게`, go: `r1`, f: `dorothy_brave`, o: `lion`,
+   q: {e: `✨ 사자가 혼자 괴물에게 가려고 해요.\n어떤 카드를 꺼내 보여 줄까요?`},
+   note: {e: `사자는 오즈를 만나기 전에도 무서운데 해냈어요. 카드는 그걸 기억나게 해 줄 뿐이에요.`}},
+  {id: `r1`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {lion: 1}},
+   e: `"'{lastCard}'…."\n사자가 씩 웃었어. "내 친구들을 잘 돌봐 다오."`},
+  {w: `lion`, f: `dorothy_brave`, o: `lion`, cam: `shake`, eff: {card: `li_spider`},
+   e: `사자는 잠든 거미의 가느다란 목을 보고\n펄쩍! 단번에 쾅! 괴물을 물리쳤어.`},
+  {t: `choice`, id: `C4`, kind: `talk`, label: `숲의 왕의 대답`, f: `dorothy_happy`, o: `lion`,
+   q: {e: `짐승들이 사자를 왕으로 모시려 해요.\n사자는 뭐라고 할까요?`},
+   note: {e: `원작의 사자는 약속해요. "도로시가 캔자스로 떠나면 돌아와서 너희를 다스리겠다."`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `"도로시가 떠나면 돌아올게."`},
+    {type: `imag`, go: `E_pre`, eff: {album: `e9_crown`}, e: `"오늘은 잔치부터 하자!"`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch9_forest`, w: `lion`, f: `dorothy_happy`, o: `tiger`,
+   e: `"도로시가 떠나면 돌아와 너희를 다스리겠다."\n겁쟁이라던 사자가 숲의 왕이 되었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch9_forest`, w: `tiger`, f: `dorothy_happy`, o: `tiger`, fx: `dream`,
+   e: `코끼리가 나팔을 불고, 새들이 꽃잎을 뿌렸어.\n허수아비가 나뭇잎 왕관을 씌워 주었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch9_forest`, w: `lion`, f: `dorothy_happy`, o: `lion`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `"나 혼자 한 게 아니야. 친구들이 있어서 왔어."\n"왕이 되어도 나는 너희 친구야."`},
+  {id: `E_last`, bg: `ch9_forest`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `scarecrow`, cam: `out`,
+   e: `허수아비는 에메랄드 시의 왕, 사자는 숲의 왕.\n이제 글린다의 성까지 얼마 안 남았어!`},
+  {t: `endcard`}
+  ]
+});
+
+/* =========================================================
+   쉬운 이야기 10장 · 다시 집으로 (원작 22~24장) + 최종 보고서
+   힘 카드: do_shoes(도로시, 알아보기) / ✨ R1(세 친구, 작별)
+   ========================================================= */
+EASY.push({
+  key: `ch10`, num: 10, together: [`scarecrow`, `tinman`, `lion`], midReport: true, finalReport: true, bgm: `bgm_ch10.mp3`, title: `다시 집으로`, orig: `원작 22~24장`, origTitle: `쿼들링의 나라 · 착한 마녀 글린다 · 다시 집으로`,
+  bgKeys: [`ch10`, `ch10_red`, `ch10_castle`, `ch10_home`],
+  endings: {
+    canon: {title: `다시 집에 오니 정말 좋아요`, label: `원작 결말`},
+    imag:  {title: `캔자스 하늘의 초록 별`, label: `상상 결말`},
+    bal:   {title: `회색 집의 이야기꾼`, label: `함께 결말`}
+  },
+  items: {
+    cookies: {ic: `🍪`, name: `쿼들링 아주머니의 과자`, desc: `빨간 농가 아주머니가 차려 준 케이크와 과자예요.`}
+  },
+  album: [
+    {id: `e10_joke`, ic: `😂`, name: `망치머리를 웃긴 날`},
+    {id: `e10_star`, ic: `⭐`, name: `캔자스 하늘의 초록 별`},
+    {id: `e10_feel`, ic: `💗`, name: `마음 읽기 성공`}
+  ],
+  talk: {
+    e: [`도로시는 첫날 집에 갈 수 있었어요. 그랬다면 친구들은 어떻게 되었을까요?`,
+        `허수아비, 나무꾼, 사자가 처음부터 가지고 있던 힘은 무엇이었나요? 카드를 보며 이야기해 봐요.`,
+        `내가 이미 가지고 있는데 아직 잘 모르는 힘이 있을까요? 친구에게 물어봐도 좋아요.`],
+    l: [`도로시는 첫날 집에 갈 수 있었어요. 그랬다면 친구들은 어떻게 되었을까요?`,
+        `허수아비, 나무꾼, 사자가 처음부터 가지고 있던 힘은 무엇이었나요? 카드를 보며 이야기해 봐요.`,
+        `내가 이미 가지고 있는데 아직 잘 모르는 힘이 있을까요? 친구에게 물어봐도 좋아요.`]
+  },
+  nodes: [
+  /* ---------- 망치머리 언덕 ---------- */
+  {id: `s1`, bg: `ch10`, w: `hammerhead`, f: `dorothy_surprised`, o: `hammerhead`, cam: `shake`,
+   e: `바위 언덕에서 팔 없는 사람들이 나왔어.\n목이 쭉 늘어나서 머리로 쾅! 들이받았어.`},
+  {w: `lion`, f: `dorothy_sad`, o: `lion`, cam: `shake`,
+   e: `허수아비도, 사자도 데굴데굴 굴러떨어졌어.\n"튀어나오는 머리랑은 못 싸워."`},
+  {t: `choice`, id: `C1`, kind: `act`, label: `망치머리 언덕`, f: `dorothy_sad`, o: `tinman`,
+   q: {e: `힘으로는 못 이겨요.\n어떻게 언덕을 넘을까요?`},
+   note: {e: `원작에서는 나무꾼이 생각해 내요. "날개 원숭이를 불러요! 한 번 더 부를 수 있잖아요."`},
+   opts: [
+    {type: `canon`, go: `m1`, e: `날개 원숭이를 불러요`},
+    {type: `imag`, go: `c1b`, eff: {album: `e10_joke`}, e: `웃긴 이야기를 해 줘요`}
+   ]},
+  {id: `c1b`, w: `hammerhead`, f: `dorothy_dreamy`, o: `hammerhead`, fx: `dream`,
+   e: `망치머리들이 깔깔 웃었지만 길은 안 열렸어.\n나무꾼이 속삭였어. "원숭이를 불러요!"`},
+  {id: `m1`, bg: `ch8_sky`, w: `monkeyking`, f: `dorothy_happy`, o: `monkeyking`, cam: `up`,
+   e: `황금 모자의 마지막 소원!\n원숭이들이 우리를 안고 언덕 너머로 날아갔어.`},
+  {bg: `ch10_red`, w: `farmwife`, f: `dorothy_happy`, o: `farmwife`, eff: {item: `cookies`},
+   e: `빨간 집, 빨간 다리, 빨간 옷의 쿼들링 나라!\n아주머니가 케이크와 과자를 주셨어.`},
+  {w: `quadgirl`, f: `dorothy_happy`, o: `quadgirl`,
+   e: `빨간 제복의 소녀 병사가\n글린다의 성으로 안내해 주었어.`},
+  /* ---------- 글린다 ---------- */
+  {bg: `ch10_castle`, w: `glinda`, f: `dorothy_surprised`, o: `glinda`, cam: `in`,
+   e: `루비 왕좌에 아름다운 글린다가 앉아 있었어.\n"무엇을 도와줄까, 얘야?"`},
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `glinda`,
+   e: `"집에 가고 싶어요.\n엠 아주머니가 걱정하실 거예요."`},
+  {w: `glinda`, f: `dorothy_happy`, o: `glinda`,
+   e: `"방법을 알려 주마.\n대신 황금 모자를 나에게 주렴."`},
+  {t: `choice`, id: `C2`, kind: `talk`, label: `황금 모자`, f: `dorothy_happy`, o: `glinda`,
+   q: {e: `글린다가 황금 모자를 달래요.\n도로시는 뭐라고 할까요?`},
+   note: {e: `원작의 도로시는 "기꺼이요!" 하고 줘요. 글린다는 모자로 친구들을 각자 나라로 보내 주고, 원숭이들을 자유롭게 해 줘요.`},
+   opts: [
+    {type: `canon`, go: `m2`, e: `"기꺼이요!"`},
+    {type: `imag`, go: `m2`, e: `"한 발로 서서 주문 외우는 거 해 보세요!"`}
+   ]},
+  {id: `m2`, w: `glinda`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `글린다가 친구들에게 물었어.\n"도로시가 떠나면 너희는 어떻게 하겠니?"`},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `"에메랄드 시로 돌아갈래요."\n"원숭이들이 데려다줄 거란다. 너는 특별하단다."`},
+  {w: `tinman`, f: `dorothy_happy`, o: `tinman`,
+   e: `"저는 윙키들에게 갈래요."\n"너는 잘 닦여 있을 때 가장 빛난단다."`},
+  {w: `lion`, f: `dorothy_happy`, o: `lion`,
+   e: `"나는 숲으로 돌아갈래요."\n"원숭이들이 너를 숲에 데려다줄 거야."`},
+  {w: `dorothy`, in: 1, f: `dorothy_surprised`, o: `glinda`, cam: `in`,
+   e: `"그런데 저는 어떻게 가요?"\n글린다가 내 발을 가리켰어. "그 은 구두가 데려다줄 거란다."`},
+  {w: `glinda`, f: `dorothy_surprised`, o: `glinda`,
+   e: `"그 힘을 알았다면,\n너는 첫날 바로 집에 갈 수 있었을 거야."`},
+  {t: `choice`, id: `P1`, kind: `power`, label: `도로시의 은 구두`, card: `do_shoes`, f: `dorothy_dreamy`, o: `glinda`,
+   q: {e: `💡 집으로 가는 힘은 처음부터 도로시 발에 있었어요!\n이건 누구 이야기와 닮았을까요?`},
+   note: {e: `허수아비, 나무꾼, 사자처럼 도로시도 처음부터 힘을 가지고 있었어요. 몰랐을 뿐이에요. 도로시의 힘 카드를 얻었어요!`},
+   opts: [
+    {type: `feel`, ic: `🥈`, ok: 1, e: `처음부터 힘을 가진 세 친구 이야기`},
+    {type: `feel`, ic: `🎩`, e: `가짜 마법사 오즈 이야기`}
+   ]},
+  {w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`,
+   e: `"하지만 첫날 갔으면 나는 아직 옥수수밭에 있었을 거예요!"\n"저는 녹슬어 있었겠죠." "나는 겁쟁이였을 거야."`},
+  {t: `choice`, id: `F1`, kind: `feel`, label: `도로시의 마음`, f: `dorothy_dreamy`, o: `scarecrow`,
+   q: {e: `먼 길을 돌아온 도로시.\n도로시의 마음은 어떨까요?`},
+   note: {e: `원작의 도로시는 친구들에게 도움이 되어서 기쁘대요. 돌아온 길이 헛되지 않았어요.`},
+   opts: [
+    {type: `feel`, ic: `🥰`, ok: 1, eff: {album: `e10_feel`, heart: {scarecrow: 1, tinman: 1, lion: 1}}, e: `친구들을 만나서 기뻐요`},
+    {type: `feel`, ic: `😤`, e: `괜히 고생해서 억울해요`},
+    {type: `feel`, ic: `😐`, e: `아무 느낌 없어요`}
+   ]},
+  /* ---------- 작별 ---------- */
+  {w: `dorothy`, in: 1, f: `dorothy_sad`, o: `scarecrow`,
+   e: `이제 헤어질 시간이야.\n나는 모아 온 카드들을 꺼냈어.`},
+  {t: `choice`, id: `R1`, kind: `recall`, who: [`scarecrow`, `tinman`, `lion`], label: `작별할 때 꺼낸 카드`, go: `r1`, f: `dorothy_brave`, o: `scarecrow`,
+   q: {e: `✨ 마지막 카드예요.\n친구들이 꼭 기억했으면 하는 카드는?`},
+   note: {e: `도로시가 떠나도 카드 속 일은 사라지지 않아요. 친구들이 직접 해낸 일이니까요.`}},
+  {id: `r1`, w: `scarecrow`, f: `dorothy_happy`, o: `scarecrow`, eff: {heart: {scarecrow: 1, tinman: 1, lion: 1}},
+   e: `"'{lastCard}'."\n"이 카드는 도로시가 가져가요. 우리는 기억하니까요."`},
+  {t: `name`, id: `N10`, key: `farewell`, free: true, max: 30, label: `세 친구에게 하는 마지막 인사`, f: `dorothy_sad`, o: `lion`,
+   q: {e: `✍️ 허수아비, 나무꾼, 사자에게\n마지막 인사를 해 주세요.`},
+   pick: [`너희는 처음부터 멋졌어`, `잊지 않을게`, `고마워, 사랑해`],
+   ph: `직접 써도 돼요`,
+   note: {e: `원작의 도로시는 친구들을 한 명씩 꼭 안아 주며 함께 울어요.`}},
+  {w: `lion`, f: `dorothy_sad`, o: `lion`,
+   e: `"'{farewell}'"\n나는 사자, 나무꾼, 허수아비를 차례로 꼭 안았어.`},
+  {t: `choice`, id: `C3`, kind: `act`, label: `세 번 딱딱딱`, f: `dorothy_brave`, o: `toto`,
+   q: {e: `토토를 안고 뒤꿈치를 세 번 부딪쳐요.\n도로시는 뭐라고 말할까요?`},
+   note: {e: `원작의 도로시는 외쳐요. "엠 아주머니에게 데려다줘!" 도로시에게 집은 사랑하는 사람이 있는 곳이었어요.`},
+   opts: [
+    {type: `canon`, go: `C4x`, e: `"엠 아주머니에게 데려다줘!"`},
+    {type: `imag`, go: `C4x`, eff: {album: `e10_star`}, e: `"집으로! 친구들 꿈도 꾸게 해 줘!"`}
+   ]},
+  {id: `C4x`, t: `choice`, kind: `predict`, label: `캔자스에 도착하면`, f: `dorothy_dreamy`, o: `toto`,
+   q: {e: `휘이잉! 바람이 불어요.\n은 구두는 어떻게 될까요?`},
+   note: {e: `원작에서 은 구두는 날아오다가 사막에 떨어져 영영 사라져요. 도로시는 양말만 신고 캔자스에 도착해요.`},
+   opts: [
+    {type: `canon`, go: `E_pre`, e: `사막에 떨어져 사라져요`},
+    {type: `imag`, go: `E_pre`, e: `도로시 방에 반짝이며 남아요`}
+   ]},
+  {id: `E_pre`, t: `ending`},
+  /* ---------- 결말 ---------- */
+  {id: `E_canon`, bg: `ch10_home`, w: `em`, f: `dorothy_happy`, o: `em`, cam: `shake`,
+   e: `세 걸음 만에 캔자스! 은 구두는 사라졌어.\n"엠 아주머니! 다시 집에 오니 정말 좋아요!"`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_imag`, bg: `ch10_home`, w: `dorothy`, in: 1, f: `dorothy_dreamy`, o: `em`, fx: `dream`,
+   e: `그날 밤 회색 하늘에 초록 별이 반짝였어.\n꿈속에서 친구들이 손을 흔들었어.`},
+  {t: `goto`, to: `E_last`},
+  {id: `E_bal`, bg: `ch10_home`, w: `henry`, f: `dorothy_happy`, o: `henry`,
+   e: `저녁 식탁에서 친구들 이야기를 들려주었어.\n헨리 아저씨가 크게 웃었어. 회색 집이 따뜻해졌어.`},
+  {id: `E_last`, bg: `ch10_home`, w: `dorothy`, in: 1, f: `dorothy_happy`, o: `toto`, cam: `out`, cards: [`scarecrow`, `tinman`, `lion`, `dorothy`], cardsTitle: `처음부터 가지고 있던 힘`,
+   e: `은 구두는 사라졌지만 카드는 남았어.\n생각, 마음, 용기, 집으로 가는 힘. 모두 처음부터 우리 안에 있었어.`},
+  {t: `endcard`}
+  ]
+});
+
 
 </script>
 <script>
@@ -4961,6 +6501,7 @@ const PRISTINE_HTML = document.documentElement.outerHTML;
 "use strict";
 /* 쉬운 이야기(특수교육·느린 학습자용): /easy/ 주소이거나 ?easy 로 열면 쉬운 장들로 바꿔 끼웁니다. */
 const EASY_MODE = !!window.EASY_MODE || /[?&]easy\b/.test(location.search);
+const ORIG_CHAPTERS = CHAPTERS.slice();
 if(EASY_MODE && EASY.length){ CHAPTERS.length = 0; EASY.forEach(c => CHAPTERS.push(c)); }
 if(EASY_MODE) document.documentElement.classList.add("easy");
 if(EASY_MODE){ document.title = WORK.easyTitle; const h = document.querySelector(".cover h1"); if(h) h.innerHTML = `${WORK.title} <span style="display:inline-block;font-size:.5em;vertical-align:middle;background:#aafbdb;color:#1c7850;border-radius:999px;padding:3px 12px">🌼 쉬운 이야기</span>`; }
@@ -4988,7 +6529,8 @@ const EASY_IC = {canon:`📖`, imag:`✨`, bal:BAL.ic};
 const WHO = Object.assign({}, WORK.who || {});
 const CHARS = Object.assign({}, WORK.chars || {});
 const DEFAULT_NAMES = Object.assign({}, WORK.names || {});
-CHAPTERS.concat(EASY).forEach(c => { if(c.cards) for(const k in c.cards) CARDS[k] = Object.assign({ch:c.num}, c.cards[k]); });
+/* 힘 카드는 원래 이야기 대본에서 정의(쉬운 이야기는 키만 씀). 쉬운 이야기에만 있는 카드는 보조로 */
+EASY.concat(ORIG_CHAPTERS).forEach(c => { if(c.cards) for(const k in c.cards) CARDS[k] = Object.assign({ch:c.num}, c.cards[k]); });
 CHAPTERS.forEach(c => { if(c.items) Object.assign(ITEMS, c.items); if(c.album) ALBUMS[c.key] = c.album; });
 const BADGE = {
   canon:{e:`📖 원작과 같은 길!`, l:`📖 원작의 길을 걸었습니다`},
