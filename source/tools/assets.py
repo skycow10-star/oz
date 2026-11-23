@@ -19,9 +19,9 @@ async def main():
   files=sorted(glob.glob(OZH + "/imgs/in/*"))
   if not files: return write_index({}, 0, [])
   async with async_playwright() as p:
-    b=await p.chromium.launch(executable_path="/usr/bin/google-chrome", args=["--allow-file-access-from-files"])
+    b=await p.chromium.launch(executable_path=_os.environ.get("CHROME","/usr/bin/google-chrome"), args=["--allow-file-access-from-files"])
     pg=await b.new_page(); errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
-    await pg.goto("file://"+HTML); await pg.wait_for_timeout(500)
+    await pg.goto(__import__("pathlib").Path(HTML).resolve().as_uri()); await pg.wait_for_timeout(500)
     await pg.set_input_files("#fileInput", files)
     await pg.wait_for_function(f"Object.keys(window.__vn.uploaded()).length>={len(files)}", timeout=180000)
     keys=await pg.evaluate("Object.keys(window.__vn.uploaded()).sort()")

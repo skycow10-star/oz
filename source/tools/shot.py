@@ -3,7 +3,7 @@ import asyncio
 from playwright.async_api import async_playwright
 async def main():
   async with async_playwright() as p:
-    b=await p.chromium.launch(executable_path="/usr/bin/google-chrome")
+    b=await p.chromium.launch(executable_path=_os.environ.get("CHROME","/usr/bin/google-chrome"))
     pg=await b.new_page(viewport={"width":1280,"height":800})
     await pg.goto(f"file://{OZH}/imgs/index_student.html"); await pg.wait_for_timeout(800)
     await pg.screenshot(path=OZH + "/imgs/s0.png")
