@@ -19,7 +19,8 @@
 - 원래 이야기·쉬운 이야기 1~10장, 힘 카드, 중간·최종 보고서 완성. 자동 시험 통과.
 - **그림 완성**: 배경 48·인물 36·얼굴 아이콘 5 (원본 `$OZ_HOME/imgs/in`, 기준 그림 ①~⑨는 `$OZ_HOME/imgs/ref`).
 - **음악**: 1~7·9·10장 `bgm_chN.mp3` 넣음. **8장만 남음**(수노 다운로드 횟수가 12/6에 다시 채워지면 받기).
-- 남은 일: 8장 음악, 물건 아이콘 it_ 19개·결말 end_ 3개, 앱 아이콘 교체.
+- 물건 아이콘 it_ 19개·결말 end_ 3개·앱 아이콘(노란 벽돌 길+도로시·토토) 완성.
+- 남은 일: 8장 음악.
 - GitHub Pages(Settings → Pages, main 브랜치)를 켜야 학생 주소가 열린다.
 - Windows 작업: `C:\ozwork`, 셸마다 `source /c/ozwork/oz_env.sh`(python3·node·CHROME 경로). 시험 포트 8775. 인물 그림은 `tools/sprite.py`, 받은 그림 정리는 `tools/grab_img.sh`.
 

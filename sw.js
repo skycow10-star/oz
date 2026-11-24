@@ -1,5 +1,5 @@
 /* 오즈의 마법사 오프라인 지원: 인터넷이 되면 항상 최신 판을 먼저 받고, 인터넷이 없으면 저장해 둔 판으로 실행합니다. */
-const CACHE = "oz-vn-v18";
+const CACHE = "oz-vn-v19";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, {cache: "reload"})))).then(() => self.skipWaiting()));
